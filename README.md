@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# pokedex-2.0
 
-## Available Scripts
+## Projektbeskrivning
 
-In the project directory, you can run:
 
-### `npm start`
+## Instruktioner för att bygga och köra projektet
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+###### Repository: https://github.com/Condif/Pokedex.git
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+###### Demo: https://condif.github.io/Pokedex/
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Miniprojekt 1 - Create React App
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+I den här laborationen ska ni i grupp om tre skapa en Webb-App med
+hjälp av Create-React-App och Typescript. Vad ni väljer att skapa
+är valfritt däremot ska ni skapa minst 8 stycken komponenter varav
+minst 3 av komponenterna (1 per person)  är ”statefulla"-komponenter.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Läs noga igenom hela uppgiftsbeskrivningen innan ni börjar.
 
-### `npm run eject`
+## Inlämning
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+För att bli godkänd på den här uppgiften MÅSTE ni använda GIT och GitHub.
+Inlämningen sker som vanligt via Zenit där du ska zippa ihop din projektmapp.
+I din projektmapp ska det finnas (utöver all kod) en README.md fil.
+Den ska innehålla en titel, beskrivning av projektet, info om hur projektet byggs och körs,
+samt en länk till GitHub repot.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Presentation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Ni ska vid inlämningsdatumet hålla i en presentation där ni för klassen presenterar er Web-Applikation,
+vilka komponenter ni har skapat och hur dom används. Ni ska även presentera hur ni har planerat, genomfört
+och strukturerat ert arbete. Dessutom ska presentationen innefatta en reflekterande del. Varje grupp får 15 min på sig.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Krav för godkänt:
 
-## Learn More
+1. Projektet innehåller och använder minst 8 stycken komponenter varav minst 3 stycken är "statefulla"-komponenter.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Git & GitHub har använts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Projektmappen innehåller en README.md fil - (läs ovan för mer info)
 
-### Code Splitting
+4. Uppgiften lämnas in i tid!
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+5. Muntlig presentation är genomförd
 
-### Analyzing the Bundle Size
+## Krav för väl godkänt:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+1. Alla punkter för godkänt är uppfyllda
 
-### Making a Progressive Web App
+2. React Router har använts för att dynamiskt uppdatera URL’en.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+3. En ”ErrorBoundry”- komponent ska skapas och användas på minst 3 ställen.
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+4. Data från ett web-API hämtas och visas på sidan.
