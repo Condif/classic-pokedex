@@ -1,17 +1,32 @@
 import * as React from "react";
 
-import MainDisplay from "./mainDisplay"
-import MainID from "./mainID"
-import MainNavpad from "./mainNavpad"
+import MainDisplay from "./mainDisplay";
+import MainID from "./mainID";
+import MainNavpad from "./mainNavpad";
+import { Pokemon } from "../../types";
 
-export default class MainDex extends React.Component {
+interface Props {
+	pokemon: Pokemon;
+}
+
+export default class MainDex extends React.Component<Props> {
 	render() {
 		return (
-            <div>
-                <MainDisplay />
-                <MainID />
-                <MainNavpad />
-            </div>
-        );
+			<div style={mainStyle}>
+				<MainDisplay sprite={this.props.pokemon.sprites} />
+
+				<MainID id={this.props.pokemon.id} />
+				<MainNavpad />
+			</div>
+		);
 	}
 }
+
+const mainStyle: React.CSSProperties = {
+	width: "60%",
+
+	display: "flex",
+	justifyContent: "space-evenly",
+	alignItems: "center",
+	flexWrap: "wrap"
+};

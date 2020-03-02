@@ -1,9 +1,10 @@
 import * as React from "react";
 import axios from "axios";
+import { Switch, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from 'history'
 
 import { Pokemon } from "../types";
-import { ErrorBoundary } from "../errorBoundry";
+// import { ErrorBoundary } from "../errorBoundary";
 
 import MainDex from "./main/mainDex";
 import InfoDex from "./info/infoDex";
@@ -84,16 +85,29 @@ export default class Layout extends React.Component<Props, State> {
 	render() {
 		return (
 			<div>
-				<ErrorBoundary>
-					<button onClick={this.downState}>down</button>
-					<button onClick={this.upState}>up</button>
-					<img src={this.state.currentPokemon.sprites} alt=""/>
-					<div>
-						<MainDex />
-						<InfoDex />
-					</div>
-				</ErrorBoundary>
+				<div style={buttStyle}>
+					<button onClick={this.downState}>DOWN</button>
+					<button onClick={this.upState}>UP</button>
+				</div>
+				<div style={layoutStyle}>
+					<MainDex pokemon={this.state.currentPokemon} />
+					<InfoDex pokemon={this.state.currentPokemon} />
+				</div>
 			</div>
 		);
 	}
 }
+
+const layoutStyle: React.CSSProperties = {
+	width: "100%",
+	height: "100vh",
+
+	display: "flex",
+	justifyContent: "center",
+
+	background: "#dc0a2d"
+};
+
+const buttStyle: React.CSSProperties = {
+	position: "absolute"
+};
