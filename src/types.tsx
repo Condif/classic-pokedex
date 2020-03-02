@@ -1,8 +1,15 @@
-export type buttonName = 'bio' | 'type' | 'region' | 'generation' | 'abilities' |'back'
+export type buttonName = 'bio' | 'moves' |'back'
 
 export type Pokemon = {
     id?: number,
     name?: string,
-    weight?: number,
-    sprites?: string
+    sprites?: string,
+    height?: string,
+    weight?: string,
+    types?: any[],
+    abilities?: string[],
+    moves?: {
+        name: string,
+        type: string
+    }
 }

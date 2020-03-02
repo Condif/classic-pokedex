@@ -1,16 +1,12 @@
 import * as React from "react";
 import axios from "axios";
+import { Switch, Route, Link } from "react-router-dom";
 
 import { Pokemon } from "../types";
-import { ErrorBoundary } from "../errorBoundry";
+// import { ErrorBoundary } from "../errorBoundary";
 
 import MainDex from "./main/mainDex";
 import InfoDex from "./info/infoDex";
-
-
-// import { resolve } from "dns";
-// import { BrowserRouter } from "react-router-dom";
-// import Layout from "./component/layout";
 
 interface Props {}
 interface State {
@@ -30,9 +26,12 @@ export default class Layout extends React.Component<Props, State> {
 		const pokemon = await this.fetchPokeData(this.state.ID);
 		this.setState({
 			currentPokemon: {
+				id: pokemon.id,
 				name: pokemon.name,
+				sprites: pokemon.sprites.front_default,
 				weight: pokemon.weight,
-				sprites: pokemon.sprites.front_default
+				height: pokemon.height,
+				types: pokemon.types
 			}
 		});
 	}
@@ -45,9 +44,12 @@ export default class Layout extends React.Component<Props, State> {
 			this.setState({
 				ID: pokemon.id,
 				currentPokemon: {
+					id: pokemon.id,
 					name: pokemon.name,
+					sprites: pokemon.sprites.front_default,
 					weight: pokemon.weight,
-					sprites: pokemon.sprites.front_default
+					height: pokemon.height,
+					types: pokemon.types
 				}
 			});
 		}
@@ -60,9 +62,12 @@ export default class Layout extends React.Component<Props, State> {
 			this.setState({
 				ID: pokemon.id,
 				currentPokemon: {
+					id: pokemon.id,
 					name: pokemon.name,
+					sprites: pokemon.sprites.front_default,
 					weight: pokemon.weight,
-					sprites: pokemon.sprites.front_default
+					height: pokemon.height,
+					types: pokemon.types
 				}
 			});
 		}
@@ -70,6 +75,8 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (id: number) => {
 		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + id);
+		console.log(res.data);
+
 		return res.data;
 	};
 
@@ -77,16 +84,29 @@ export default class Layout extends React.Component<Props, State> {
 		console.log(this.state.currentPokemon);
 		return (
 			<div>
-				<ErrorBoundary>
-					<button onClick={this.downState}>down</button>
-					<button onClick={this.upState}>up</button>
-					<img src={this.state.currentPokemon.sprites} alt=""/>
-					<div>
-						<MainDex />
-						<InfoDex />
-					</div>
-				</ErrorBoundary>
+				<div style={buttStyle}>
+					<button onClick={this.downState}>DOWN</button>
+					<button onClick={this.upState}>UP</button>
+				</div>
+				<div style={layoutStyle}>
+					<MainDex pokemon={this.state.currentPokemon} />
+					<InfoDex pokemon={this.state.currentPokemon} />
+				</div>
 			</div>
 		);
 	}
 }
+
+const layoutStyle: React.CSSProperties = {
+	width: "100%",
+	height: "100vh",
+
+	display: "flex",
+	justifyContent: "center",
+
+	background: "#dc0a2d"
+};
+
+const buttStyle: React.CSSProperties = {
+	position: "absolute"
+};
