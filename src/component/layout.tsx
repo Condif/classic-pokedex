@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 
 import { Pokemon } from "../types";
 import { ErrorBoundary } from "../errorBoundry";
@@ -8,77 +8,80 @@ import { ErrorBoundary } from "../errorBoundry";
 import MainDex from "./main/mainDex";
 import InfoDex from "./info/infoDex";
 
-const history = createHistory();
+const history = createBrowserHistory();
 // import { resolve } from "dns";
 // import { BrowserRouter } from "react-router-dom";
 // import Layout from "./component/layout";
 
 interface Props {}
 interface State {
-	ID: number;
+	lastPokemon: string
 	currentPokemon: Pokemon;
 }
 export default class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		const lastUrl = (history.location.pathname.slice(1) !== "") ? history.location.pathname : '/bulbasaur'
+		this.updateUrlHistory(lastUrl)
+		
 		this.state = {
-			ID: 1,
+			lastPokemon: lastUrl,
 			currentPokemon: {}
-		};
+		}
 	}
 
 	async componentDidMount() {
-		const pokemon = await this.fetchPokeData(this.state.ID);
-		this.setState({
-			currentPokemon: {
-				name: pokemon.name,
-				weight: pokemon.weight,
-				sprites: pokemon.sprites.front_default
-			}
-		});
+		const pokemon = await this.fetchPokeData();
+		this.setPokemonInState(pokemon)
 	}
 
 	upState = async () => {
-		if (this.state.ID < 807) {
-			const newId = this.state.ID + 1;
-			const pokemon = await this.fetchPokeData(newId);
-
-			this.setState({
-				ID: pokemon.id,
-				currentPokemon: {
-					name: pokemon.name,
-					weight: pokemon.weight,
-					sprites: pokemon.sprites.front_default
-				}
-			});
+		const id = this.state.currentPokemon.id
+		if (id !== undefined) {			
+			if (id < 807) {
+				
+				const newId = (id+1).toString();
+				this.updateUrlHistory(newId)
+				const pokemon = await this.fetchPokeData();
+				this.setPokemonInState(pokemon)
+			}
 		}
 	};
 	downState = async () => {
-		if (this.state.ID > 1) {
-			const newId = this.state.ID - 1;
-			const pokemon = await this.fetchPokeData(newId);
-
-			this.setState({
-				ID: pokemon.id,
-				currentPokemon: {
-					name: pokemon.name,
-					weight: pokemon.weight,
-					sprites: pokemon.sprites.front_default
-				}
-			});
+		const id = this.state.currentPokemon.id
+		if (id !== undefined) {
+			if (id > 1) {
+				const newId = (id-1).toString();
+				this.updateUrlHistory(newId)
+				const pokemon = await this.fetchPokeData();
+				this.setPokemonInState(pokemon)
+			}
 		}
 	};
 
-	fetchPokeData = async (id: number) => {
-		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + id);
+	fetchPokeData = async () => {	
+		const pokemon = history.location.pathname
+		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
 		return res.data;
 	};
 
+	setPokemonInState(pokemon: any) {
+		this.setState({
+			lastPokemon: pokemon.id,
+			currentPokemon: {
+				name: pokemon.name,
+				weight: pokemon.weight,
+				sprites: pokemon.sprites.front_default,
+				id: pokemon.id
+			}
+		})
+	}
+
+	updateUrlHistory(pokemonId: string) {
+		history.push(pokemonId)
+	}
+
 	render() {
-		console.log(this.state.currentPokemon);
-		if (this.state.currentPokemon.name != undefined) {
-			history.push(this.state.currentPokemon.name)
-		}
 		return (
 			<div>
 				<ErrorBoundary>
