@@ -78,6 +78,9 @@ export default class Layout extends React.Component<Props, State> {
 		return (
 			<div>
 				<ErrorBoundary>
+					<button onClick={this.downState}>down</button>
+					<button onClick={this.upState}>up</button>
+					<img src={this.state.currentPokemon.sprites} alt=""/>
 					<div>
 						<MainDex />
 						<InfoDex />
