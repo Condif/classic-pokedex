@@ -1,20 +1,18 @@
 import * as React from "react";
 
-import InfoDisplay from "./infoDisplay"
-import InfoNavbar from "./infoNavbar"
+import InfoDisplay from "./infoDisplay";
+import InfoNavbar from "./infoNavbar";
 import { Pokemon } from "../../types";
 
 interface Props {
-	pokemon: Pokemon
+	pokemon: Pokemon;
 }
 
 export default class InfoDex extends React.Component<Props> {
-	
-
 	render() {
 		return (
 			<div style={infoStyle}>
-				<InfoDisplay pokemon={this.props.pokemon}/>
+				<InfoDisplay pokemon={this.props.pokemon} />
 				<InfoNavbar />
 			</div>
 		);
@@ -22,5 +20,8 @@ export default class InfoDex extends React.Component<Props> {
 }
 
 const infoStyle: React.CSSProperties = {
-	width: "40%"
-}
+	width: "45%",
+	padding: "2rem",
+	border: ".5rem solid #e7e7e7",
+	borderLeft:"none"
+};

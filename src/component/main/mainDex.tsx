@@ -23,10 +23,12 @@ export default class MainDex extends React.Component<Props> {
 }
 
 const mainStyle: React.CSSProperties = {
-	width: "60%",
+	width: "55%",
 
 	display: "flex",
 	justifyContent: "space-evenly",
 	alignItems: "center",
-	flexWrap: "wrap"
+    flexWrap: "wrap",
+    
+    border: ".5rem solid #e7e7e7 "
 };
