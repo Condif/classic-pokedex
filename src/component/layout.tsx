@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from "axios";
+import createHistory from 'history/createBrowserHistory'
 
 import { Pokemon } from "../types";
 import { ErrorBoundary } from "../errorBoundry";
@@ -7,7 +8,7 @@ import { ErrorBoundary } from "../errorBoundry";
 import MainDex from "./main/mainDex";
 import InfoDex from "./info/infoDex";
 
-
+const history = createHistory();
 // import { resolve } from "dns";
 // import { BrowserRouter } from "react-router-dom";
 // import Layout from "./component/layout";
@@ -75,6 +76,9 @@ export default class Layout extends React.Component<Props, State> {
 
 	render() {
 		console.log(this.state.currentPokemon);
+		if (this.state.currentPokemon.name != undefined) {
+			history.push(this.state.currentPokemon.name)
+		}
 		return (
 			<div>
 				<ErrorBoundary>
