@@ -58,7 +58,6 @@ export default class Layout extends React.Component<Props, State> {
 				this.updateUrlHistory(newId)
 				const pokemon = await this.fetchPokeData();
 				const pokemonBio = await this.fetchPokeDataSpecies();
-				console.log(pokemon)
 				this.setPokemonInState(pokemon, pokemonBio)
 			}
 		}
@@ -72,17 +71,16 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeDataSpecies = async () => {
 		const pokemon = history.location.pathname
+		let pokeFlavor: string = '';
 		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemon);
-		console.log(resSpecies)
 		const bioList = resSpecies.data.flavor_text_entries
 		bioList.some((bioText: any) => {
-			if (bioText !== undefined && bioText !== null) {
-				if (bioText.language.name === 'en') {
-					console.log(bioText.flavor_text)
-					return bioText.flavor_text;
-				}
+			if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
+				pokeFlavor = bioText.flavor_text	
 			}
+			return pokeFlavor;
 		});
+		return pokeFlavor;
 	};
 
 	setPokemonInState(pokemon: any, pokemonBio: any) {
