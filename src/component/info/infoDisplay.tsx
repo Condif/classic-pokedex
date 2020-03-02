@@ -16,6 +16,7 @@ export default class InfoDisplay extends React.Component<Props> {
 				<h3>InfoDex</h3>
 				<h4>{this.props.pokemon.name}</h4>
 				<p>height: {this.props.pokemon.height}</p>
+				
 				<p>weight: {this.props.pokemon.weight}</p>
 
 				<p>
@@ -24,6 +25,8 @@ export default class InfoDisplay extends React.Component<Props> {
 						<p>{type}</p>
 					))}
 				</p>
+				<p>Bio: {this.props.pokemon.pokemonBio}</p>
+				
 			</div>
 		);
 	}
