@@ -1,6 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 
+import { Pokemon } from "./types";
 import { ErrorBoundary } from "./errorBoundry";
 
 // import { resolve } from "dns";
@@ -10,7 +11,7 @@ import { ErrorBoundary } from "./errorBoundry";
 interface Props {}
 interface State {
 	ID: number;
-	currentPokemon: {} | [];
+	currentPokemon: Pokemon;
 }
 export default class App extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -24,7 +25,11 @@ export default class App extends React.Component<Props, State> {
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData(this.state.ID);
 		this.setState({
-			currentPokemon: pokemon.name
+			currentPokemon: {
+				name: pokemon.name,
+				weight: pokemon.weight,
+				sprites: pokemon.sprites.front_default
+			}
 		});
 	}
 
@@ -32,9 +37,14 @@ export default class App extends React.Component<Props, State> {
 		if (this.state.ID < 807) {
 			const newId = this.state.ID + 1;
 			const pokemon = await this.fetchPokeData(newId);
+
 			this.setState({
-				ID: newId,
-				currentPokemon: pokemon.name
+				ID: pokemon.id,
+				currentPokemon: {
+					name: pokemon.name,
+					weight: pokemon.weight,
+					sprites: pokemon.sprites.front_default
+				}
 			});
 		}
 	};
@@ -42,9 +52,14 @@ export default class App extends React.Component<Props, State> {
 		if (this.state.ID > 1) {
 			const newId = this.state.ID - 1;
 			const pokemon = await this.fetchPokeData(newId);
+
 			this.setState({
-				ID: newId,
-				currentPokemon: pokemon.name
+				ID: pokemon.id,
+				currentPokemon: {
+					name: pokemon.name,
+					weight: pokemon.weight,
+					sprites: pokemon.sprites.front_default
+				}
 			});
 		}
 	};
@@ -68,7 +83,11 @@ export default class App extends React.Component<Props, State> {
 				<button onClick={this.upState}>up</button>
 
 				<ErrorBoundary>
-					<h1>{this.state.currentPokemon}</h1>
+					<h1 style={{ textTransform: "capitalize" }}>
+						{this.state.currentPokemon.name}
+					</h1>
+					<h2>{this.state.currentPokemon.weight} lb</h2>
+					<img src={this.state.currentPokemon.sprites} alt="sprite" />
 				</ErrorBoundary>
 			</div>
 		);
