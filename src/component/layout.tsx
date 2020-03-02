@@ -58,6 +58,7 @@ export default class Layout extends React.Component<Props, State> {
 				this.updateUrlHistory(newId)
 				const pokemon = await this.fetchPokeData();
 				const pokemonBio = await this.fetchPokeDataSpecies();
+				console.log(pokemon)
 				this.setPokemonInState(pokemon, pokemonBio)
 			}
 		}
@@ -72,11 +73,13 @@ export default class Layout extends React.Component<Props, State> {
 	fetchPokeDataSpecies = async () => {
 		const pokemon = history.location.pathname
 		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemon);
+		console.log(resSpecies)
 		const bioList = resSpecies.data.flavor_text_entries
-		bioList.forEach((bioText: any) => {
+		bioList.some((bioText: any) => {
 			if (bioText !== undefined && bioText !== null) {
 				if (bioText.language.name === 'en') {
-					return bioText;
+					console.log(bioText.flavor_text)
+					return bioText.flavor_text;
 				}
 			}
 		});
