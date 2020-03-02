@@ -33,7 +33,7 @@ export default class Layout extends React.Component<Props, State> {
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
-				bio: pokemonSpecies.flavor_text_entries
+				bio: pokemonSpecies
 			}
 		});
 	}
@@ -53,7 +53,7 @@ export default class Layout extends React.Component<Props, State> {
 					weight: pokemon.weight,
 					height: pokemon.height,
 					types: pokemon.types,
-					bio: pokemonSpecies.flavor_text_entries
+					bio: pokemonSpecies
 				}
 			});
 		}
@@ -73,7 +73,7 @@ export default class Layout extends React.Component<Props, State> {
 					weight: pokemon.weight,
 					height: pokemon.height,
 					types: pokemon.types,
-					bio: pokemonSpecies.flavor_text_entries
+					bio: pokemonSpecies
 				}
 			});
 		}
@@ -81,18 +81,16 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (id: number) => {
 		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + id);
-		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + id);
 		console.log(res.data);
-		console.log(resSpecies.data)
+
 
 		return res.data;
 	};
 
 	fetchPokeDataSpecies = async (id: number) => {
-		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + id);
-		console.log(resSpecies.data)
-
-		return resSpecies.data;
+		const resSpecies: any = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + id);
+		console.log(resSpecies.data.flavor_text_entries[1].flavor_text)
+		return resSpecies.data.flavor_text_entries[1].flavor_text;
 	};
 
 	render() {

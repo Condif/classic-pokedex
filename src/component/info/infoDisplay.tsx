@@ -24,6 +24,7 @@ export default class InfoDisplay extends React.Component<Props> {
 						<p>{type}</p>
 					))}
 				</p>
+					<p>Bio: {this.props.pokemon.bio}</p>
 			</div>
 		);
 	}
