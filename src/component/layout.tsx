@@ -24,6 +24,7 @@ export default class Layout extends React.Component<Props, State> {
 
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData(this.state.ID);
+		const pokemonSpecies = await this.fetchPokeDataSpecies(this.state.ID);
 		this.setState({
 			currentPokemon: {
 				id: pokemon.id,
@@ -31,7 +32,8 @@ export default class Layout extends React.Component<Props, State> {
 				sprites: pokemon.sprites.front_default,
 				weight: pokemon.weight,
 				height: pokemon.height,
-				types: pokemon.types
+				types: pokemon.types,
+				bio: pokemonSpecies.flavor_text_entries
 			}
 		});
 	}
@@ -40,6 +42,7 @@ export default class Layout extends React.Component<Props, State> {
 		if (this.state.ID < 807) {
 			const newId = this.state.ID + 1;
 			const pokemon = await this.fetchPokeData(newId);
+			const pokemonSpecies = await this.fetchPokeDataSpecies(this.state.ID);
 
 			this.setState({
 				ID: pokemon.id,
@@ -49,7 +52,8 @@ export default class Layout extends React.Component<Props, State> {
 					sprites: pokemon.sprites.front_default,
 					weight: pokemon.weight,
 					height: pokemon.height,
-					types: pokemon.types
+					types: pokemon.types,
+					bio: pokemonSpecies.flavor_text_entries
 				}
 			});
 		}
@@ -58,6 +62,7 @@ export default class Layout extends React.Component<Props, State> {
 		if (this.state.ID > 1) {
 			const newId = this.state.ID - 1;
 			const pokemon = await this.fetchPokeData(newId);
+			const pokemonSpecies = await this.fetchPokeDataSpecies(this.state.ID);
 
 			this.setState({
 				ID: pokemon.id,
@@ -67,7 +72,8 @@ export default class Layout extends React.Component<Props, State> {
 					sprites: pokemon.sprites.front_default,
 					weight: pokemon.weight,
 					height: pokemon.height,
-					types: pokemon.types
+					types: pokemon.types,
+					bio: pokemonSpecies.flavor_text_entries
 				}
 			});
 		}
@@ -75,9 +81,18 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (id: number) => {
 		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + id);
+		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + id);
 		console.log(res.data);
+		console.log(resSpecies.data)
 
 		return res.data;
+	};
+
+	fetchPokeDataSpecies = async (id: number) => {
+		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + id);
+		console.log(resSpecies.data)
+
+		return resSpecies.data;
 	};
 
 	render() {
