@@ -7,20 +7,29 @@ export default class InfoNavbar extends React.Component {
 	render() {
 		const navIndex: buttonName[] = [
 			"bio",
-			"type",
-			"region",
-			"generation",
-			"abilities",
+			"moves",
 			"back"
 		];
 
 		return (
 			<div>
-				<h2>Navbar</h2>
+				<h3>Navbar</h3>
+
+				<div style={navStyle}>
 				{navIndex.map(value => (
 					<NavigationButton buttonName={value} />
 				))}
+				</div>
+
 			</div>
 		);
 	}
+}
+
+const navStyle: React.CSSProperties = {
+	display: "flex",
+	justifyContent:"center",
+	alignItems:"center",
+
+	background:"#dc0a2d"
 }
