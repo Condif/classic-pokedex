@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from 'history'
 
 import { Pokemon } from "../types";
@@ -33,7 +33,8 @@ export default class Layout extends React.Component<Props, State> {
 
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData();
-		this.setPokemonInState(pokemon)
+		const pokemonBio = await this.fetchPokeDataSpecies();
+		this.setPokemonInState(pokemon, pokemonBio)
 	}
 
 	upState = async () => {
@@ -44,7 +45,8 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = (id+1).toString();
 				this.updateUrlHistory(newId)
 				const pokemon = await this.fetchPokeData();
-				this.setPokemonInState(pokemon)
+				const pokemonBio = await this.fetchPokeDataSpecies();
+				this.setPokemonInState(pokemon, pokemonBio)
 			}
 		}
 	};
@@ -55,7 +57,8 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = (id-1).toString();
 				this.updateUrlHistory(newId)
 				const pokemon = await this.fetchPokeData();
-				this.setPokemonInState(pokemon)
+				const pokemonBio = await this.fetchPokeDataSpecies();
+				this.setPokemonInState(pokemon, pokemonBio)
 			}
 		}
 	};
@@ -66,14 +69,29 @@ export default class Layout extends React.Component<Props, State> {
 		return res.data;
 	};
 
-	setPokemonInState(pokemon: any) {
+	fetchPokeDataSpecies = async () => {
+		const pokemon = history.location.pathname
+		let pokeFlavor: string = '';
+		const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemon);
+		const bioList = resSpecies.data.flavor_text_entries
+		bioList.some((bioText: any) => {
+			if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
+				pokeFlavor = bioText.flavor_text	
+			}
+			return pokeFlavor;
+		});
+		return pokeFlavor;
+	};
+
+	setPokemonInState(pokemon: any, pokemonBio: any) {
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
 				name: pokemon.name,
 				weight: pokemon.weight,
 				sprites: pokemon.sprites.front_default,
-				id: pokemon.id
+				id: pokemon.id,
+				pokemonBio: pokemonBio
 			}
 		})
 	}

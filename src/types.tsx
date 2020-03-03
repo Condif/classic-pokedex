@@ -11,5 +11,8 @@ export type Pokemon = {
     moves?: {
         name: string,
         type: string
-    }
+    },
+    pokemonBio?: string,
+    
+    
 }
