@@ -71,9 +71,11 @@ export default class Layout extends React.Component<Props, State> {
 			lastPokemon: pokemon.id,
 			currentPokemon: {
 				name: pokemon.name,
-				weight: pokemon.weight,
+				id: pokemon.id,	
 				sprites: pokemon.sprites.front_default,
-				id: pokemon.id
+				weight: pokemon.weight,
+				height: pokemon.height,
+				types: pokemon.types
 			}
 		})
 	}

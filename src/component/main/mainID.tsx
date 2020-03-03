@@ -5,8 +5,6 @@ interface Props {
 }
 export default class MainID extends React.Component<Props> {
 	render() {
-		console.log(this.props.id);
-
 		return (
 			<div style={IdStyle}>
 				<p style={absoluteText}>ID</p>

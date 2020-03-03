@@ -67,6 +67,8 @@ export default class InfoDisplay extends React.Component<Props> {
 	render() {
 		const types: string[] = [];
 
+		console.log(this.props.pokemon);
+
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
@@ -75,8 +77,9 @@ export default class InfoDisplay extends React.Component<Props> {
 				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
 				<p>height: {this.props.pokemon.height}</p>
 				<p>weight: {this.props.pokemon.weight}</p>
+
 				<p>Type:</p>
-				<p>{types.map(type => this.typeColor(type))}</p>
+				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
 			</div>
 		);
 	}
@@ -95,6 +98,10 @@ const nameStyle: React.CSSProperties = {
 
 	textTransform: "capitalize",
 	fontSize: "2rem"
+};
+const typeStyle: React.CSSProperties = {
+	textTransform: "uppercase",
+	fontSize:"bold"
 };
 
 const normal: React.CSSProperties = {
