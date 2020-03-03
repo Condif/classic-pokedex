@@ -5,12 +5,10 @@ interface Props {
 }
 export default class MainID extends React.Component<Props> {
 	render() {
-		console.log(this.props.id);
-
 		return (
 			<div style={IdStyle}>
 				<p style={absoluteText}>ID</p>
-				<p style={idText}>{this.props.id}</p>
+				<p style={idText}>0{this.props.id}</p>
 			</div>
 		);
 	}
@@ -21,8 +19,8 @@ const IdStyle: React.CSSProperties = {
 
 	gridArea: "ID",
 
-	width: "50%",
-	height: "20%",
+	width: "40%",
+	height: "15%",
 
 	display: "flex",
 	justifyContent: "center",
@@ -33,7 +31,7 @@ const IdStyle: React.CSSProperties = {
 };
 
 const idText: React.CSSProperties = {
-	fontSize: "4rem",
+	fontSize: "5rem",
 };
 
 const absoluteText: React.CSSProperties = {

@@ -6,6 +6,7 @@ export default class MainNavpad extends React.Component {
 			<div style={navpadStyle}>
 				<button style={{ ...u, ...btn }}></button>
 				<button style={{ ...r, ...btn }}></button>
+				<button style={{ ...btn, ...m }}></button>
 				<button style={{ ...d, ...btn }}></button>
 				<button style={{ ...l, ...btn }}></button>
 			</div>
@@ -14,28 +15,42 @@ export default class MainNavpad extends React.Component {
 }
 
 const navpadStyle: React.CSSProperties = {
-	width: "5rem",
-	height: "5rem",
+	width: "7rem",
+	height: "7rem",
 
 	display: "grid",
 	gridTemplateColumns: "1fr 1fr 1fr",
 	gridTemplateRows: "1fr 1fr 1fr",
-	gridTemplateAreas: "'. u .' 'l . r' '. d .'"
+	gridTemplateAreas: "'. u .' 'l m r' '. d .'"
 };
 
 const u: React.CSSProperties = {
-	gridArea: "u"
+	gridArea: "u",
+
+	borderRadius: ".5rem .5rem 0 0"
 };
 const r: React.CSSProperties = {
-	gridArea: "r"
+	gridArea: "r",
+
+	borderRadius: " 0 .5rem .5rem 0"
 };
 const d: React.CSSProperties = {
-	gridArea: "d"
+	gridArea: "d",
+
+	borderRadius: " 0 0 .5rem .5rem "
 };
 const l: React.CSSProperties = {
-	gridArea: "l"
+	gridArea: "l",
+
+	borderRadius: ".5rem 0 0 .5rem"
+};
+const m: React.CSSProperties = {
+	gridArea: "m",
+	// borderRadius:"50%",
 };
 
 const btn: React.CSSProperties = {
-	background: "#555"
+	outline: "none",
+	background: "#555",
+	border: ".5rem solid #333"
 };
