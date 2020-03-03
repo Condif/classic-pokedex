@@ -76,10 +76,14 @@ export default class InfoDisplay extends React.Component<Props> {
 			<div style={displayStyle}>
 				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
 				<p>height: {this.props.pokemon.height}</p>
+				
 				<p>weight: {this.props.pokemon.weight}</p>
 
 				<p>Type:</p>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
+
+				<p>Bio: {this.props.pokemon.pokemonBio}</p>
+				
 			</div>
 		);
 	}
