@@ -34,8 +34,8 @@ export default class Layout extends React.Component<Props, State> {
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 		const pokemonBio = await this.fetchPokeDataSpecies();
-		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves)
+		// const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+		this.setPokemonInState(pokemon, pokemonBio, null)
 	}
 
 	upState = async () => {
@@ -45,10 +45,10 @@ export default class Layout extends React.Component<Props, State> {
 				
 				const newId = "/" + (id+1).toString();
 				const pokemon = await this.fetchPokeData(newId);
-				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+				// const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
-				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves)
+				this.setPokemonInState(pokemon, pokemonBio, null)
 			}
 		}
 	};
@@ -60,11 +60,23 @@ export default class Layout extends React.Component<Props, State> {
 				const pokemon = await this.fetchPokeData(newId);
 				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
-				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves)
+				// const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+				this.setPokemonInState(pokemon, pokemonBio, null)
 			}
 		}
 	};
+
+	fetchMovesState = async (pokemon: any) => {
+		const id = this.state.currentPokemon.id
+		if (id !== undefined) {
+			if (id > 1) {
+				const newId = "/" + (id).toString();
+				const pokemon = await this.fetchPokeData(newId);
+				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+				this.setPokemonInState(pokemon, null, pokemonMoves)
+			}
+		}
+	}
 
 	fetchPokeData = async (newId: string) => {	
 		const pokemon = newId
@@ -85,11 +97,12 @@ export default class Layout extends React.Component<Props, State> {
 		});
 		return pokeFlavor;
 	};
+	
 	fetchPokeDataMoves = async (pokemon: any) => {
-		const listOfMoves: string[] = pokemon.moves
 		let listOfMovesUrls: string[] = []
+		let pokemonMovesList: [] = pokemon.moves
 		
-		for (let i: number = 0; i < listOfMoves.length; i++) {
+		for (let i: number = 0; i < pokemonMovesList.length; i++) {
 			listOfMovesUrls.push(pokemon.moves[i].move.url)
 		}
 		let pokemonMoves: string [] = []
@@ -97,6 +110,7 @@ export default class Layout extends React.Component<Props, State> {
 			for(let index: number = 0; index < listOfMovesUrls.length; index++) {
 				if(listOfMovesUrls[index].includes("https://pokeapi.co/api/v2/move/" + i + "/")) {
 					pokemonMoves = await axios.get("https://pokeapi.co/api/v2/move/" + i + "/")
+					console.log(pokemonMoves)
 				}
 
 			}
@@ -132,6 +146,7 @@ export default class Layout extends React.Component<Props, State> {
 				<div style={buttStyle}>
 					<button onClick={this.downState}>DOWN</button>
 					<button onClick={this.upState}>UP</button>
+					<button onClick={this.fetchMovesState}>fetchmoves</button>
 				</div>
 				<div style={layoutStyle}>
 					<MainDex pokemon={this.state.currentPokemon} />
