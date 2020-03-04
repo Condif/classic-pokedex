@@ -87,12 +87,19 @@ export default class Layout extends React.Component<Props, State> {
 	};
 	fetchPokeDataMoves = async (pokemon: any) => {
 		const listOfMoves: string[] = [pokemon.moves]
+		let listOfMoveUrls: string[] = []
+		
+		for (let i: number = 0; i < listOfMoves.length + 1; i++) {
+			listOfMoveUrls = pokemon.moves[i].move.url
+			console.log(listOfMoveUrls)
+		}
 		let pokemonMoves: string [] = []
 		for (let i: number = 0; i < 100; i++) {
-			if(listOfMoves.includes("https://pokeapi.co/api/v2/move/" + i)) {
+			if(listOfMoveUrls.includes("https://pokeapi.co/api/v2/move/" + i)) {
 				pokemonMoves = await axios.get("https://pokeapi.co/api/v2/move/" + i)
 			}
 		}
+		console.log(pokemonMoves);
 		return pokemonMoves
 	};
 
