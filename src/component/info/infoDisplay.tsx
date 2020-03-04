@@ -66,12 +66,17 @@ export default class InfoDisplay extends React.Component<Props> {
 
 	render() {
 		const types: string[] = [];
-
+		const moves: string[] = [];
 		console.log(this.props.pokemon);
 
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
+		this.props.pokemon.moves?.forEach(move => {
+			types.push(move.move.name);
+		});
+		
+		
 		return (
 			<div style={displayStyle}>
 				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
@@ -84,6 +89,8 @@ export default class InfoDisplay extends React.Component<Props> {
 
 				<p>Bio: {this.props.pokemon.pokemonBio}</p>
 				
+				<p>Moves:</p>
+				<div>{moves}</div>
 			</div>
 		);
 	}

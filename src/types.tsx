@@ -8,10 +8,7 @@ export type Pokemon = {
     weight?: string,
     types?: any[],
     abilities?: string[],
-    moves?: {
-        name: string,
-        type: string
-    },
+    moves?: any[],
     pokemonBio?: string,
     
     
