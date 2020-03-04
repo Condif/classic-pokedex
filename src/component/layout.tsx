@@ -73,6 +73,15 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = "/" + (id).toString();
 				const pokemon = await this.fetchPokeData(newId);
 				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+				// for (let i: number = 0; i < pokemonMoves.length; i++) {
+				// 	movesFlavor.push(pokemonMoves[i])
+				// }
+				// pokemonMoves.some((bioText: any) => {
+				// 	if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
+				// 		pokeFlavor = bioText.flavor_text	
+				// 	}
+				// 	return pokeFlavor;
+				// });
 				this.setPokemonInState(pokemon, null, pokemonMoves)
 			}
 		}
@@ -101,25 +110,35 @@ export default class Layout extends React.Component<Props, State> {
 	fetchPokeDataMoves = async (pokemon: any) => {
 		let listOfMovesUrls: string[] = []
 		let pokemonMovesList: [] = pokemon.moves
+		let engMoveFlavor: string [] = [];
+		
 		
 		for (let i: number = 0; i < pokemonMovesList.length; i++) {
 			listOfMovesUrls.push(pokemon.moves[i].move.url)
 		}
-		let pokemonMoves: string [] = []
 		for (let i: number = 0; i < 746; i++) {
 			for(let index: number = 0; index < listOfMovesUrls.length; index++) {
 				if(listOfMovesUrls[index].includes("https://pokeapi.co/api/v2/move/" + i + "/")) {
-					pokemonMoves.push(await axios.get("https://pokeapi.co/api/v2/move/" + i + "/"))
+					const getPokemonMoves = await axios.get("https://pokeapi.co/api/v2/move/" + i + "/")
+					const dataPokemonMoves = getPokemonMoves.data
+					engMoveFlavor.push(dataPokemonMoves.flavor_text_entries[2].flavor_text)
 					
 				}
 
 			}
 		}
-		console.log(pokemonMoves)
-		return pokemonMoves
+		// engMoveFlavor.some((moveFlavor: any) => {
+		// 	if (moveFlavor !== undefined && moveFlavor !== null && moveFlavor.language.name === 'en') {
+		// 			engMoveFlavor.push(moveFlavor)	
+		// 		}
+		// 		console.log(moveFlavor)
+		// 		return moveFlavor;
+		// 	});
+		// console.log(engMoveFlavor)
+		return engMoveFlavor;
 	};
 
-	setPokemonInState(pokemon: any, pokemonBio: any, pokemonMoves: any) {
+	setPokemonInState(pokemon: any, pokemonBio: any, pokemonMovesFlavorText: any) {
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
@@ -131,7 +150,8 @@ export default class Layout extends React.Component<Props, State> {
 				height: pokemon.height,
 				types: pokemon.types,
 				pokemonBio: pokemonBio,
-				moves: pokemon.moves
+				moves: pokemon.moves,
+				movesFlavorText: pokemonMovesFlavorText
 
 			}
 		})

@@ -68,6 +68,7 @@ export default class InfoDisplay extends React.Component<Props> {
 		const types: string[] = [];
 		const moves: string[] = [];
 		console.log(this.props.pokemon);
+		console.log(this.props.pokemon.movesFlavorText)
 
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
