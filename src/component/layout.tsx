@@ -109,12 +109,13 @@ export default class Layout extends React.Component<Props, State> {
 		for (let i: number = 0; i < 746; i++) {
 			for(let index: number = 0; index < listOfMovesUrls.length; index++) {
 				if(listOfMovesUrls[index].includes("https://pokeapi.co/api/v2/move/" + i + "/")) {
-					pokemonMoves = await axios.get("https://pokeapi.co/api/v2/move/" + i + "/")
-					console.log(pokemonMoves)
+					pokemonMoves.push(await axios.get("https://pokeapi.co/api/v2/move/" + i + "/"))
+					
 				}
 
 			}
 		}
+		console.log(pokemonMoves)
 		return pokemonMoves
 	};
 
