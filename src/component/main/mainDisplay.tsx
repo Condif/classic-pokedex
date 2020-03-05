@@ -22,6 +22,8 @@ export default class MainDisplay extends React.Component<Props> {
 const outerDisplayStyle: React.CSSProperties = {
 	position:"relative",
 
+	margin:"5%",
+
 	width: "80%",
 	maxWidth:"37rem",
 	minWidth:"10rem",
@@ -33,7 +35,6 @@ const outerDisplayStyle: React.CSSProperties = {
 	padding:"1.5rem",
 
 	background: "#e7e7e7",
-	// border: "2rem solid #e7e7e7",
 	borderRadius: "1rem"
 };
 
