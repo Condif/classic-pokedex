@@ -1,13 +1,20 @@
 import * as React from 'react'
 import axios from 'axios'
 
+interface PokeData {
+    id: number
+    name: string
+    url: string
+}
+
 interface Props {
     placeHolder: string
 }
 
 interface State {
     showList: boolean
-    pokemonList: Array<any>
+    showPokemon: Array<any>
+    pokemonList: Array<PokeData>
 }
 
 export default class SearchBar extends React.Component<Props, State> {
@@ -15,7 +22,12 @@ export default class SearchBar extends React.Component<Props, State> {
         super(props)
         this.state = {
             showList: false,
-            pokemonList: ['']
+            showPokemon: [],
+            pokemonList: [{
+                id: 0,
+                name: '',
+                url: ''
+            }]
         }
     }
 
@@ -27,9 +39,11 @@ export default class SearchBar extends React.Component<Props, State> {
     setPokemonInState(pokemon: Array<any>) {
         const generatePokemon = pokemon.map((val, index) => {
             index++
-            return (
-            <li key={val.name}>ID: {index}. {val.name}</li>
-            )
+            return ({
+                id: index,
+                name: val.name,
+                url: val.url,
+            })
         })   
         this.setState({
             pokemonList: generatePokemon
@@ -41,7 +55,7 @@ export default class SearchBar extends React.Component<Props, State> {
         return (await result).data.results    
     }
 
-    handleOnChange = (e: React.FormEvent) => {
+    handleOnChange = async(e: React.FormEvent) => {
         let target = e.target as HTMLInputElement
         console.log(target.value);
         if (target.value === '') {
@@ -49,18 +63,24 @@ export default class SearchBar extends React.Component<Props, State> {
                 showList: false
             })
         } else {
-            this.checkMatchingPokemonNames(target.value)
+            const validPokemon = await this.checkMatchingPokemonNames(target.value)
             this.setState({
-                showList: true
+                showList: true,
+                showPokemon: validPokemon
             })
+            console.log(this.state.showPokemon);
+            
         }
     }
 
-    checkMatchingPokemonNames(value: string) {
+    async checkMatchingPokemonNames(value: string) {
+        let validPokemon: Array<PokeData> = []
         this.state.pokemonList.forEach(pokemon => {
-            console.log(pokemon);
-            
+            if (pokemon.name.includes(value)) {
+                validPokemon.push(pokemon)              
+            }
         });
+        return validPokemon
     }
 
     render() {
@@ -69,7 +89,7 @@ export default class SearchBar extends React.Component<Props, State> {
                 <div>
                     <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange} />
                     <ul>
-                        {this.state.pokemonList}
+                        <p>Show list</p>
                     </ul>
                 </div>
             )
