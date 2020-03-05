@@ -13,7 +13,7 @@ interface Props {
 
 interface State {
     showList: boolean
-    showPokemon: Array<any>
+    showPokemon?: Array<any>
     pokemonList: Array<PokeData>
 }
 
@@ -22,7 +22,6 @@ export default class SearchBar extends React.Component<Props, State> {
         super(props)
         this.state = {
             showList: false,
-            showPokemon: [],
             pokemonList: [{
                 id: 0,
                 name: '',
@@ -57,19 +56,17 @@ export default class SearchBar extends React.Component<Props, State> {
 
     handleOnChange = async(e: React.FormEvent) => {
         let target = e.target as HTMLInputElement
-        console.log(target.value);
         if (target.value === '') {
             this.setState({
                 showList: false
             })
         } else {
             const validPokemon = await this.checkMatchingPokemonNames(target.value)
+            const remappedPokemon = await this.remapPokemon(validPokemon)
             this.setState({
                 showList: true,
-                showPokemon: validPokemon
-            })
-            console.log(this.state.showPokemon);
-            
+                showPokemon: remappedPokemon
+            })          
         }
     }
 
@@ -78,27 +75,28 @@ export default class SearchBar extends React.Component<Props, State> {
         this.state.pokemonList.forEach(pokemon => {
             if (pokemon.name.includes(value)) {
                 validPokemon.push(pokemon)              
+            } else if (pokemon.id.toString() === value) {
+                validPokemon.push(pokemon)
             }
         });
         return validPokemon
     }
 
+    async remapPokemon(pokemon:Array<PokeData>) {
+        return pokemon.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
+    }
+
     render() {
-        if (this.state.showList) {
-            return (
-                <div>
-                    <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange} />
+        return (
+            <div>
+                <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+                {(this.state.showList) ? 
                     <ul>
-                        <p>Show list</p>
+                        {this.state.showPokemon}
                     </ul>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange} />
-                </div>
-            )
-        }
+                    : null
+                }
+            </div>
+        )
     }
 }
