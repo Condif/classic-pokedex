@@ -35,7 +35,7 @@ export default class Layout extends React.Component<Props, State> {
 	}
 
 	async componentDidMount() {
-		const pokemon = await this.fetchPokeData();
+		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 		const pokemonBio = await this.fetchPokeDataSpecies();
 		this.setPokemonInState(pokemon, pokemonBio)
 	}
@@ -45,9 +45,9 @@ export default class Layout extends React.Component<Props, State> {
 		if (id !== undefined) {			
 			if (id < 807) {
 				
-				const newId = (id+1).toString();
-				this.updateUrlHistory(newId)
-				const pokemon = await this.fetchPokeData();
+				const newId = "/" + (id+1).toString();
+				const pokemon = await this.fetchPokeData(newId);
+				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
 				this.setPokemonInState(pokemon, pokemonBio)
 			}
@@ -57,17 +57,17 @@ export default class Layout extends React.Component<Props, State> {
 		const id = this.state.currentPokemon.id
 		if (id !== undefined) {
 			if (id > 1) {
-				const newId = (id-1).toString();
-				this.updateUrlHistory(newId)
-				const pokemon = await this.fetchPokeData();
+				const newId = "/" + (id-1).toString();
+				const pokemon = await this.fetchPokeData(newId);
+				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
 				this.setPokemonInState(pokemon, pokemonBio)
 			}
 		}
 	};
 
-	fetchPokeData = async () => {	
-		const pokemon = history.location.pathname
+	fetchPokeData = async (newId: string) => {	
+		const pokemon = newId
 		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
 		return res.data;
 	};
