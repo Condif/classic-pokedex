@@ -3,7 +3,7 @@ import * as React from "react";
 import MainDisplay from "./mainDisplay";
 import MainID from "./mainID";
 import MainNavpad from "./mainNavpad";
-import { Pokemon } from "../../types";
+import { Pokemon } from "../../../types";
 
 interface Props {
 	pokemon: Pokemon;
@@ -13,7 +13,12 @@ export default class MainDex extends React.Component<Props> {
 	render() {
 		return (
 			<div style={mainStyle}>
-				<MainDisplay sprite={this.props.pokemon.sprites} />
+				<MainDisplay
+					sprite={this.props.pokemon.sprites}
+					name={this.props.pokemon.name}
+					weight={this.props.pokemon.weight}
+					height={this.props.pokemon.height}
+				/>
 
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
@@ -28,7 +33,7 @@ const mainStyle: React.CSSProperties = {
 	display: "flex",
 	justifyContent: "space-evenly",
 	alignItems: "center",
-    flexWrap: "wrap",
-    
-    border: ".5rem solid #e7e7e7 "
+	flexWrap: "wrap"
+
+	// border: ".5rem solid #e7e7e7 "
 };

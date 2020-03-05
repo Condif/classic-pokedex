@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pokemon } from "../../types";
+import { Pokemon } from "../../../types";
 import Abilities from "./infoAbilities";
 
 interface Props {
@@ -54,29 +54,18 @@ export default class InfoDisplay extends React.Component<Props> {
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
-
-		// this.props.pokemon.abilities?.forEach(ability => {
-		// 	abilities.push(ability.ability.name);
-		// });
-
 		return (
 			<div style={displayStyle}>
-				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
+				<div style={bioWrapperStyle}>
+					<h4>Bio</h4>
+					<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
+				</div>
 
-				<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
-
-				<div>
+				<div style={abilityWrapperStyle}>
 					<h4>Abilities</h4>
 					{this.props.pokemon.abilities?.map(ability => (
 						<Abilities url={ability.ability.url} />
 					))}
-				</div>
-
-				<div style={whWrapperStyle}>
-					<p style={whStyle}>height</p>
-					<p style={whValueStyle}>{this.props.pokemon.height / 10}&nbsp;m</p>
-					<p style={whStyle}>weight</p>
-					<p style={whValueStyle}>{this.props.pokemon.weight / 10}&nbsp;kg</p>
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
 			</div>
@@ -89,8 +78,9 @@ const displayStyle: React.CSSProperties = {
 
 	maxWidth: "35rem",
 
-	padding: "0 1rem",
-	marginBottom: "2rem",
+	padding: "1rem",
+	margin: "2rem",
+	marginTop: "6rem",
 
 	background: "#272727",
 	color: "#e7e7e7",
@@ -99,54 +89,27 @@ const displayStyle: React.CSSProperties = {
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between"
-	// alignItems: "center",
-};
-const nameStyle: React.CSSProperties = {
-	width: "100%",
-
-	color: "#e7e7e7",
-
-	padding: "1rem .5rem 0 .5rem",
-	borderBottom: ".2rem solid #e7e7e7",
-
-	textTransform: "capitalize",
-	fontSize: "2rem"
 };
 
+const bioWrapperStyle: React.CSSProperties = {
+	height: "40%",
+	
+	padding: ".8rem",
+	
+	background: "#333",
+	border: ".3rem double #272727"
+
+};
 const bioStyle: React.CSSProperties = {
-	// height: "50%",
+};
+
+const abilityWrapperStyle: React.CSSProperties = {
+	height: "50%",
 
 	padding: ".8rem",
-	margin: ".2rem",
 
 	background: "#333",
 	border: ".3rem double #272727"
-};
-
-const whWrapperStyle: React.CSSProperties = {
-	padding: "1rem 2rem",
-
-	fontSize: "1.4rem",
-
-	borderBottom: ".2rem solid #333",
-
-	display: "flex",
-	flexWrap: "wrap",
-	justifyContent: "space-evenly",
-	alignItems: "center"
-};
-const whStyle: React.CSSProperties = {
-	width: "40%",
-	margin: ".2rem",
-
-	borderRight: ".2rem solid #e7e7e7",
-	textTransform: "capitalize"
-};
-const whValueStyle: React.CSSProperties = {
-	width: "40%",
-	margin: ".3rem",
-	textAlign: "right",
-	borderBottom: ".1rem solid #e7e7e7"
 };
 
 // -- -- -- -- -- types
@@ -163,7 +126,6 @@ const typeStyle: React.CSSProperties = {
 	display: "flex",
 	justifyContent: "space-evenly"
 };
-
 const typeTextStyle: React.CSSProperties = {
 	padding: "0.5rem 1rem",
 	color: "#eee",
