@@ -7,7 +7,8 @@ import { Pokemon } from "../../types";
 import SearchBar from "./searchBar";
 
 interface Props {
-	pokemon: Pokemon;
+	pokemon: Pokemon,
+	searchClick: (searchReasult: string) => void;
 }
 
 export default class MainDex extends React.Component<Props> {
@@ -18,7 +19,7 @@ export default class MainDex extends React.Component<Props> {
 
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
-				<SearchBar placeHolder="Search for a pokemon"/>
+				<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon"/>
 			</div>
 		);
 	}
