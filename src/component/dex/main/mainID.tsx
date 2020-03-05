@@ -30,7 +30,8 @@ const IdStyle: React.CSSProperties = {
 	alignItems: "center",
 	fontWeight: 800,
 
-	background: "#52ae5f"
+	background: "#52ae5f",
+	backgroundImage:'url("https://www.transparenttextures.com/patterns/graphy.png")'
 };
 
 const idText: React.CSSProperties = {
