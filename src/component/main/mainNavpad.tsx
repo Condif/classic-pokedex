@@ -15,8 +15,8 @@ export default class MainNavpad extends React.Component {
 }
 
 const navpadStyle: React.CSSProperties = {
-	width: "7rem",
-	height: "7rem",
+	width: "8rem",
+	height: "8rem",
 
 	display: "grid",
 	gridTemplateColumns: "1fr 1fr 1fr",

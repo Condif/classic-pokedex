@@ -27,7 +27,10 @@ export default class Layout extends React.Component<Props, State> {
 		
 		this.state = {
 			lastPokemon: lastUrl,
-			currentPokemon: {}
+			currentPokemon: {
+				height: 0,
+				weight: 0
+			}
 		}
 	}
 
@@ -90,11 +93,11 @@ export default class Layout extends React.Component<Props, State> {
 				name: pokemon.name,
 				id: pokemon.id,	
 				sprites: pokemon.sprites.front_default,
-
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
-				pokemonBio: pokemonBio
+				abilities: pokemon.abilities,
+				pokemonBio: pokemonBio,
 
 			}
 		})
