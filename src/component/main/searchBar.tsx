@@ -1,10 +1,16 @@
 import * as React from 'react'
 import axios from 'axios'
+import SearchResults from './searchResults'
 
 interface PokeData {
     id: number
     name: string
     url: string
+}
+
+interface Pokebundle {
+    pokeName: Array<PokeData>
+    pokeID: Array<PokeData>
 }
 
 interface Props {
@@ -13,7 +19,7 @@ interface Props {
 
 interface State {
     showList: boolean
-    showPokemon?: Array<any>
+    showPokemon: {pokeName: any, pokeID: any}
     pokemonList: Array<PokeData>
 }
 
@@ -22,6 +28,7 @@ export default class SearchBar extends React.Component<Props, State> {
         super(props)
         this.state = {
             showList: false,
+            showPokemon: {pokeName: [], pokeID: []},
             pokemonList: [{
                 id: 0,
                 name: '',
@@ -63,6 +70,8 @@ export default class SearchBar extends React.Component<Props, State> {
         } else {
             const validPokemon = await this.checkMatchingPokemonNames(target.value)
             const remappedPokemon = await this.remapPokemon(validPokemon)
+            console.log(remappedPokemon);
+            
             this.setState({
                 showList: true,
                 showPokemon: remappedPokemon
@@ -71,19 +80,24 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 
     async checkMatchingPokemonNames(value: string) {
-        let validPokemon: Array<PokeData> = []
+        let pokeName: Array<PokeData> = []
+        let pokeID: Array<PokeData> = []
         this.state.pokemonList.forEach(pokemon => {
             if (pokemon.name.includes(value)) {
-                validPokemon.push(pokemon)              
-            } else if (pokemon.id.toString() === value) {
-                validPokemon.push(pokemon)
+                pokeName.push(pokemon)              
+            } 
+            else if (pokemon.id.toString() === value) {
+                pokeID.push(pokemon)
             }
         });
-        return validPokemon
+        return {pokeName, pokeID}
     }
 
-    async remapPokemon(pokemon:Array<PokeData>) {
-        return pokemon.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
+    async remapPokemon(pokemon: Pokebundle) {
+        const {pokeName: name, pokeID: id} = pokemon
+        const pokeName = name.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
+        const pokeID = id.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
+        return {pokeName, pokeID}
     }
 
     render() {
@@ -91,10 +105,27 @@ export default class SearchBar extends React.Component<Props, State> {
             <div>
                 <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
-                    <ul>
-                        {this.state.showPokemon}
-                    </ul>
-                    : null
+                    <div> 
+                        {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
+                            <h1>No results</h1>
+                            : null
+                        }
+                        <div>
+                            {(this.state.showPokemon.pokeName.length > 0) ? 
+                            <SearchResults title="Name: " value={this.state.showPokemon.pokeName.length}>
+                                {this.state.showPokemon.pokeName}
+                            </SearchResults>
+                            : null
+                            }
+                            {(this.state.showPokemon.pokeID.length > 0) ?
+                            <SearchResults title="ID: ">
+                                {this.state.showPokemon.pokeID}
+                            </SearchResults>
+                            : null
+                            }
+                        </div>
+                    </div>
+                : null
                 }
             </div>
         )
