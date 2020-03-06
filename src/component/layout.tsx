@@ -35,17 +35,15 @@ export default class Layout extends React.Component<Props, State> {
 		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 		const pokemonBio = await this.fetchPokeDataSpecies();
 		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves)
+		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 	}
 
 	upState = async () => {
 		const id = this.state.currentPokemon.id
 		if (id !== undefined) {			
 			if (id < 807) {
-				
 				const newId = "/" + (id+1).toString();
 				const pokemon = await this.fetchPokeData(newId);
-				// const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
 				this.setPokemonInState(pokemon, pokemonBio, null)
@@ -60,7 +58,6 @@ export default class Layout extends React.Component<Props, State> {
 				const pokemon = await this.fetchPokeData(newId);
 				this.updateUrlHistory(pokemon.name)
 				const pokemonBio = await this.fetchPokeDataSpecies();
-				// const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 				this.setPokemonInState(pokemon, pokemonBio, null)
 			}
 		}
@@ -73,15 +70,6 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = "/" + (id).toString();
 				const pokemon = await this.fetchPokeData(newId);
 				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-				// for (let i: number = 0; i < pokemonMoves.length; i++) {
-				// 	movesFlavor.push(pokemonMoves[i])
-				// }
-				// pokemonMoves.some((bioText: any) => {
-				// 	if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
-				// 		pokeFlavor = bioText.flavor_text	
-				// 	}
-				// 	return pokeFlavor;
-				// });
 				this.setPokemonInState(pokemon, null, pokemonMoves)
 			}
 		}
