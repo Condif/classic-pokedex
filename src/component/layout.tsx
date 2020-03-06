@@ -64,7 +64,7 @@ export default class Layout extends React.Component<Props, State> {
 		const pokemon = await this.fetchPokeData(newId);
 		this.updateUrlHistory(pokemon.name)
 		const pokemonBio = await this.fetchPokeDataSpecies();
-		this.setPokemonInState(pokemon, pokemonBio)
+		this.setPokemonInState(pokemon, pokemonBio, null)
 	}
 
 	fetchMovesState = async (pokemon: any) => {

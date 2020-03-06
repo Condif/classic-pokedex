@@ -49,10 +49,6 @@ export default class InfoDisplay extends React.Component<Props> {
 
 	render() {
 		const types: string[] = [];
-		// const abilities: string[] = [];
-
-	render() {
-		const types: string[] = [];
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
@@ -81,7 +77,6 @@ export default class InfoDisplay extends React.Component<Props> {
 					<p style={whValueStyle}>{this.props.pokemon.weight / 10}&nbsp;kg</p>
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
-				<p>Bio: {this.props.pokemon.pokemonBio}</p>
 			</div>
 		);
 	}
