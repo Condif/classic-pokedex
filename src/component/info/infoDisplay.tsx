@@ -64,20 +64,32 @@ export default class InfoDisplay extends React.Component<Props> {
 		}
 	};
 
+
+
 	render() {
 		const types: string[] = [];
 		const moves: string[] = [];
-		console.log(this.props.pokemon);
-		console.log(this.props.pokemon.movesFlavorText)
+		const flavorText: string [] = [];
+		let movesIndex: number = 0;
 
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
 		this.props.pokemon.moves?.forEach(move => {
-			types.push(move.move.name);
+			moves.push(move.move.name);
+		});
+
+		this.props.pokemon.movesFlavorText?.forEach(text => {
+			flavorText.push(text);
 		});
 		
+		function createFlavorText (i: number) {
+				movesIndex ++;
+				return  flavorText[i];
+		}
+
 		
+
 		return (
 			<div style={displayStyle}>
 				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
@@ -91,7 +103,18 @@ export default class InfoDisplay extends React.Component<Props> {
 				<p>Bio: {this.props.pokemon.pokemonBio}</p>
 				
 				<p>Moves:</p>
-				<div>{moves}</div>
+
+				<div>{moves.map(movesName => {
+						
+						return (<ul style={moveUlStyle}>
+									<li style ={nameListStyle}>{movesName}
+										<li style ={flavorTextStyle}>
+											{createFlavorText(movesIndex)}
+										</li>
+									</li>
+								</ul>
+				)})}
+				</div>
 			</div>
 		);
 	}
@@ -170,3 +193,16 @@ const steel: React.CSSProperties = {
 const fairy: React.CSSProperties = {
 	color: "#d685ad"
 };
+
+const moveUlStyle: React.CSSProperties = {
+	listStyleType: "none",
+}
+
+const nameListStyle: React.CSSProperties = {
+	fontWeight: "bold",
+	textTransform: "uppercase",
+}
+const flavorTextStyle: React.CSSProperties = {
+	fontWeight: "normal",
+	textTransform: "none",
+}

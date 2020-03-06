@@ -127,15 +127,6 @@ export default class Layout extends React.Component<Props, State> {
 
 			}
 		}
-		// engMoveFlavor.some((moveFlavor: any) => {
-		// 	if (moveFlavor !== undefined && moveFlavor !== null && moveFlavor.language.name === 'en') {
-		// 			engMoveFlavor.push(moveFlavor)	
-		// 		}
-		// 		console.log(moveFlavor)
-		// 		return moveFlavor;
-		// 	});
-		// console.log(engMoveFlavor)
-		console.log(listOfMovesUrls)
 		return engMoveFlavor;
 	};
 
