@@ -7,11 +7,8 @@ export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
 			<div style={{ ...outerDisplayStyle, ...center }}>
-				{/* <div style={dotWrapper}>
-					<div style={dot}></div>
-					<div style={dot}></div>
-				</div> */}
 				<div style={innerDisplayStyle}>
+					{this.props.children}
 					<img src={this.props.sprite} alt="sprite" style={imageStyle} />
 				</div>
 			</div>
@@ -46,6 +43,7 @@ const innerDisplayStyle: React.CSSProperties = {
 	borderRadius: "1rem",
 	
 	display: "flex",
+	flexDirection: "column",
 	justifyContent: "center",
 	alignItems: "center",
 	overflow:"hidden"
