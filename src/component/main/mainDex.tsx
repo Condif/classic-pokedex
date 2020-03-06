@@ -16,7 +16,7 @@ export default class MainDex extends React.Component<Props> {
 		return (
 			<div style={mainStyle}>
 				<MainDisplay sprite={this.props.pokemon.sprites}>
-					<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon"/>
+					<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon..."/>
 				</MainDisplay>
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
