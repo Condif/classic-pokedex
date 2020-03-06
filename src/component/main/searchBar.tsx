@@ -98,8 +98,8 @@ export default class SearchBar extends React.Component<Props, State> {
 
     async remapPokemon(pokemon: Pokebundle) {
         const {pokeName: name, pokeID: id} = pokemon
-        const pokeName = name.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
-        const pokeID = id.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
+        const pokeName = name.map((val) => <li key={val.name} style={resultListItem} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
+        const pokeID = id.map((val) => <li key={val.name} style={resultListItem} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
         return {pokeName, pokeID}
     }
 
@@ -114,26 +114,26 @@ export default class SearchBar extends React.Component<Props, State> {
             <div style={searchBarContainer}>
                 <input type="text" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
-                    <div style={searchBarResults}> 
+                    <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
                             <h1>No results</h1>
                             : null
                         }
                         <div style={searchBarResultList}>
                             {(this.state.showPokemon.pokeName.length > 0) ? 
-                            <SearchResults title="Name: " value={this.state.showPokemon.pokeName.length}>
+                            <SearchResults title="matching name..." value={this.state.showPokemon.pokeName.length}>
                                 {this.state.showPokemon.pokeName}
                             </SearchResults>
                             : null
                             }
                             {(this.state.showPokemon.pokeID.length > 0) ?
-                            <SearchResults title="ID: ">
+                            <SearchResults title="matching ID... ">
                                 {this.state.showPokemon.pokeID}
                             </SearchResults>
                             : null
                             }
                         </div>
-                    </div>
+                    </>
                 : null
                 }
             </div>
@@ -142,25 +142,53 @@ export default class SearchBar extends React.Component<Props, State> {
 }
 
 const searchBarContainer: React.CSSProperties = {
-    width: '90%',
-    maxHeight: '5rem'
+    position: 'absolute',
+    top: '1.9rem',
+    bottom: '2rem',
+    // right: '1rem',
+    // left: '1rem',
+
+    width: '80%',
+    maxHeight: '30rem',
+    minHeight: '15rem',
+    // height: '80%',
+    overflow: 'hidden',
 }
 
 const searchBarInput: React.CSSProperties = {
-    width: '100%',
+    position: 'absolute',
+    top: '0%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+
+    width: '80%',
     height: '1.5rem',
+    padding: '1rem',
 
-    fontSize: '1rem',
+    fontSize: '1.2rem',
+    color: '#E7E7E7',
 
-    backgroundColor: '#272727',
-    border: 'none',
-    color: 'E7E7E7'
-}
-
-const searchBarResults: React.CSSProperties = {
-    maxHeight: '10rem'
+    backgroundColor: '#212121',
+    border: '1px solid #171717',
+    borderRadius: '1rem',
 }
 
 const searchBarResultList: React.CSSProperties = {
-    maxHeight: '10rem'
+    position: 'absolute',
+    top: '2.4rem',
+    left: '0rem',
+    right: '-1.1rem',
+    bottom: '1rem',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
+    backgroundColor: '#272727B3',
+}
+
+const resultListItem: React.CSSProperties = {
+    margin: '.1rem 0 .4rem 0',
+    padding: '.3rem 0 .3rem .8rem',
+    borderRadius: '.5rem',
+    backgroundColor: '#212121E6',
+
+    cursor: 'pointer'
 }
