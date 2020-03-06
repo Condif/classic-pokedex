@@ -46,10 +46,7 @@ export default class Layout extends React.Component<Props, State> {
 			if (id < 807) {
 				
 				const newId = "/" + (id+1).toString();
-				const pokemon = await this.fetchPokeData(newId);
-				this.updateUrlHistory(pokemon.name)
-				const pokemonBio = await this.fetchPokeDataSpecies();
-				this.setPokemonInState(pokemon, pokemonBio)
+				this.updateNewPokemon(newId)
 			}
 		}
 	};
@@ -58,13 +55,17 @@ export default class Layout extends React.Component<Props, State> {
 		if (id !== undefined) {
 			if (id > 1) {
 				const newId = "/" + (id-1).toString();
-				const pokemon = await this.fetchPokeData(newId);
-				this.updateUrlHistory(pokemon.name)
-				const pokemonBio = await this.fetchPokeDataSpecies();
-				this.setPokemonInState(pokemon, pokemonBio)
+				this.updateNewPokemon(newId)
 			}
 		}
 	};
+	
+	async updateNewPokemon(newId: string) {
+		const pokemon = await this.fetchPokeData(newId);
+		this.updateUrlHistory(pokemon.name)
+		const pokemonBio = await this.fetchPokeDataSpecies();
+		this.setPokemonInState(pokemon, pokemonBio)
+	}
 
 	fetchPokeData = async (newId: string) => {	
 		const pokemon = newId
@@ -107,6 +108,10 @@ export default class Layout extends React.Component<Props, State> {
 		history.push(pokemonId)
 	}
 
+	handleSearchClick = (searchResult: string) => {
+		this.updateNewPokemon(searchResult)
+	}
+
 	render() {
 		return (
 			<div>
@@ -115,7 +120,7 @@ export default class Layout extends React.Component<Props, State> {
 					<button onClick={this.upState}>UP</button>
 				</div>
 				<div style={layoutStyle}>
-					<MainDex pokemon={this.state.currentPokemon} />
+					<MainDex pokemon={this.state.currentPokemon} searchClick={this.handleSearchClick} />
 					<InfoDex pokemon={this.state.currentPokemon} />
 				</div>
 			</div>

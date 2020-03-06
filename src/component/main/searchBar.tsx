@@ -15,6 +15,7 @@ interface Pokebundle {
 
 interface Props {
     placeHolder: string
+    searchClick: (searchResult: string) => void;
 }
 
 interface State {
@@ -77,6 +78,8 @@ export default class SearchBar extends React.Component<Props, State> {
                 showPokemon: remappedPokemon
             })          
         }
+        console.log(this.state.showPokemon);
+        
     }
 
     async checkMatchingPokemonNames(value: string) {
@@ -95,9 +98,15 @@ export default class SearchBar extends React.Component<Props, State> {
 
     async remapPokemon(pokemon: Pokebundle) {
         const {pokeName: name, pokeID: id} = pokemon
-        const pokeName = name.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
-        const pokeID = id.map((val) => <li key={val.name}> ID: {val.id} {val.name}</li>)
+        const pokeName = name.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
+        const pokeID = id.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
         return {pokeName, pokeID}
+    }
+
+    handlePokemonChoice = (event: any) => {
+        const clickedPokemon = event.target.getAttribute('id')
+        this.props.searchClick('/'+clickedPokemon)
+        
     }
 
     render() {
