@@ -1,70 +1,55 @@
 import * as React from "react";
 import { Pokemon } from "../../types";
+import Abilities from "./infoAbilities";
 
 interface Props {
 	pokemon: Pokemon;
 }
 export default class InfoDisplay extends React.Component<Props> {
 	typeColor = (type: string) => {
-		if (type === "normal") {
-			return <p style={normal}>{type}</p>;
-		}
-		if (type === "fire") {
-			return <p style={fire}>{type}</p>;
-		}
-		if (type === "water") {
-			return <p style={water}>{type}</p>;
-		}
-		if (type === "electric") {
-			return <p style={electric}>{type}</p>;
-		}
-		if (type === "grass") {
-			return <p style={grass}>{type}</p>;
-		}
-		if (type === "ice") {
-			return <p style={ice}>{type}</p>;
-		}
-		if (type === "fighting") {
-			return <p style={fighting}>{type}</p>;
-		}
-		if (type === "poison") {
-			return <p style={poison}>{type}</p>;
-		}
-		if (type === "ground") {
-			return <p style={ground}>{type}</p>;
-		}
-		if (type === "flying") {
-			return <p style={flying}>{type}</p>;
-		}
-		if (type === "psychic") {
-			return <p style={psychic}>{type}</p>;
-		}
-		if (type === "bug") {
-			return <p style={bug}>{type}</p>;
-		}
-		if (type === "rock") {
-			return <p style={rock}>{type}</p>;
-		}
-		if (type === "ghost") {
-			return <p style={ghost}>{type}</p>;
-		}
-		if (type === "dragon") {
-			return <p style={dragon}>{type}</p>;
-		}
-		if (type === "dark") {
-			return <p style={dark}>{type}</p>;
-		}
-		if (type === "steel") {
-			return <p style={steel}>{type}</p>;
-		}
-		if (type === "fairy") {
-			return <p style={fairy}>{type}</p>;
-		} else {
-			return <p>{type}</p>;
+		switch (type) {
+			case "normal":
+				return <p style={{ ...typeTextStyle, ...normal }}>{type}</p>;
+			case "fire":
+				return <p style={{ ...typeTextStyle, ...fire }}>{type}</p>;
+			case "water":
+				return <p style={{ ...typeTextStyle, ...water }}>{type}</p>;
+			case "electric":
+				return <p style={{ ...typeTextStyle, ...electric }}>{type}</p>;
+			case "grass":
+				return <p style={{ ...typeTextStyle, ...grass }}>{type}</p>;
+			case "ice":
+				return <p style={{ ...typeTextStyle, ...ice }}>{type}</p>;
+			case "fighting":
+				return <p style={{ ...typeTextStyle, ...fighting }}>{type}</p>;
+			case "poison":
+				return <p style={{ ...typeTextStyle, ...poison }}>{type}</p>;
+			case "ground":
+				return <p style={{ ...typeTextStyle, ...ground }}>{type}</p>;
+			case "flying":
+				return <p style={{ ...typeTextStyle, ...flying }}>{type}</p>;
+			case "psychic":
+				return <p style={{ ...typeTextStyle, ...psychic }}>{type}</p>;
+			case "bug":
+				return <p style={{ ...typeTextStyle, ...bug }}>{type}</p>;
+			case "rock":
+				return <p style={{ ...typeTextStyle, ...rock }}>{type}</p>;
+			case "ghost":
+				return <p style={{ ...typeTextStyle, ...ghost }}>{type}</p>;
+			case "dragon":
+				return <p style={{ ...typeTextStyle, ...dragon }}>{type}</p>;
+			case "dark":
+				return <p style={{ ...typeTextStyle, ...dark }}>{type}</p>;
+			case "steel":
+				return <p style={{ ...typeTextStyle, ...steel }}>{type}</p>;
+			case "fairy":
+				return <p style={{ ...typeTextStyle, ...fairy }}>{type}</p>;
 		}
 	};
 
-
+	render() {
+		const types: string[] = [];
+		// const abilities: string[] = [];
 
 	render() {
 		const types: string[] = [];
@@ -72,19 +57,30 @@ export default class InfoDisplay extends React.Component<Props> {
 			types.push(type.type.name);
 		});
 
-
-		
+		// this.props.pokemon.abilities?.forEach(ability => {
+		// 	abilities.push(ability.ability.name);
+		// });
 
 		return (
 			<div style={displayStyle}>
 				<h3 style={nameStyle}>{this.props.pokemon.name}</h3>
-				<p>height: {this.props.pokemon.height}</p>
-				
-				<p>weight: {this.props.pokemon.weight}</p>
 
-				<p>Type:</p>
+				<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
+
+				<div>
+					<h4>Abilities</h4>
+					{this.props.pokemon.abilities?.map(ability => (
+						<Abilities url={ability.ability.url} />
+					))}
+				</div>
+
+				<div style={whWrapperStyle}>
+					<p style={whStyle}>height</p>
+					<p style={whValueStyle}>{this.props.pokemon.height / 10}&nbsp;m</p>
+					<p style={whStyle}>weight</p>
+					<p style={whValueStyle}>{this.props.pokemon.weight / 10}&nbsp;kg</p>
+				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
-
 				<p>Bio: {this.props.pokemon.pokemonBio}</p>
 			</div>
 		);
@@ -92,76 +88,149 @@ export default class InfoDisplay extends React.Component<Props> {
 }
 
 const displayStyle: React.CSSProperties = {
+	height: "100%",
+
+	maxWidth: "35rem",
+
+	padding: "0 1rem",
+	marginBottom: "2rem",
+
 	background: "#272727",
 	color: "#e7e7e7",
-	padding: "1rem"
+	borderRadius: "1rem",
+
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between"
+	// alignItems: "center",
 };
 const nameStyle: React.CSSProperties = {
-	background: "#272727",
+	width: "100%",
+
 	color: "#e7e7e7",
-	padding: ".2rem",
+
+	padding: "1rem .5rem 0 .5rem",
 	borderBottom: ".2rem solid #e7e7e7",
 
 	textTransform: "capitalize",
 	fontSize: "2rem"
 };
+
+const bioStyle: React.CSSProperties = {
+	// height: "50%",
+
+	padding: ".8rem",
+	margin: ".2rem",
+
+	background: "#333",
+	border: ".3rem double #272727"
+};
+
+const whWrapperStyle: React.CSSProperties = {
+	padding: "1rem 2rem",
+
+	fontSize: "1.4rem",
+
+	borderBottom: ".2rem solid #333",
+
+	display: "flex",
+	flexWrap: "wrap",
+	justifyContent: "space-evenly",
+	alignItems: "center"
+};
+const whStyle: React.CSSProperties = {
+	width: "40%",
+	margin: ".2rem",
+
+	borderRight: ".2rem solid #e7e7e7",
+	textTransform: "capitalize"
+};
+const whValueStyle: React.CSSProperties = {
+	width: "40%",
+	margin: ".3rem",
+	textAlign: "right",
+	borderBottom: ".1rem solid #e7e7e7"
+};
+
+// -- -- -- -- -- types
+
 const typeStyle: React.CSSProperties = {
+	width: "100%",
+	maxWidth: "",
+
+	padding: "1rem",
+
 	textTransform: "uppercase",
-	fontSize:"bold"
+	fontSize: "bold",
+
+	display: "flex",
+	justifyContent: "space-evenly"
+};
+
+const typeTextStyle: React.CSSProperties = {
+	padding: "0.5rem 1rem",
+	color: "#eee",
+
+	letterSpacing: ".1rem",
+	fontWeight: "bolder",
+
+	borderRadius: "1rem"
 };
 
 const normal: React.CSSProperties = {
-	color: "#a8a77a"
+	background: "#a8a77a"
 };
 const fire: React.CSSProperties = {
-	color: "#ee8130"
+	background: "#ee8130"
 };
 const water: React.CSSProperties = {
-	color: "#6390f0"
+	background: "#6390f0"
 };
 const electric: React.CSSProperties = {
-	color: "#f7d02c"
+	color: "#333",
+	background: "#f7d02c"
 };
 const grass: React.CSSProperties = {
-	color: "#7ac74c"
+	background: "#7ac74c"
 };
 const ice: React.CSSProperties = {
-	color: "#96d9d6"
+	color: "#333",
+	background: "#96d9d6"
 };
 const fighting: React.CSSProperties = {
-	color: "#c22e28"
+	background: "#c22e28"
 };
 const poison: React.CSSProperties = {
-	color: "#a33ea1"
+	background: "#a33ea1"
 };
 const ground: React.CSSProperties = {
-	color: "#e2bf65"
+	background: "#e2bf65"
 };
 const flying: React.CSSProperties = {
-	color: "#a98ff3"
+	background: "#a98ff3"
 };
 const psychic: React.CSSProperties = {
-	color: "#f95587"
+	background: "#f95587"
 };
 const bug: React.CSSProperties = {
-	color: "#a6b91a"
+	background: "#a6b91a"
 };
 const rock: React.CSSProperties = {
-	color: "#b6a136"
+	background: "#b6a136"
 };
 const ghost: React.CSSProperties = {
-	color: "#735797"
+	background: "#735797"
 };
 const dragon: React.CSSProperties = {
-	color: "#6f35fc"
+	background: "#6f35fc"
 };
 const dark: React.CSSProperties = {
-	color: "#705746"
+	background: "#705746"
 };
 const steel: React.CSSProperties = {
-	color: "#b7b7ce"
+	background: "#b7b7ce"
 };
 const fairy: React.CSSProperties = {
-	color: "#d685ad"
+	background: "#d685ad"
 };
 

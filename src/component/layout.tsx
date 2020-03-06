@@ -27,7 +27,10 @@ export default class Layout extends React.Component<Props, State> {
 		
 		this.state = {
 			lastPokemon: lastUrl,
-			currentPokemon: {}
+			currentPokemon: {
+				height: 0,
+				weight: 0
+			}
 		}
 	}
 
@@ -43,10 +46,7 @@ export default class Layout extends React.Component<Props, State> {
 		if (id !== undefined) {			
 			if (id < 807) {
 				const newId = "/" + (id+1).toString();
-				const pokemon = await this.fetchPokeData(newId);
-				this.updateUrlHistory(pokemon.name)
-				const pokemonBio = await this.fetchPokeDataSpecies();
-				this.setPokemonInState(pokemon, pokemonBio, null)
+				this.updateNewPokemon(newId)
 			}
 		}
 	};
@@ -55,13 +55,17 @@ export default class Layout extends React.Component<Props, State> {
 		if (id !== undefined) {
 			if (id > 1) {
 				const newId = "/" + (id-1).toString();
-				const pokemon = await this.fetchPokeData(newId);
-				this.updateUrlHistory(pokemon.name)
-				const pokemonBio = await this.fetchPokeDataSpecies();
-				this.setPokemonInState(pokemon, pokemonBio, null)
+				this.updateNewPokemon(newId)
 			}
 		}
 	};
+	
+	async updateNewPokemon(newId: string) {
+		const pokemon = await this.fetchPokeData(newId);
+		this.updateUrlHistory(pokemon.name)
+		const pokemonBio = await this.fetchPokeDataSpecies();
+		this.setPokemonInState(pokemon, pokemonBio)
+	}
 
 	fetchMovesState = async (pokemon: any) => {
 		const id = this.state.currentPokemon.id
@@ -125,7 +129,6 @@ export default class Layout extends React.Component<Props, State> {
 				name: pokemon.name,
 				id: pokemon.id,	
 				sprites: pokemon.sprites.front_default,
-
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
@@ -141,6 +144,10 @@ export default class Layout extends React.Component<Props, State> {
 		history.push(pokemonId)
 	}
 
+	handleSearchClick = (searchResult: string) => {
+		this.updateNewPokemon(searchResult)
+	}
+
 	render() {
 		return (
 			<div>
@@ -150,7 +157,7 @@ export default class Layout extends React.Component<Props, State> {
 					<button onClick={this.fetchMovesState}>fetchmoves</button>
 				</div>
 				<div style={layoutStyle}>
-					<MainDex pokemon={this.state.currentPokemon} />
+					<MainDex pokemon={this.state.currentPokemon} searchClick={this.handleSearchClick} />
 					<InfoDex pokemon={this.state.currentPokemon} />
 				</div>
 			</div>
