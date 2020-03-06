@@ -74,7 +74,8 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = "/" + (id).toString();
 				const pokemon = await this.fetchPokeData(newId);
 				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-				this.setPokemonInState(pokemon, null, pokemonMoves)
+				const pokemonBio = await this.fetchPokeDataSpecies();
+				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves)
 			}
 		}
 	}
