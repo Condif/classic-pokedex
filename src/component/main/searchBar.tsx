@@ -111,15 +111,15 @@ export default class SearchBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
-                <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+            <div style={searchBarContainer}>
+                <input type="text" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
-                    <div> 
+                    <div style={searchBarResults}> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
                             <h1>No results</h1>
                             : null
                         }
-                        <div>
+                        <div style={searchBarResultList}>
                             {(this.state.showPokemon.pokeName.length > 0) ? 
                             <SearchResults title="Name: " value={this.state.showPokemon.pokeName.length}>
                                 {this.state.showPokemon.pokeName}
@@ -139,4 +139,28 @@ export default class SearchBar extends React.Component<Props, State> {
             </div>
         )
     }
+}
+
+const searchBarContainer: React.CSSProperties = {
+    width: '90%',
+    maxHeight: '5rem'
+}
+
+const searchBarInput: React.CSSProperties = {
+    width: '100%',
+    height: '1.5rem',
+
+    fontSize: '1rem',
+
+    backgroundColor: '#272727',
+    border: 'none',
+    color: 'E7E7E7'
+}
+
+const searchBarResults: React.CSSProperties = {
+    maxHeight: '10rem'
+}
+
+const searchBarResultList: React.CSSProperties = {
+    maxHeight: '10rem'
 }
