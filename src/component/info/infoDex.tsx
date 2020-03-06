@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import InfoDisplay from "./infoDisplay";
+import InfoDisplayMoves from "./infoDisplayMoves";
 import InfoNavbar from "./infoNavbar";
 import { Pokemon } from "../../types";
 
@@ -14,6 +15,7 @@ export default class InfoDex extends React.Component<Props> {
 			<div style={infoStyle}>
 				<InfoDisplay pokemon={this.props.pokemon} />
 				<InfoNavbar />
+				<InfoDisplayMoves pokemon={this.props.pokemon} />
 			</div>
 		);
 	}
