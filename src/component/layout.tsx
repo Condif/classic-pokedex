@@ -6,8 +6,8 @@ import { createBrowserHistory } from 'history'
 import { Pokemon } from "../types";
 // import { ErrorBoundary } from "../errorBoundary";
 
-import MainDex from "./main/mainDex";
-import InfoDex from "./info/infoDex";
+import MainDex from "./dex/main/mainDex";
+import InfoDex from "./dex/info/infoDex";
 
 const history = createBrowserHistory();
 // import { resolve } from "dns";

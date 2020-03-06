@@ -63,7 +63,7 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 
     handleOnChange = async(e: React.FormEvent) => {
-        let target = e.target as HTMLInputElement
+        let target = e.target as any
         if (target.value === '') {
             this.setState({
                 showList: false
