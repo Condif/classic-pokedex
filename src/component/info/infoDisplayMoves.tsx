@@ -29,17 +29,17 @@ export default class InfoDisplayMoves extends React.Component<Props> {
         return (
             <div style={displayStyle}>
                 
-                <p>Moves:</p>
+                <h1>Moves:</h1>
 
                 <div>{moves.map(movesName => {
                         
-                        return (<ul style={moveUlStyle}>
-                                    <li style ={nameListStyle}>{movesName}
+                        return (<div>
+                                    <ul style ={nameListStyle}>{movesName}
                                         <li style ={flavorTextStyle}>
                                             {createFlavorText(movesIndex)}
                                         </li>
-                                    </li>
-                                </ul>
+                                    </ul>
+                                </div>
                 )})}
                 </div>
             </div>
@@ -53,13 +53,11 @@ const displayStyle: React.CSSProperties = {
 	padding: "1rem"
 };
 
-const moveUlStyle: React.CSSProperties = {
-	listStyleType: "none",
-}
 
 const nameListStyle: React.CSSProperties = {
 	fontWeight: "bold",
-	textTransform: "uppercase",
+    textTransform: "uppercase",
+    listStyleType: "none",
 }
 const flavorTextStyle: React.CSSProperties = {
 	fontWeight: "normal",
