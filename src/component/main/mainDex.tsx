@@ -15,11 +15,11 @@ export default class MainDex extends React.Component<Props> {
 	render() {
 		return (
 			<div style={mainStyle}>
-				<MainDisplay sprite={this.props.pokemon.sprites} />
-
+				<MainDisplay sprite={this.props.pokemon.sprites}>
+					<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon"/>
+				</MainDisplay>
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
-				<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon"/>
 			</div>
 		);
 	}
