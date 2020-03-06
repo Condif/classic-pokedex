@@ -135,6 +135,7 @@ export default class Layout extends React.Component<Props, State> {
 		// 		return moveFlavor;
 		// 	});
 		// console.log(engMoveFlavor)
+		console.log(listOfMovesUrls)
 		return engMoveFlavor;
 	};
 
