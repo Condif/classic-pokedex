@@ -49,8 +49,6 @@ export default class InfoDisplay extends React.Component<Props> {
 
 	render() {
 		const types: string[] = [];
-		// const abilities: string[] = [];
-
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
@@ -230,3 +228,4 @@ const steel: React.CSSProperties = {
 const fairy: React.CSSProperties = {
 	background: "#d685ad"
 };
+
