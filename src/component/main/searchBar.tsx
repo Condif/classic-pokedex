@@ -145,13 +145,10 @@ const searchBarContainer: React.CSSProperties = {
     position: 'absolute',
     top: '1.9rem',
     bottom: '2rem',
-    // right: '1rem',
-    // left: '1rem',
 
     width: '80%',
     maxHeight: '30rem',
     minHeight: '15rem',
-    // height: '80%',
     overflow: 'hidden',
 }
 
@@ -177,15 +174,16 @@ const searchBarResultList: React.CSSProperties = {
     position: 'absolute',
     top: '2.4rem',
     left: '0rem',
-    right: '-1.1rem',
+    right: '0rem',
     bottom: '1rem',
-    overflowY: 'scroll',
+
+    overflowY: 'auto',
     overflowX: 'hidden',
     backgroundColor: '#272727B3',
 }
 
 const resultListItem: React.CSSProperties = {
-    margin: '.1rem 0 .4rem 0',
+    margin: '.1rem .5rem .4rem .5rem',
     padding: '.3rem 0 .3rem .8rem',
     borderRadius: '.5rem',
     backgroundColor: '#212121E6',
