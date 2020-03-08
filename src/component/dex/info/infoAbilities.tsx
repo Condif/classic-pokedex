@@ -28,15 +28,9 @@ export default class Abilities extends React.Component<Props, State> {
 	};
 
 	toggleFlavor = () => {
-		if (this.state.showFlavor) {
-			this.setState({
-				showFlavor: false
-			});
-		} else {
-			this.setState({
-				showFlavor: true
-			});
-		}
+		this.setState({
+            showFlavor: !this.state.showFlavor
+        })
 	};
 
 	render() {

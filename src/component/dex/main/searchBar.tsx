@@ -63,7 +63,7 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 
     handleOnChange = async(e: React.FormEvent) => {
-        let target = e.target as HTMLInputElement
+        let target = e.target as any
         if (target.value === '') {
             this.setState({
                 showList: false
@@ -143,10 +143,12 @@ export default class SearchBar extends React.Component<Props, State> {
 
 const searchBarContainer: React.CSSProperties = {
     position: 'absolute',
-    top: '1.9rem',
-    bottom: '2rem',
-
-    width: '80%',
+    zIndex: 1,
+    top: '.5rem',
+    bottom: '.5rem',
+    // backgroundColor: '#272727B3',
+    
+    width: '90%',
     maxHeight: '30rem',
     minHeight: '15rem',
     overflow: 'hidden',

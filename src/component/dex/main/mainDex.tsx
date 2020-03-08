@@ -3,11 +3,11 @@ import * as React from "react";
 import MainDisplay from "./mainDisplay";
 import MainID from "./mainID";
 import MainNavpad from "./mainNavpad";
-import { Pokemon } from "../../types";
+import { Pokemon } from "../../../types";
 import SearchBar from "./searchBar";
 
 interface Props {
-	pokemon: Pokemon,
+	pokemon: Pokemon;
 	searchClick: (searchReasult: string) => void;
 }
 
@@ -15,9 +15,18 @@ export default class MainDex extends React.Component<Props> {
 	render() {
 		return (
 			<div style={mainStyle}>
-				<MainDisplay sprite={this.props.pokemon.sprites}>
-					<SearchBar searchClick={this.props.searchClick} placeHolder="Search for a pokemon..."/>
+				<MainDisplay
+					sprite={this.props.pokemon.sprites}
+					name={this.props.pokemon.name}
+					weight={this.props.pokemon.weight}
+					height={this.props.pokemon.height}
+				>
+					<SearchBar
+					searchClick={this.props.searchClick}
+					placeHolder="Search for a pokemon..."
+					/>
 				</MainDisplay>
+
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
 			</div>
@@ -31,7 +40,7 @@ const mainStyle: React.CSSProperties = {
 	display: "flex",
 	justifyContent: "space-evenly",
 	alignItems: "center",
-    flexWrap: "wrap",
-    
-    border: ".5rem solid #e7e7e7 "
+	flexWrap: "wrap",
+
+	border: ".5rem solid #e7e7e7 "
 };
