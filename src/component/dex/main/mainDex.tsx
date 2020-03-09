@@ -20,14 +20,15 @@ export default class MainDex extends React.Component<Props> {
 					name={this.props.pokemon.name}
 					weight={this.props.pokemon.weight}
 					height={this.props.pokemon.height}
-				/>
+				>
+					<SearchBar
+					searchClick={this.props.searchClick}
+					placeHolder="Search for a pokemon..."
+					/>
+				</MainDisplay>
 
 				<MainID id={this.props.pokemon.id} />
 				<MainNavpad />
-				<SearchBar
-					searchClick={this.props.searchClick}
-					placeHolder="Search for a pokemon"
-				/>
 			</div>
 		);
 	}

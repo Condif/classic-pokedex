@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { ReactComponent } from '*.svg'
 
 interface Props {
     title: string
@@ -15,13 +14,29 @@ export default class SearchResults extends React.Component<Props, State> {
 
     render() {
         return (
-            <>
-                <h1>{this.props.title}</h1>
-                {(this.props.value && this.props.value >= 5) ? <h3>{this.props.value}</h3> : null}
-                <ul>
+            <div>
+                <div style={searchResultTitle}>
+                    <p>{this.props.title}</p>
+                    {(this.props.value && this.props.value >= 5) ? <p>{this.props.value} entries</p> : null}
+                </div>
+                <ul style={searchResultUL}>
                     {this.props.children}
                 </ul>
-            </>
+            </div>
         )
     }
+}
+
+const searchResultTitle: React.CSSProperties = {
+    margin: '.3rem 0 .2rem 0',
+
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    color: '#d1d1d1',
+}
+
+const searchResultUL: React.CSSProperties = {
+    listStyle: 'none',
+    color: '#E7E7E7',
+    fontSize: '1.2rem'
 }
