@@ -62,24 +62,28 @@ export default class SearchBar extends React.Component<Props, State> {
         return (await result).data.results    
     }
 
-    handleOnChange = async(e: React.FormEvent) => {
-        let target = e.target as any
-        if (target.value === '') {
+    handleOnChange = async(e: React.FormEvent<HTMLInputElement> | HTMLInputElement) => {
+        let targetValue = ''
+        
+        if (e instanceof HTMLInputElement) {
+            targetValue = e.value
+        } else {
+            targetValue = e.currentTarget.value            
+        }
+        
+        if (targetValue === '') {
             this.setState({
                 showList: false
             })
         } else {
-            const validPokemon = await this.checkMatchingPokemonNames(target.value)
+            const validPokemon = await this.checkMatchingPokemonNames(targetValue)
             const remappedPokemon = await this.remapPokemon(validPokemon)
-            console.log(remappedPokemon);
             
             this.setState({
                 showList: true,
                 showPokemon: remappedPokemon
             })          
-        }
-        console.log(this.state.showPokemon);
-        
+        }        
     }
 
     async checkMatchingPokemonNames(value: string) {
@@ -106,13 +110,22 @@ export default class SearchBar extends React.Component<Props, State> {
     handlePokemonChoice = (event: any) => {
         const clickedPokemon = event.target.getAttribute('id')
         this.props.searchClick('/'+clickedPokemon)
-        
+        this.removeSearchList()
     }
+
+    removeSearchList() {
+        const searchBar = document.getElementById('searchField') as HTMLInputElement
+        if (searchBar) {
+            searchBar.value = ''
+            this.handleOnChange(searchBar)
+        }        
+    }
+
 
     render() {
         return (
             <div style={searchBarContainer}>
-                <input type="text" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+                <input type="text" id="searchField" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
                     <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
