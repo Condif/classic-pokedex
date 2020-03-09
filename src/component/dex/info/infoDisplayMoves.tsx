@@ -32,7 +32,7 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 
 				<div style={movesListStyle}>
 					{this.props.pokemon.moves?.map(move => (
-						<Move key={move.name} url={move.move.url} />
+						<Move key={move.move.name} url={move.move.url} />
 					))}
 				</div>
 			</div>
