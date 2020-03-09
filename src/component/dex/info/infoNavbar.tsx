@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavPage } from "../../../types";
+// import { NavPage } from "../../../types";
 
 interface Props {
 	navigateToBio: () => void
