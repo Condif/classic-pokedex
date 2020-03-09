@@ -21,8 +21,6 @@ import {
 	fairy
 } from "../../css";
 
-import { type } from "os";
-
 interface State {
 	name?: string;
 	flavor?: string;
@@ -135,20 +133,23 @@ const flavorWrapper: React.CSSProperties = {
 };
 
 const flavorStyle: React.CSSProperties = {
-	margin: ".2rem .5rem",
+    margin: ".2rem .5rem",
 	width: "100%",
-
+    
+    
 	fontSize: "1.1rem",
 	cursor: "pointer",
-
+    
 	display: "flex",
 	alignItems: "center"
 };
 
+
 const flavorNameStyle: React.CSSProperties = {
-	width: "100%",
-	padding: ".2rem .5rem",
-	background: "#333"
+    width: "100%",
+    padding: ".2rem .5rem",
+    background: "#333",
+    
 };
 
 const flavorTextStyle: React.CSSProperties = {
