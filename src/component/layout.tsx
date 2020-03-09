@@ -7,10 +7,13 @@ import { Pokemon } from "../types";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
+import TeamBuilder from "./team/teamBuilder";
 
 const history = createBrowserHistory();
 
-interface Props {}
+interface Props {
+	isDesktop: boolean
+}
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
@@ -76,7 +79,6 @@ export default class Layout extends React.Component<Props, State> {
 
 				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
-
 			}
 		}
 	};
@@ -88,23 +90,29 @@ export default class Layout extends React.Component<Props, State> {
 	};
 
 	fetchPokeDataSpecies = async (pokemon: any) => {
-        const pokemonId = "/" + pokemon.id
-        let pokeFlavor: string = '';
-        if (pokemon.species) {
-            const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemonId);
-            const bioList = resSpecies.data.flavor_text_entries
-            bioList.some((bioText: any) => {
-                if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
-                    pokeFlavor = bioText.flavor_text    
-                }
-                return pokeFlavor;
-            });
-        } else {
-            return pokeFlavor = ''
-        }
-        
-        return pokeFlavor;
-    };
+		const pokemonId = "/" + pokemon.id;
+		let pokeFlavor: string = "";
+		if (pokemon.species) {
+			const resSpecies = await axios.get(
+				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
+			);
+			const bioList = resSpecies.data.flavor_text_entries;
+			bioList.some((bioText: any) => {
+				if (
+					bioText !== undefined &&
+					bioText !== null &&
+					bioText.language.name === "en"
+				) {
+					pokeFlavor = bioText.flavor_text;
+				}
+				return pokeFlavor;
+			});
+		} else {
+			return (pokeFlavor = "");
+		}
+
+		return pokeFlavor;
+	};
 
 	fetchPokeDataMoves = async (pokemon: any) => {
 		let listOfMovesUrls: string[] = [];
@@ -167,30 +175,32 @@ export default class Layout extends React.Component<Props, State> {
 	render() {
 		return (
 			<Switch>
-				<Route exact path="/hej">
-					{/* <TeamBuilder /> */}
+				<Route path="/hej">
+					<TeamBuilder />
 				</Route>
 				<Route path="/">
 					<div style={layoutWrapperStyle}>
-						<div style={buttWrapperStyle}>
-							<button style={buttStyle} onClick={this.downState}>
-								DOWN
-							</button>
-							<button style={buttStyle} onClick={this.upState}>
-								UP
-							</button>
-							<button style={buttStyle} onClick={this.fetchMovesState}>
-								fetchmoves
-							</button>
-						</div>
-
-						<div style={layoutStyle}>
-							<MainDex
-								pokemon={this.state.currentPokemon}
-								searchClick={this.handleSearchClick}
-							/>
-							<InfoDex pokemon={this.state.currentPokemon} />
-						</div>
+						{this.props.isDesktop ? (
+							<div style={layoutStyle}>
+								<MainDex
+									pokemon={this.state.currentPokemon}
+									searchClick={this.handleSearchClick}
+								/>
+								<InfoDex pokemon={this.state.currentPokemon} />
+							</div>
+						) : (
+							<Switch>
+								<Route path="/">
+									<MainDex
+										pokemon={this.state.currentPokemon}
+										searchClick={this.handleSearchClick}
+									/>
+								</Route>
+								<Route path="/info">
+									<InfoDex pokemon={this.state.currentPokemon} />
+								</Route>
+							</Switch>
+						)}
 					</div>
 				</Route>
 			</Switch>
