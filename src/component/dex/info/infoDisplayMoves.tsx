@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pokemon } from "../../types";
+import { Pokemon } from "../../../types";
 
 interface Props {
 	pokemon: Pokemon;

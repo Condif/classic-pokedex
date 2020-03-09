@@ -63,7 +63,7 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 
     handleOnChange = async(e: React.FormEvent) => {
-        let target = e.target as HTMLInputElement
+        let target = e.target as any
         if (target.value === '') {
             this.setState({
                 showList: false
@@ -98,8 +98,8 @@ export default class SearchBar extends React.Component<Props, State> {
 
     async remapPokemon(pokemon: Pokebundle) {
         const {pokeName: name, pokeID: id} = pokemon
-        const pokeName = name.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
-        const pokeID = id.map((val) => <li key={val.name} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
+        const pokeName = name.map((val) => <li key={val.name} style={resultListItem} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
+        const pokeID = id.map((val) => <li key={val.name} style={resultListItem} id={val.name} onClick={this.handlePokemonChoice}> ID: {val.id} {val.name}</li>)
         return {pokeName, pokeID}
     }
 
@@ -111,32 +111,84 @@ export default class SearchBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
-                <input type="text" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+            <div style={searchBarContainer}>
+                <input type="text" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
-                    <div> 
+                    <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
                             <h1>No results</h1>
                             : null
                         }
-                        <div>
+                        <div style={searchBarResultList}>
                             {(this.state.showPokemon.pokeName.length > 0) ? 
-                            <SearchResults title="Name: " value={this.state.showPokemon.pokeName.length}>
+                            <SearchResults title="matching name..." value={this.state.showPokemon.pokeName.length}>
                                 {this.state.showPokemon.pokeName}
                             </SearchResults>
                             : null
                             }
                             {(this.state.showPokemon.pokeID.length > 0) ?
-                            <SearchResults title="ID: ">
+                            <SearchResults title="matching ID... ">
                                 {this.state.showPokemon.pokeID}
                             </SearchResults>
                             : null
                             }
                         </div>
-                    </div>
+                    </>
                 : null
                 }
             </div>
         )
     }
+}
+
+const searchBarContainer: React.CSSProperties = {
+    position: 'absolute',
+    zIndex: 1,
+    top: '.5rem',
+    bottom: '.5rem',
+    // backgroundColor: '#272727B3',
+    
+    width: '90%',
+    maxHeight: '30rem',
+    minHeight: '15rem',
+    overflow: 'hidden',
+}
+
+const searchBarInput: React.CSSProperties = {
+    position: 'absolute',
+    top: '0%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+
+    width: '80%',
+    height: '1.5rem',
+    padding: '1rem',
+
+    fontSize: '1.2rem',
+    color: '#E7E7E7',
+
+    backgroundColor: '#212121',
+    border: '1px solid #171717',
+    borderRadius: '1rem',
+}
+
+const searchBarResultList: React.CSSProperties = {
+    position: 'absolute',
+    top: '2.4rem',
+    left: '0rem',
+    right: '0rem',
+    bottom: '1rem',
+
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    backgroundColor: '#272727B3',
+}
+
+const resultListItem: React.CSSProperties = {
+    margin: '.1rem .5rem .4rem .5rem',
+    padding: '.3rem 0 .3rem .8rem',
+    borderRadius: '.5rem',
+    backgroundColor: '#212121E6',
+
+    cursor: 'pointer'
 }

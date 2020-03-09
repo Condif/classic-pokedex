@@ -16,6 +16,8 @@ const navStyle: React.CSSProperties = {
 	width: "90%",
 	maxWidth:"33rem",
 
+	margin:"0 2rem 2rem 2rem",
+
 	display: "flex",
 	justifyContent: "center",
 
@@ -30,23 +32,24 @@ const btnStyle: React.CSSProperties = {
 	width: "50%",
 
 	margin: "0 .1rem",
-	padding: ".5rem 1rem",
+	padding: ".75rem",
 
 	textAlign: "center",
+	fontSize:"125%",
 
 	background: "#2aa9fe",
 	color:"",
-	border:".5rem double #dc0a2d",
+	// border:".5rem solid #dc0a2d",
 
 	cursor: "pointer"
 };
 const bioBtn: React.CSSProperties = {
 	borderRadius: "4rem 0 0 4rem",
-	borderRight:".5rem solid #dc0a2d"
+	// borderRight:".5rem solid #dc0a2d"
 };
 const movesBtn: React.CSSProperties = {
 	borderRadius: "0 4rem 4rem 0",
-	borderLeft:".5rem solid #dc0a2d"
+	// borderLeft:".5rem solid #dc0a2d"
 };
 
 const backBtn: React.CSSProperties = {
