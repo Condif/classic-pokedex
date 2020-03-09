@@ -1,17 +1,14 @@
 import * as React from "react";
 import axios from "axios";
-// import { Switch, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Switch, Route } from "react-router-dom";
 
 import { Pokemon } from "../types";
-// import { ErrorBoundary } from "../errorBoundary";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 
 const history = createBrowserHistory();
-// import { resolve } from "dns";
 
 interface Props {}
 interface State {
@@ -65,7 +62,7 @@ export default class Layout extends React.Component<Props, State> {
 	async updateNewPokemon(newId: string) {
 		const pokemon = await this.fetchPokeData(newId);
 		this.updateUrlHistory(pokemon.name);
-		const pokemonBio = await this.fetchPokeDataSpecies();
+		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 		this.setPokemonInState(pokemon, pokemonBio, null);
 	}
 
@@ -77,7 +74,7 @@ export default class Layout extends React.Component<Props, State> {
 				const pokemon = await this.fetchPokeData(newId);
 				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 
-				const pokemonBio = await this.fetchPokeDataSpecies();
+				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 
 			}
@@ -90,25 +87,24 @@ export default class Layout extends React.Component<Props, State> {
 		return res.data;
 	};
 
-	fetchPokeDataSpecies = async () => {
-		const pokemon = history.location.pathname;
-		let pokeFlavor: string = "";
-		const resSpecies = await axios.get(
-			"https://pokeapi.co/api/v2/pokemon-species" + pokemon
-		);
-		const bioList = resSpecies.data.flavor_text_entries;
-		bioList.some((bioText: any) => {
-			if (
-				bioText !== undefined &&
-				bioText !== null &&
-				bioText.language.name === "en"
-			) {
-				pokeFlavor = bioText.flavor_text;
-			}
-			return pokeFlavor;
-		});
-		return pokeFlavor;
-	};
+	fetchPokeDataSpecies = async (pokemon: any) => {
+        const pokemonId = "/" + pokemon.id
+        let pokeFlavor: string = '';
+        if (pokemon.species) {
+            const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemonId);
+            const bioList = resSpecies.data.flavor_text_entries
+            bioList.some((bioText: any) => {
+                if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
+                    pokeFlavor = bioText.flavor_text    
+                }
+                return pokeFlavor;
+            });
+        } else {
+            return pokeFlavor = ''
+        }
+        
+        return pokeFlavor;
+    };
 
 	fetchPokeDataMoves = async (pokemon: any) => {
 		let listOfMovesUrls: string[] = [];
