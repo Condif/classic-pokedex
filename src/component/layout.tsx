@@ -170,7 +170,7 @@ export default class Layout extends React.Component<Props, State> {
 		return (
 			<Switch>
 				<Route exact path="/hej">
-					<TeamBuilder />
+					{/* <TeamBuilder /> */}
 				</Route>
 				<Route path="/">
 					<div style={layoutWrapperStyle}>
