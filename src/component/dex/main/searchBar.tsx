@@ -116,7 +116,7 @@ export default class SearchBar extends React.Component<Props, State> {
                 {(this.state.showList) ? 
                     <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
-                            <h1>No results</h1>
+                            <p style={noResult}>No results</p>
                             : null
                         }
                         <div style={searchBarResultList}>
@@ -146,7 +146,6 @@ const searchBarContainer: React.CSSProperties = {
     zIndex: 1,
     top: '.5rem',
     bottom: '.5rem',
-    // backgroundColor: '#272727B3',
     
     width: '90%',
     maxHeight: '30rem',
@@ -177,7 +176,7 @@ const searchBarResultList: React.CSSProperties = {
     top: '2.4rem',
     left: '0rem',
     right: '0rem',
-    bottom: '1rem',
+    bottom: '0rem',
 
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -192,3 +191,14 @@ const resultListItem: React.CSSProperties = {
 
     cursor: 'pointer'
 }
+
+const noResult: React.CSSProperties = {
+    margin: '3rem 0 0 0',
+    padding: '.3rem 0 .3rem .8rem',
+    borderRadius: '.5rem',
+
+    color:"#e7e7e7",
+    backgroundColor: '#212121',
+
+}
+

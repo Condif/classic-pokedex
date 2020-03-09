@@ -2,24 +2,55 @@ import * as React from "react";
 
 import InfoDisplay from "./infoDisplay";
 import InfoNavbar from "./infoNavbar";
-import InfoDisplayMoves from "./infoDisplayMoves";
 import { Pokemon } from "../../../types";
+import { NavPage } from "../../../types";
+import InfoDisplayMoves from "./infoDisplayMoves";
 
 interface Props {
 	pokemon: Pokemon;
 }
+interface State {
+	page: NavPage;
+}
 
-export default class InfoDex extends React.Component<Props> {
+export default class InfoDex extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			page: "moves"
+		};
+	}
+
+	handleNavigateToBio = () => {
+		this.setState({
+			page: "bio"
+		});
+	};
+	handleNavigateToMoves = () => {
+		this.setState({
+			page: "moves"
+		});
+	};
+
 	render() {
 		return (
 			<div style={infoStyle}>
 				<div style={cutout_1}></div>
 				<div style={cutout_2}></div>
 
-				<InfoDisplay pokemon={this.props.pokemon} />
-				<InfoNavbar />
+				{/* <div>
+					</div> */}
+					{this.state.page === "bio" && (
+						<InfoDisplay pokemon={this.props.pokemon} />
+					)}
+					{this.state.page === "moves" && (
+						<InfoDisplayMoves pokemon={this.props.pokemon} />
+					)}
 
-				<InfoDisplayMoves pokemon={this.props.pokemon} />
+				<InfoNavbar
+					navigateToBio={this.handleNavigateToBio}
+					navigateToMoves={this.handleNavigateToMoves}
+				/>
 			</div>
 		);
 	}
@@ -29,7 +60,7 @@ const infoStyle: React.CSSProperties = {
 	position: "relative",
 
 	width: "45%",
-	borderLeft: ".5rem solid #e7e7e7",
+	borderLeft: ".5rem solid #123",
 	borderRadius: "2%",
 
 	display: "flex",

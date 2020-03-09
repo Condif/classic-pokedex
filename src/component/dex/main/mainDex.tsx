@@ -41,6 +41,4 @@ const mainStyle: React.CSSProperties = {
 	justifyContent: "space-evenly",
 	alignItems: "center",
 	flexWrap: "wrap",
-
-	border: ".5rem solid #e7e7e7 "
 };
