@@ -26,9 +26,10 @@ export default class MainDex extends React.Component<Props> {
 					placeHolder="Search for a pokemon..."
 					/>
 				</MainDisplay>
-
-				<MainID id={this.props.pokemon.id} />
-				<MainNavpad />
+				<div style={idNavpadWrapper}>
+					<MainID id={this.props.pokemon.id} />
+					<MainNavpad />
+				</div>
 			</div>
 		);
 	}
@@ -36,6 +37,15 @@ export default class MainDex extends React.Component<Props> {
 
 const mainStyle: React.CSSProperties = {
 	width: "55%",
+
+	display: "flex",
+	flexDirection: "column",
+	justifyContent:	"space-between",
+	alignItems: "center",
+
+};
+const idNavpadWrapper: React.CSSProperties = {
+	width: "100%",
 
 	display: "flex",
 	justifyContent: "space-evenly",

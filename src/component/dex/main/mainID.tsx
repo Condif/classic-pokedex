@@ -23,7 +23,7 @@ const IdStyle: React.CSSProperties = {
 
 	width: "40%",
 	maxWidth: "15rem",
-	height: "15%",
+	
 
 	display: "flex",
 	justifyContent: "center",

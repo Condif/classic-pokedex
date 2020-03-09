@@ -215,10 +215,9 @@ const layoutWrapperStyle: React.CSSProperties = {
 
 const layoutStyle: React.CSSProperties = {
 	width: "100%",
-	maxWidth: "70rem",
+	maxWidth: "60rem",
 	height: "100vh",
-	maxHeight: "50rem",
-
+	maxHeight: "40rem",
 	display: "flex",
 	justifyContent: "center",
 

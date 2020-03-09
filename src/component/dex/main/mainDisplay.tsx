@@ -29,7 +29,7 @@ export default class MainDisplay extends React.Component<Props> {
 const outerDisplayStyle: React.CSSProperties = {
 	position: "relative",
 
-	margin: "5%",
+	marginTop: "6rem",
 
 	width: "80%",
 	maxWidth: "37rem",
@@ -39,7 +39,7 @@ const outerDisplayStyle: React.CSSProperties = {
 	maxHeight: "30rem",
 	minHeight: "15rem",
 
-	padding: "1.5rem",
+	padding: "1.2rem",
 
 	background: "#e7e7e7",
 	borderRadius: ".5rem"
@@ -106,7 +106,7 @@ const whValueStyle: React.CSSProperties = {
 };
 
 const imageStyle: React.CSSProperties = {
-	width: "75%",
+	width: "65%",
 	objectFit: "cover",
 	imageRendering: "pixelated"
 };
