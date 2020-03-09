@@ -6,7 +6,10 @@ export type Pokemon = {
 	weight: number;
 	types?: any[];
 	abilities?: any[];
-	moves?: [];
+	moves?: any[];
 	pokemonBio?: string;
 	movesFlavorText?: any[];
 };
+
+
+export type NavPage = "bio" | "moves"

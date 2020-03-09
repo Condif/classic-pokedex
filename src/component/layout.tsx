@@ -133,6 +133,7 @@ export default class Layout extends React.Component<Props, State> {
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
+				abilities: pokemon.abilities,
 				pokemonBio: pokemonBio,
 				moves: pokemon.moves,
 				movesFlavorText: pokemonMovesFlavorText
@@ -151,11 +152,11 @@ export default class Layout extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div>
-				<div style={buttStyle}>
-					<button onClick={this.downState}>DOWN</button>
-					<button onClick={this.upState}>UP</button>
-					<button onClick={this.fetchMovesState}>fetchmoves</button>
+			<div style={layoutWrapperStyle}>
+				<div style={buttWrapperStyle}>
+					<button style={buttStyle} onClick={this.downState}>DOWN</button>
+					<button style={buttStyle} onClick={this.upState}>UP</button>
+					<button style={buttStyle} onClick={this.fetchMovesState}>fetchmoves</button>
 				</div>
 				<div style={layoutStyle}>
 					<MainDex pokemon={this.state.currentPokemon} searchClick={this.handleSearchClick} />
@@ -166,16 +167,48 @@ export default class Layout extends React.Component<Props, State> {
 	}
 }
 
-const layoutStyle: React.CSSProperties = {
+const layoutWrapperStyle: React.CSSProperties = {
+	position:"relative",
+	
 	width: "100%",
 	height: "100vh",
+	
+	
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	
+	backgroundColor: "#e7e7e7",
+	backgroundImage: 'url("https://www.transparenttextures.com/patterns/hexellence.png")',
+};
+
+const layoutStyle: React.CSSProperties = {
+	width: "100%",
+	maxWidth: "70rem",
+	height: "100vh",
+	maxHeight:"50rem",
 
 	display: "flex",
 	justifyContent: "center",
 
-	background: "#dc0a2d"
+	background: "#dc0a2d",
+	backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png")',
+	borderRadius:"1rem",
 };
 
+const buttWrapperStyle: React.CSSProperties = {
+	position: "absolute",
+
+	top:0,
+	left:"50%",
+	transform:"translatex(-50%)",
+};
 const buttStyle: React.CSSProperties = {
-	position: "absolute"
+
+	padding:".5rem",
+	margin:".2rem",
+
+	color:"#e7e7e7",
+	background:"#333",
+	border:".3rem double #ee8866",
 };

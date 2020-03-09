@@ -83,7 +83,7 @@ const whWrapperStyle: React.CSSProperties = {
 	left:"50%",
 	transform:"translatex(-50%)",
 
-	color:"#555",
+	color:"#777",
 
 	display: "flex",
 	flexWrap: "wrap",
@@ -105,7 +105,7 @@ const whValueStyle: React.CSSProperties = {
 };
 
 const imageStyle: React.CSSProperties = {
-	width: "80%",
+	width: "75%",
 	objectFit: "cover",
 	imageRendering: "pixelated"
 };

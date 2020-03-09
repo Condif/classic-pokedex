@@ -1,29 +1,43 @@
 import * as React from "react";
+import { NavPage } from "../../../types";
 
-export default class InfoNavbar extends React.Component {
+interface Props {
+	navigateToBio: () => void
+	navigateToMoves: () => void
+}
+
+export default class InfoNavbar extends React.Component<Props> {
 	render() {
 		return (
-				<div style={navStyle}>
-					<p style={{ ...btnStyle, ...bioBtn }}>bio</p>
-					<p style={{ ...btnStyle, ...movesBtn }}>moves</p>
-					<p style={backBtn}></p>
-				</div>
+			<div style={navStyle}>
+				<p
+					style={{ ...btnStyle, ...bioBtn }}
+					onClick={this.props.navigateToBio}>
+					bio
+				</p>
+				<p
+					style={{ ...btnStyle, ...movesBtn }}
+					onClick={this.props.navigateToMoves}>
+					moves
+				</p>
+				<p style={backBtn}></p>
+			</div>
 		);
 	}
 }
 
 const navStyle: React.CSSProperties = {
 	width: "90%",
-	maxWidth:"33rem",
+	maxWidth: "33rem",
 
-	margin:"0 2rem 2rem 2rem",
+	margin: "0 2rem 2rem 2rem",
 
 	display: "flex",
 	justifyContent: "center",
 
-	fontSize:"1.5rem",
+	fontSize: "1.5rem",
 	fontWeight: 800,
-	textTransform:"uppercase"
+	textTransform: "uppercase"
 };
 
 // - - -- -- -- - -
@@ -35,20 +49,20 @@ const btnStyle: React.CSSProperties = {
 	padding: ".75rem",
 
 	textAlign: "center",
-	fontSize:"125%",
+	fontSize: "125%",
 
 	background: "#2aa9fe",
-	color:"",
+	color: "",
 	// border:".5rem solid #dc0a2d",
 
 	cursor: "pointer"
 };
 const bioBtn: React.CSSProperties = {
-	borderRadius: "4rem 0 0 4rem",
+	borderRadius: "4rem 0 0 4rem"
 	// borderRight:".5rem solid #dc0a2d"
 };
 const movesBtn: React.CSSProperties = {
-	borderRadius: "0 4rem 4rem 0",
+	borderRadius: "0 4rem 4rem 0"
 	// borderLeft:".5rem solid #dc0a2d"
 };
 

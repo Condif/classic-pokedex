@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Pokemon } from "../../../types";
+import { normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy } from "../../css"
 import Abilities from "./infoAbilities";
 
 interface Props {
@@ -49,8 +50,6 @@ export default class InfoDisplay extends React.Component<Props> {
 
 	render() {
 		const types: string[] = [];
-		// const abilities: string[] = [];
-
 		this.props.pokemon.types?.forEach(type => {
 			types.push(type.type.name);
 		});
@@ -134,61 +133,4 @@ const typeTextStyle: React.CSSProperties = {
 	fontWeight: "bolder",
 
 	borderRadius: "1rem"
-};
-
-const normal: React.CSSProperties = {
-	background: "#a8a77a"
-};
-const fire: React.CSSProperties = {
-	background: "#ee8130"
-};
-const water: React.CSSProperties = {
-	background: "#6390f0"
-};
-const electric: React.CSSProperties = {
-	color: "#333",
-	background: "#f7d02c"
-};
-const grass: React.CSSProperties = {
-	background: "#7ac74c"
-};
-const ice: React.CSSProperties = {
-	color: "#333",
-	background: "#96d9d6"
-};
-const fighting: React.CSSProperties = {
-	background: "#c22e28"
-};
-const poison: React.CSSProperties = {
-	background: "#a33ea1"
-};
-const ground: React.CSSProperties = {
-	background: "#e2bf65"
-};
-const flying: React.CSSProperties = {
-	background: "#a98ff3"
-};
-const psychic: React.CSSProperties = {
-	background: "#f95587"
-};
-const bug: React.CSSProperties = {
-	background: "#a6b91a"
-};
-const rock: React.CSSProperties = {
-	background: "#b6a136"
-};
-const ghost: React.CSSProperties = {
-	background: "#735797"
-};
-const dragon: React.CSSProperties = {
-	background: "#6f35fc"
-};
-const dark: React.CSSProperties = {
-	background: "#705746"
-};
-const steel: React.CSSProperties = {
-	background: "#b7b7ce"
-};
-const fairy: React.CSSProperties = {
-	background: "#d685ad"
 };
