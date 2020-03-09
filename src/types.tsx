@@ -11,5 +11,11 @@ export type Pokemon = {
 	movesFlavorText?: any[];
 };
 
+export type myPokemon = {
+	name: string,
+	moves: string[]
+	sprite: string,
+}
+
 
 export type NavPage = "bio" | "moves"
