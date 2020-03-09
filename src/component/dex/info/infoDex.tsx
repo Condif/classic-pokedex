@@ -60,7 +60,7 @@ const infoStyle: React.CSSProperties = {
 	position: "relative",
 
 	width: "45%",
-	borderLeft: ".5rem solid #e7e7e7",
+	borderLeft: ".5rem solid #123",
 	borderRadius: "2%",
 
 	display: "flex",

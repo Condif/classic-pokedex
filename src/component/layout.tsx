@@ -13,7 +13,6 @@ import InfoDex from "./dex/info/infoDex";
 const history = createBrowserHistory();
 // import { resolve } from "dns";
 
-
 interface Props {}
 interface State {
 	lastPokemon: string;
@@ -170,7 +169,10 @@ export default class Layout extends React.Component<Props, State> {
 	render() {
 		return (
 			<Switch>
-				<Route exact path="/">
+				<Route exact path="/hej">
+					<TeamBuilder />
+				</Route>
+				<Route path="/">
 					<div style={layoutWrapperStyle}>
 						<div style={buttWrapperStyle}>
 							<button style={buttStyle} onClick={this.downState}>
@@ -193,7 +195,6 @@ export default class Layout extends React.Component<Props, State> {
 						</div>
 					</div>
 				</Route>
-				<Route path="/hej">hej</Route>
 			</Switch>
 		);
 	}
@@ -226,7 +227,9 @@ const layoutStyle: React.CSSProperties = {
 	background: "#dc0a2d",
 	backgroundImage:
 		'url("https://www.transparenttextures.com/patterns/cartographer.png")',
-	borderRadius: "1rem"
+	borderRadius: "1rem",
+
+	boxShadow: "-.5rem .5rem .5rem #123"
 };
 
 const buttWrapperStyle: React.CSSProperties = {

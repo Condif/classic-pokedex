@@ -119,11 +119,10 @@ export default class Move extends React.Component<Props, State> {
 }
 
 const test: React.CSSProperties = {
-	margin: " 0 .5rem",
 
 	width: "1rem",
 	height: "1rem",
-	borderRadius: "1rem"
+	borderRadius: ".2rem"
 };
 const flavorWrapper: React.CSSProperties = {
 	width: "100%",
@@ -146,7 +145,8 @@ const flavorStyle: React.CSSProperties = {
 
 
 const flavorNameStyle: React.CSSProperties = {
-    width: "100%",
+	width: "100%",
+	marginLeft:".5rem",
     padding: ".2rem .5rem",
     background: "#333",
     

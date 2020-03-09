@@ -28,7 +28,7 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 
 		return (
 			<div style={displayStyle}>
-				<h1>Moves:</h1>
+				<h1 style={movesHeaderStyle}>Moves:</h1>
 
 				<div style={movesListStyle}>
 					{this.props.pokemon.moves?.map(move => (
@@ -56,20 +56,29 @@ const displayStyle: React.CSSProperties = {
 
 	display: "flex",
 	flexDirection: "column",
+	overflow: "hidden"
+};
 
-	overflowY: "scroll"
+
+const movesHeaderStyle: React.CSSProperties = {
+	paddingBottom:".5rem",
+	marginBottom:".5rem",
+	borderBottom:".2rem solid #333"
+
 };
 
 const movesListStyle: React.CSSProperties = {
-	width:"100%",
+	width: "100%",
 
-	background: "#272727"
+	background: "#272727",
+
+	overflowY: "scroll"
 };
 
 const nameStyle: React.CSSProperties = {
 	fontWeight: "bold",
 	textTransform: "uppercase",
-	listStyleType: "none"
+	listStyleType: "none",
 };
 const flavorTextStyle: React.CSSProperties = {
 	fontWeight: "normal",
