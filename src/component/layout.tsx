@@ -38,7 +38,7 @@ export default class Layout extends React.Component<Props, State> {
 
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-		const pokemonBio = await this.fetchPokeDataSpecies();
+		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 	}
@@ -76,8 +76,10 @@ export default class Layout extends React.Component<Props, State> {
 				const newId = "/" + id.toString();
 				const pokemon = await this.fetchPokeData(newId);
 				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+
 				const pokemonBio = await this.fetchPokeDataSpecies();
 				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+
 			}
 		}
 	};
