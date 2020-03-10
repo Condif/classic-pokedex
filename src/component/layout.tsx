@@ -65,7 +65,7 @@ export default class Layout extends React.Component<Props, State> {
 		this.setPokemonInState(pokemon, pokemonBio)
 	}
 
-	fetchMovesState = async (pokemon: any) => {
+	fetchMovesState = async () => {
 		const id = this.state.currentPokemon.id;
 		if (id !== undefined) {
 			if (id > 1) {
