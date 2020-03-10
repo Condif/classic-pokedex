@@ -146,9 +146,6 @@ export default class Layout extends React.Component<Props, State> {
 							<button style={buttStyle} onClick={this.upState}>
 								UP
 							</button>
-							<button style={buttStyle} onClick={this.fetchMovesState}>
-								fetchmoves
-							</button>
 						</div>
 
 						<div style={layoutStyle}>
