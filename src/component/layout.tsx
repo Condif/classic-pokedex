@@ -185,6 +185,7 @@ export default class Layout extends React.Component<Props, State> {
 						{this.props.isDesktop ? (
 							<div style={layoutStyle}>
 								<MainDex
+									isDesktop={this.props.isDesktop}
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
 								/>
@@ -194,6 +195,7 @@ export default class Layout extends React.Component<Props, State> {
 							<Switch>
 								<Route path="/">
 									<MainDex
+										isDesktop={this.props.isDesktop}
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
 									/>

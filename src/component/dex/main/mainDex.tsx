@@ -9,10 +9,14 @@ import SearchBar from "./searchBar";
 interface Props {
 	pokemon: Pokemon;
 	searchClick: (searchReasult: string) => void;
+	isDesktop: boolean;
+
 }
 
 export default class MainDex extends React.Component<Props> {
+	
 	render() {
+		
 		return (
 			<div style={mainStyle}>
 				<MainDisplay
