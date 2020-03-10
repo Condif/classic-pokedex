@@ -33,8 +33,11 @@ export default class Abilities extends React.Component<Props, State> {
         })
 	};
 
-	render() {
+	componentDidMount() {
 		this.fetchFlavorText();
+	}
+
+	render() {
 
 		return (
 			<div style={flavorWrapper}>
