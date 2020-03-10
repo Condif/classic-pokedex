@@ -19,11 +19,11 @@ const IdStyle: React.CSSProperties = {
 	
 	gridArea: "ID",
 
-	margin:"2rem",
+	
 
 	width: "40%",
 	maxWidth: "15rem",
-	height: "15%",
+	
 
 	display: "flex",
 	justifyContent: "center",
@@ -35,7 +35,7 @@ const IdStyle: React.CSSProperties = {
 };
 
 const idText: React.CSSProperties = {
-	fontSize: "5rem",
+	fontSize: "4.5rem",
 	color:"#232"
 };
 
