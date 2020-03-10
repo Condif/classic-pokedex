@@ -8,23 +8,19 @@ interface Props {
 }
 
 export default class InfoDisplayMoves extends React.Component<Props> {
+
 	render() {
-		const moves: string[] = [];
-		const flavorText: string[] = [];
-		let movesIndex: number = 0;
+		// const moves: string[] = [];
+		// const flavorText: string[] = [];
+		// let movesIndex: number = 0;
 
-		this.props.pokemon.moves?.forEach(move => {
-			moves.push(move.move.name);
-		});
+		// this.props.pokemon.moves?.forEach(move => {
+		// 	moves.push(move.move.name);
+		// });
 
-		this.props.pokemon.movesFlavorText?.forEach(text => {
-			flavorText.push(text);
-		});
-
-		function createFlavorText(i: number) {
-			movesIndex++;
-			return flavorText[i];
-		}
+		// this.props.pokemon.movesFlavorText?.forEach(text => {
+		// 	flavorText.push(text);
+		// });
 
 		return (
 			<div style={displayStyle}>
@@ -32,7 +28,7 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 
 				<div style={movesListStyle}>
 					{this.props.pokemon.moves?.map(move => (
-						<Move url={move.move.url} />
+						<Move key={move.move.name} url={move.move.url} />
 					))}
 				</div>
 			</div>
@@ -75,12 +71,12 @@ const movesListStyle: React.CSSProperties = {
 	overflowY: "scroll"
 };
 
-const nameStyle: React.CSSProperties = {
-	fontWeight: "bold",
-	textTransform: "uppercase",
-	listStyleType: "none",
-};
-const flavorTextStyle: React.CSSProperties = {
-	fontWeight: "normal",
-	textTransform: "none"
-};
+// const nameStyle: React.CSSProperties = {
+// 	fontWeight: "bold",
+// 	textTransform: "uppercase",
+// 	listStyleType: "none",
+// };
+// const flavorTextStyle: React.CSSProperties = {
+// 	fontWeight: "normal",
+// 	textTransform: "none"
+// };
