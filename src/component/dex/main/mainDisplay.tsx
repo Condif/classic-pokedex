@@ -20,6 +20,7 @@ export default class MainDisplay extends React.Component<Props> {
 					}>
 						{this.props.children}
 						<PokeSprite image={this.props.sprite} />
+					</Suspense>
 						<h2 style={nameStyle}>{this.props.name}</h2>
 						<div style={whWrapperStyle}>
 							<p style={whStyle}>height</p>
@@ -27,7 +28,6 @@ export default class MainDisplay extends React.Component<Props> {
 							<p style={whStyle}>weight</p>
 							<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
 						</div>
-					</Suspense>
 				</div>
 			</div>
 		);
