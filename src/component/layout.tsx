@@ -12,7 +12,7 @@ import TeamBuilder from "./team/teamBuilder";
 const history = createBrowserHistory();
 
 interface Props {
-	isDesktop: boolean
+	isDesktop: boolean;
 }
 interface State {
 	lastPokemon: string;
@@ -176,7 +176,9 @@ export default class Layout extends React.Component<Props, State> {
 		return (
 			<Switch>
 				<Route path="/hej">
-					<TeamBuilder />
+					<div style={layoutWrapperStyle}>
+						<TeamBuilder />
+					</div>
 				</Route>
 				<Route path="/">
 					<div style={layoutWrapperStyle}>
