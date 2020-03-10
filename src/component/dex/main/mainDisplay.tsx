@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import PokeLoad from './PokeLoad'
+import PokeLoad from '../PokeLoad'
 
 const PokeSprite = React.lazy(() =>
 import ('./PokeSprite'))
