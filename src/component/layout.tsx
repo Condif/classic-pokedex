@@ -147,7 +147,6 @@ export default class Layout extends React.Component<Props, State> {
 								UP
 							</button>
 						</div>
-
 						<div style={layoutStyle}>
 							<MainDex
 								pokemon={this.state.currentPokemon}
