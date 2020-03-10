@@ -1,4 +1,8 @@
-import * as React from "react";
+import React, { Suspense } from "react";
+import PokeLoad from './PokeLoad'
+
+const PokeSprite = React.lazy(() =>
+import ('./PokeSprite'))
 
 interface Props {
 	sprite: any;
@@ -12,7 +16,13 @@ export default class MainDisplay extends React.Component<Props> {
 			<div style={{ ...outerDisplayStyle, ...center }}>
 				<div style={innerDisplayStyle}>
 					{this.props.children}
-					<img src={this.props.sprite} alt="sprite" style={imageStyle} />
+					<Suspense fallback={
+						<PokeLoad />
+					}>
+					{/* <Suspense fallback={<div>...loading</div>}> */}
+						<PokeSprite image={this.props.sprite} />
+					</Suspense>
+					{/* <img src={this.props.sprite} alt="sprite" style={imageStyle} /> */}
 					<h2 style={nameStyle}>{this.props.name}</h2>
 					<div style={whWrapperStyle}>
 						<p style={whStyle}>height</p>
@@ -105,11 +115,11 @@ const whValueStyle: React.CSSProperties = {
 	borderBottom: ".1rem solid #555"
 };
 
-const imageStyle: React.CSSProperties = {
-	width: "75%",
-	objectFit: "cover",
-	imageRendering: "pixelated"
-};
+// const imageStyle: React.CSSProperties = {
+// 	width: "75%",
+// 	objectFit: "cover",
+// 	imageRendering: "pixelated"
+// };
 
 const center: React.CSSProperties = {
 	display: "flex",
