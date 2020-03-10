@@ -1,7 +1,11 @@
-import * as React from "react";
+import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
 import { normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy } from "../../css"
-import Abilities from "./infoAbilities";
+import PokeLoad from "../PokeLoad";
+// import Abilities from "./infoAbilities";
+
+const Abilities = React.lazy(() =>
+import('./infoAbilities'))
 
 interface Props {
 	pokemon: Pokemon;
@@ -55,6 +59,7 @@ export default class InfoDisplay extends React.Component<Props> {
 		});
 		return (
 			<div style={displayStyle}>
+				<Suspense fallback={ <PokeLoad />}>
 				<div style={bioWrapperStyle}>
 					<h4>Bio</h4>
 					<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
@@ -67,6 +72,7 @@ export default class InfoDisplay extends React.Component<Props> {
 					))}
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
+				</Suspense>
 			</div>
 		);
 	}
@@ -74,6 +80,7 @@ export default class InfoDisplay extends React.Component<Props> {
 
 const displayStyle: React.CSSProperties = {
 	height: "100%",
+	width: '90%',
 
 	maxWidth: "35rem",
 
