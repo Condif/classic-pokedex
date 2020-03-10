@@ -96,8 +96,11 @@ export default class Move extends React.Component<Props, State> {
 		}
 	};
 
-	render() {
+	componentDidMount() {
 		this.fetchFlavorText();
+	}
+
+	render() {
 		const type = this.giveType(this.state.type);
 
 		return (
