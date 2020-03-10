@@ -15,21 +15,19 @@ export default class MainDisplay extends React.Component<Props> {
 		return (
 			<div style={{ ...outerDisplayStyle, ...center }}>
 				<div style={innerDisplayStyle}>
-					{this.props.children}
 					<Suspense fallback={
 						<PokeLoad />
 					}>
-					{/* <Suspense fallback={<div>...loading</div>}> */}
+						{this.props.children}
 						<PokeSprite image={this.props.sprite} />
+						<h2 style={nameStyle}>{this.props.name}</h2>
+						<div style={whWrapperStyle}>
+							<p style={whStyle}>height</p>
+							<p style={whValueStyle}>{this.props.height / 10}&nbsp;m</p>
+							<p style={whStyle}>weight</p>
+							<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
+						</div>
 					</Suspense>
-					{/* <img src={this.props.sprite} alt="sprite" style={imageStyle} /> */}
-					<h2 style={nameStyle}>{this.props.name}</h2>
-					<div style={whWrapperStyle}>
-						<p style={whStyle}>height</p>
-						<p style={whValueStyle}>{this.props.height / 10}&nbsp;m</p>
-						<p style={whStyle}>weight</p>
-						<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
-					</div>
 				</div>
 			</div>
 		);
