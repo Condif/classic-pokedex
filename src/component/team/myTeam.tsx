@@ -129,7 +129,7 @@ const memberTextWrapper: React.CSSProperties = {
 	justifyContent: "center"
 };
 const memberName: React.CSSProperties = {
-	fontSize: "2rem",
+	fontSize: "1.5rem",
 	fontWeight: "bold",
 	color: "#333",
 

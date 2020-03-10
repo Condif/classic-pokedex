@@ -20,43 +20,43 @@ export default class TeamBuilder extends React.Component<Props, State> {
 					moves: ["ember", "punch", "baja", "snuggle"],
 					sprite:
 						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
+					type: ["fire","flying"]
+				},
+				{
+					name: "Sqquirtman",
+					moves: ["squirt", "fap", "nibble"],
+					sprite:
+						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
+					type: ["water",]
+				},
+				{
+					name: "Bubbazoor",
+					moves: ["snatch", "zoink", "nibble","YEET"],
+					sprite:
+						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
+					type: ["grass","poison"]
+				},
+				{
+					name: "Kalaschnikorv",
+					moves: ["pew", "bang", "pom","krack"],
+					sprite:
+						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
 					type: ["fire"]
 				},
-				// {
-				// 	name: "Sqquirtman",
-				// 	moves: ["squirt", "fap", "nibble"],
-				// 	sprite:
-				// 		"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
-				// 	type: ["water"]
-				// },
-				// {
-				// 	name: "Bubbazoor",
-				// 	moves: ["snatch", "zoink", "nibble","YEET"],
-				// 	sprite:
-				// 		"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
-				// 	type: ["grass"]
-				// },
-				// {
-				// 	name: "Kalaschnikorv",
-				// 	moves: ["pew", "bang", "pom","krack"],
-				// 	sprite:
-				// 		"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
-				// 	type: ["fire"]
-				// },
-				// {
-				// 	name: "Tjorv",
-				// 	moves: ["nuzz", "snugg", "smil"],
-				// 	sprite:
-				// 		"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
-				// 	type: ["water"]
-				// },
-				// {
-				// 	name: "Tjomme",
-				// 	moves: ["parabol", "kiosk", "citronsaft", "ligma"],
-				// 	sprite:
-				// 		"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
-				// 	type: ["grass"]
-				// },
+				{
+					name: "Tjorv",
+					moves: ["nuzz", "snugg", "smil"],
+					sprite:
+						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
+					type: ["water"]
+				},
+				{
+					name: "Tjomme",
+					moves: ["parabol", "kiosk", "citronsaft", "ligma"],
+					sprite:
+						"https://pngimage.net/wp-content/uploads/2018/06/missingno-png.png",
+					type: ["grass"]
+				},
 			]
 		};
 	}
@@ -66,6 +66,7 @@ export default class TeamBuilder extends React.Component<Props, State> {
 
 		this.state.myTeam.forEach(pokemon => {
 			teamTypes.push(pokemon.type[0])
+			teamTypes.push(pokemon.type[1])
 			
 		});
 		return teamTypes
