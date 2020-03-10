@@ -48,10 +48,6 @@ export default class InfoDisplay extends React.Component<Props> {
 		}
 	};
 
-	// componentDidMount() {
-
-	// }
-
 	render() {
 		const types: string[] = [];
 		this.props.pokemon.types?.forEach(type => {
