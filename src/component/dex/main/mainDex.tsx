@@ -37,7 +37,6 @@ export default class MainDex extends React.Component<Props> {
 
 const mainStyle: React.CSSProperties = {
 	width: "55%",
-
 	display: "flex",
 	flexDirection: "column",
 	justifyContent:	"space-between",
@@ -45,10 +44,9 @@ const mainStyle: React.CSSProperties = {
 
 };
 const idNavpadWrapper: React.CSSProperties = {
-	width: "100%",
-
+	width: "80%",
 	display: "flex",
-	justifyContent: "space-evenly",
+	justifyContent: "space-between",
 	alignItems: "center",
 	flexWrap: "wrap",
 };

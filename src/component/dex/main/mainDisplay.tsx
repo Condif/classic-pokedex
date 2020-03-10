@@ -29,13 +29,13 @@ export default class MainDisplay extends React.Component<Props> {
 const outerDisplayStyle: React.CSSProperties = {
 	position: "relative",
 
-	marginTop: "6rem",
+	margin: "4rem 0 1rem 0",
 
 	width: "80%",
 	maxWidth: "37rem",
 	minWidth: "10rem",
 
-	height: "70%",
+	height: "65%",
 	maxHeight: "30rem",
 	minHeight: "15rem",
 
