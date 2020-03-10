@@ -7,10 +7,13 @@ import { Pokemon } from "../types";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
+import TeamBuilder from "./team/teamBuilder";
 
 const history = createBrowserHistory();
 
-interface Props {}
+interface Props {
+	isDesktop: boolean;
+}
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
@@ -36,7 +39,8 @@ export default class Layout extends React.Component<Props, State> {
 	async componentDidMount() {
 		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio);
+		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 	}
 
 	upState = async () => {
@@ -62,18 +66,19 @@ export default class Layout extends React.Component<Props, State> {
 		const pokemon = await this.fetchPokeData(newId);
 		this.updateUrlHistory(pokemon.name);
 		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio)
+		this.setPokemonInState(pokemon, pokemonBio, null);
 	}
 
-	fetchMovesState = async () => {
+	fetchMovesState = async (pokemon: any) => {
 		const id = this.state.currentPokemon.id;
 		if (id !== undefined) {
 			if (id > 1) {
 				const newId = "/" + id.toString();
 				const pokemon = await this.fetchPokeData(newId);
-				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-				this.setPokemonInState(pokemon, pokemonBio);
+				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 
+				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
+				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 			}
 		}
 	};
@@ -85,27 +90,62 @@ export default class Layout extends React.Component<Props, State> {
 	};
 
 	fetchPokeDataSpecies = async (pokemon: any) => {
-        const pokemonId = "/" + pokemon.id
-        let pokeFlavor: string = '';
-        if (pokemon.species) {
-            const resSpecies = await axios.get("https://pokeapi.co/api/v2/pokemon-species" + pokemonId);
-            const bioList = resSpecies.data.flavor_text_entries
-            bioList.some((bioText: any) => {
-                if (bioText !== undefined && bioText !== null && bioText.language.name === 'en') {
-                    pokeFlavor = bioText.flavor_text    
-                }
-                return pokeFlavor;
-            });
-        } else {
-            return pokeFlavor = ''
-        }
-        
-        return pokeFlavor;
-    };
+		const pokemonId = "/" + pokemon.id;
+		let pokeFlavor: string = "";
+		if (pokemon.species) {
+			const resSpecies = await axios.get(
+				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
+			);
+			const bioList = resSpecies.data.flavor_text_entries;
+			bioList.some((bioText: any) => {
+				if (
+					bioText !== undefined &&
+					bioText !== null &&
+					bioText.language.name === "en"
+				) {
+					pokeFlavor = bioText.flavor_text;
+				}
+				return pokeFlavor;
+			});
+		} else {
+			return (pokeFlavor = "");
+		}
+
+		return pokeFlavor;
+	};
+
+	fetchPokeDataMoves = async (pokemon: any) => {
+		let listOfMovesUrls: string[] = [];
+		let pokemonMovesList: [] = pokemon.moves;
+		let engMoveFlavor: string[] = [];
+
+		for (let i: number = 0; i < pokemonMovesList.length; i++) {
+			listOfMovesUrls.push(pokemon.moves[i].move.url);
+		}
+		for (let i: number = 0; i < 746; i++) {
+			for (let index: number = 0; index < listOfMovesUrls.length; index++) {
+				if (
+					listOfMovesUrls[index].includes(
+						"https://pokeapi.co/api/v2/move/" + i + "/"
+					)
+				) {
+					const getPokemonMoves = await axios.get(
+						"https://pokeapi.co/api/v2/move/" + i + "/"
+					);
+					const dataPokemonMoves = getPokemonMoves.data;
+					engMoveFlavor.push(
+						dataPokemonMoves.flavor_text_entries[2].flavor_text
+					);
+				}
+			}
+		}
+		return engMoveFlavor;
+	};
 
 	setPokemonInState(
 		pokemon: any,
 		pokemonBio: any,
+		pokemonMovesFlavorText: any
 	) {
 		this.setState({
 			lastPokemon: pokemon.id,
@@ -119,6 +159,7 @@ export default class Layout extends React.Component<Props, State> {
 				abilities: pokemon.abilities,
 				pokemonBio: pokemonBio,
 				moves: pokemon.moves,
+				movesFlavorText: pokemonMovesFlavorText
 			}
 		});
 	}
@@ -134,27 +175,34 @@ export default class Layout extends React.Component<Props, State> {
 	render() {
 		return (
 			<Switch>
-				<Route exact path="/hej">
-					{/* <TeamBuilder /> */}
+				<Route path="/hej">
+					<div style={layoutWrapperStyle}>
+						<TeamBuilder />
+					</div>
 				</Route>
 				<Route path="/">
 					<div style={layoutWrapperStyle}>
-						<div style={buttWrapperStyle}>
-							<button style={buttStyle} onClick={this.downState}>
-								DOWN
-							</button>
-							<button style={buttStyle} onClick={this.upState}>
-								UP
-							</button>
-						</div>
-
-						<div style={layoutStyle}>
-							<MainDex
-								pokemon={this.state.currentPokemon}
-								searchClick={this.handleSearchClick}
-							/>
-							<InfoDex pokemon={this.state.currentPokemon} />
-						</div>
+						{this.props.isDesktop ? (
+							<div style={layoutStyle}>
+								<MainDex
+									pokemon={this.state.currentPokemon}
+									searchClick={this.handleSearchClick}
+								/>
+								<InfoDex pokemon={this.state.currentPokemon} />
+							</div>
+						) : (
+							<Switch>
+								<Route path="/">
+									<MainDex
+										pokemon={this.state.currentPokemon}
+										searchClick={this.handleSearchClick}
+									/>
+								</Route>
+								<Route path="/info">
+									<InfoDex pokemon={this.state.currentPokemon} />
+								</Route>
+							</Switch>
+						)}
 					</div>
 				</Route>
 			</Switch>
