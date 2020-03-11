@@ -10,41 +10,41 @@ export default class InfoDisplay extends React.Component<Props> {
 	typeColor = (type: string) => {
 		switch (type) {
 			case "normal":
-				return <p style={{ ...typeTextStyle, ...normal }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...normal }}>{type}</p>;
 			case "fire":
-				return <p style={{ ...typeTextStyle, ...fire }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...fire }}>{type}</p>;
 			case "water":
-				return <p style={{ ...typeTextStyle, ...water }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...water }}>{type}</p>;
 			case "electric":
-				return <p style={{ ...typeTextStyle, ...electric }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...electric }}>{type}</p>;
 			case "grass":
-				return <p style={{ ...typeTextStyle, ...grass }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...grass }}>{type}</p>;
 			case "ice":
-				return <p style={{ ...typeTextStyle, ...ice }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...ice }}>{type}</p>;
 			case "fighting":
-				return <p style={{ ...typeTextStyle, ...fighting }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...fighting }}>{type}</p>;
 			case "poison":
-				return <p style={{ ...typeTextStyle, ...poison }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...poison }}>{type}</p>;
 			case "ground":
-				return <p style={{ ...typeTextStyle, ...ground }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...ground }}>{type}</p>;
 			case "flying":
-				return <p style={{ ...typeTextStyle, ...flying }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...flying }}>{type}</p>;
 			case "psychic":
-				return <p style={{ ...typeTextStyle, ...psychic }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...psychic }}>{type}</p>;
 			case "bug":
-				return <p style={{ ...typeTextStyle, ...bug }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...bug }}>{type}</p>;
 			case "rock":
-				return <p style={{ ...typeTextStyle, ...rock }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...rock }}>{type}</p>;
 			case "ghost":
-				return <p style={{ ...typeTextStyle, ...ghost }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...ghost }}>{type}</p>;
 			case "dragon":
-				return <p style={{ ...typeTextStyle, ...dragon }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...dragon }}>{type}</p>;
 			case "dark":
-				return <p style={{ ...typeTextStyle, ...dark }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...dark }}>{type}</p>;
 			case "steel":
-				return <p style={{ ...typeTextStyle, ...steel }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...steel }}>{type}</p>;
 			case "fairy":
-				return <p style={{ ...typeTextStyle, ...fairy }}>{type}</p>;
+				return <p key={type} style={{ ...typeTextStyle, ...fairy }}>{type}</p>;
 		}
 	};
 
@@ -63,7 +63,7 @@ export default class InfoDisplay extends React.Component<Props> {
 				<div style={abilityWrapperStyle}>
 					<h4>Abilities</h4>
 					{this.props.pokemon.abilities?.map(ability => (
-						<Abilities url={ability.ability.url} />
+						<Abilities key={ability.ability.name} url={ability.ability.url} />
 					))}
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>

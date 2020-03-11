@@ -96,8 +96,11 @@ export default class Move extends React.Component<Props, State> {
 		}
 	};
 
-	render() {
+	componentDidMount() {
 		this.fetchFlavorText();
+	}
+
+	render() {
 		const type = this.giveType(this.state.type);
 
 		return (
@@ -109,7 +112,7 @@ export default class Move extends React.Component<Props, State> {
 
 				{this.state.showFlavor && (
 					<div style={{ ...flavorTextStyle }}>
-						<h5>type : {this.state.type}</h5>
+						<h5 style={typeText}>type : {this.state.type}</h5>
 						<p>{this.state.flavor}</p>
 					</div>
 				)}
@@ -118,6 +121,12 @@ export default class Move extends React.Component<Props, State> {
 	}
 }
 
+const typeText: React.CSSProperties = {
+	fontWeight: "bold",
+	marginBottom: "0.2rem",
+	textTransform: "uppercase",
+	color: "#888"
+	};
 const test: React.CSSProperties = {
 
 	width: "1rem",

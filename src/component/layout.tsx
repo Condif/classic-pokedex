@@ -8,7 +8,6 @@ import { Pokemon, myPokemon } from "../types";
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
-import { type } from "os";
 
 const history = createBrowserHistory();
 
@@ -260,10 +259,9 @@ const layoutWrapperStyle: React.CSSProperties = {
 
 const layoutStyle: React.CSSProperties = {
 	width: "100%",
-	maxWidth: "70rem",
+	maxWidth: "60rem",
 	height: "100vh",
-	maxHeight: "50rem",
-
+	maxHeight: "40rem",
 	display: "flex",
 	justifyContent: "center",
 
