@@ -1,18 +1,19 @@
 import * as React from "react";
-
+import "../../mainDisplayStyle.css"
 interface Props {
 	sprite: any;
 	name: any;
 	weight: any;
 	height: any;
+	isDesktop: boolean;
 }
 
 
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
-			<div style={{ ...outerDisplayStyle, ...center }}>
-				<div style={innerDisplayStyle}>
+			<div className={`outerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
+				<div className={`innerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
 					{this.props.children}
 					<img src={this.props.sprite} alt="sprite" style={imageStyle} />
 					<h2 style={nameStyle}>{this.props.name}</h2>
@@ -27,41 +28,6 @@ export default class MainDisplay extends React.Component<Props> {
 		);
 	}
 }
-
-const outerDisplayStyle: React.CSSProperties = {
-	position: "relative",
-
-	margin: "4rem 0 1rem 0",
-
-	width: "80%",
-	maxWidth: "37rem",
-	minWidth: "10rem",
-
-	height: "65%",
-	maxHeight: "30rem",
-	minHeight: "15rem",
-
-	padding: "1.2rem",
-
-	background: "#e7e7e7",
-	borderRadius: ".5rem"
-};
-
-const innerDisplayStyle: React.CSSProperties = {
-	position: "relative",
-
-	width: "100%",
-	height: "100%",
-
-	background: "#272727",
-	borderRadius: ".5rem",
-
-	display: "flex",
-	flexDirection:"column",
-	justifyContent: "center",
-	alignItems: "center",
-	overflow: "hidden"
-};
 
 const nameStyle: React.CSSProperties = {
 	position: "absolute",

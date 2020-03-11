@@ -18,7 +18,7 @@
 
 /*Css for mainDisplay mobile */
 .mainDisplay.mobile {
-    width: 55%;
+    width: 80%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

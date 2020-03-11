@@ -8,6 +8,7 @@ import { Pokemon } from "../types";
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
+import "./layoutStyle.css"
 
 const history = createBrowserHistory();
 
@@ -176,14 +177,14 @@ export default class Layout extends React.Component<Props, State> {
 		return (
 			<Switch>
 				<Route path="/hej">
-					<div style={layoutWrapperStyle}>
+				<div className="layoutWrapperStyle">
 						<TeamBuilder />
 					</div>
 				</Route>
 				<Route path="/">
-					<div style={layoutWrapperStyle}>
+					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
-							<div style={layoutStyle}>
+							<div className="layoutStyle">
 								<MainDex
 									isDesktop={this.props.isDesktop}
 									pokemon={this.state.currentPokemon}
@@ -194,14 +195,19 @@ export default class Layout extends React.Component<Props, State> {
 						) : (
 							<Switch>
 								<Route path="/">
-									<MainDex
-										isDesktop={this.props.isDesktop}
-										pokemon={this.state.currentPokemon}
-										searchClick={this.handleSearchClick}
-									/>
+									<div className="layoutStyleMobile">
+										<MainDex
+											isDesktop={this.props.isDesktop}
+											pokemon={this.state.currentPokemon}
+											searchClick={this.handleSearchClick}
+										/>
+									</div>
 								</Route>
+								{/*Uppdaterar pokemon efter url vilket vilket gör att sidan kraschar med /info, kan använda link */}
 								<Route path="/info">
-									<InfoDex pokemon={this.state.currentPokemon} />
+									<div className="layoutStyleMobile">
+										<InfoDex pokemon={this.state.currentPokemon} />
+									</div>
 								</Route>
 							</Switch>
 						)}
@@ -212,36 +218,6 @@ export default class Layout extends React.Component<Props, State> {
 	}
 }
 
-const layoutWrapperStyle: React.CSSProperties = {
-	position: "relative",
-
-	width: "100%",
-	height: "100vh",
-
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-
-	backgroundColor: "#e7e7e7",
-	backgroundImage:
-		'url("https://www.transparenttextures.com/patterns/hexellence.png")'
-};
-
-const layoutStyle: React.CSSProperties = {
-	width: "100%",
-	maxWidth: "60rem",
-	height: "100vh",
-	maxHeight: "40rem",
-	display: "flex",
-	justifyContent: "center",
-
-	background: "#dc0a2d",
-	backgroundImage:
-		'url("https://www.transparenttextures.com/patterns/cartographer.png")',
-	borderRadius: "1rem",
-
-	boxShadow: "-.5rem .5rem .5rem #123"
-};
 
 const buttWrapperStyle: React.CSSProperties = {
 	position: "absolute",

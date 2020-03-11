@@ -24,6 +24,7 @@ export default class MainDex extends React.Component<Props> {
 				den false heter klassen mainDisplay.mobile */ }
 
 					<MainDisplay
+						isDesktop={this.props.isDesktop}
 						sprite={this.props.pokemon.sprites}
 						name={this.props.pokemon.name}
 						weight={this.props.pokemon.weight}
@@ -43,12 +44,3 @@ export default class MainDex extends React.Component<Props> {
 		);
 	}
 }
-
-
-const idNavpadWrapper: React.CSSProperties = {
-	width: "80%",
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	flexWrap: "wrap",
-};
