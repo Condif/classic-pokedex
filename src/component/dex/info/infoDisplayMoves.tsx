@@ -1,7 +1,11 @@
-import * as React from "react";
+import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
+import PokeLoad from "../PokeLoad";
 
-import Move from "./infoMove";
+// import Move from "./infoMove";
+
+const Move = React.lazy(() => 
+import('./infoMove'))
 
 interface Props {
 	pokemon: Pokemon;
@@ -14,12 +18,13 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 		return (
 			<div style={displayStyle}>
 				<h1 style={movesHeaderStyle}>Moves:</h1>
-
+				<Suspense fallback={ <PokeLoad /> }>
 				<div style={movesListStyle}>
 					{this.props.pokemon.moves?.map(move => (
 						<Move key={move.move.name} url={move.move.url} />
 					))}
 				</div>
+				</Suspense>
 			</div>
 		);
 	}

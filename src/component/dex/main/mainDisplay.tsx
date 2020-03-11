@@ -1,5 +1,9 @@
-import * as React from "react";
+import React, { Suspense } from "react";
+import PokeLoad from '../PokeLoad'
 import "../../mainDisplayStyle.css"
+
+const PokeSprite = React.lazy(() =>
+import ('./PokeSprite'))
 interface Props {
 	sprite: any;
 	name: any;
@@ -8,14 +12,17 @@ interface Props {
 	isDesktop: boolean;
 }
 
-
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
 			<div className={`outerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
 				<div className={`innerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
-					{this.props.children}
-					<img src={this.props.sprite} alt="sprite" style={imageStyle} />
+					<Suspense fallback={
+						<PokeLoad />
+					}>
+						{this.props.children}
+						<PokeSprite image={this.props.name} />
+					</Suspense>
 					<h2 style={nameStyle}>{this.props.name}</h2>
 					<div style={whWrapperStyle}>
 						<p style={whStyle}>height</p>
@@ -25,6 +32,7 @@ export default class MainDisplay extends React.Component<Props> {
 					</div>
 				</div>
 			</div>
+
 		);
 	}
 }
@@ -73,11 +81,11 @@ const whValueStyle: React.CSSProperties = {
 	borderBottom: ".1rem solid #555"
 };
 
-const imageStyle: React.CSSProperties = {
-	width: "65%",
-	objectFit: "cover",
-	imageRendering: "pixelated"
-};
+// const imageStyle: React.CSSProperties = {
+// 	width: "65%",
+// 	objectFit: "cover",
+// 	imageRendering: "pixelated"
+// };
 
 const center: React.CSSProperties = {
 	display: "flex",

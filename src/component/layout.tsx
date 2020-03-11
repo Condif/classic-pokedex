@@ -11,7 +11,6 @@ import TeamBuilder from "./team/teamBuilder";
 import "./layoutStyle.css"
 
 const history = createBrowserHistory();
-
 interface Props {
 	isDesktop: boolean;
 }
@@ -19,6 +18,7 @@ interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
 }
+
 export default class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
@@ -33,15 +33,12 @@ export default class Layout extends React.Component<Props, State> {
 			currentPokemon: {
 				height: 0,
 				weight: 0
-			}
+			},
 		};
 	}
 
 	async componentDidMount() {
-		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+		this.updateNewPokemon(this.state.lastPokemon)
 	}
 
 	upState = async () => {
@@ -65,6 +62,8 @@ export default class Layout extends React.Component<Props, State> {
 
 	async updateNewPokemon(newId: string) {
 		const pokemon = await this.fetchPokeData(newId);
+		console.log(pokemon);
+		
 		this.updateUrlHistory(pokemon.name);
 		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 		this.setPokemonInState(pokemon, pokemonBio, null);
@@ -86,11 +85,23 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
-		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
-		return res.data;
+		const notFound = {
+			height: 404,
+			weight: 404,
+			id: 404,
+			name: 'MissingNo',
+		}
+		
+		try {
+			const res:any = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon)
+			return res.data;
+		} catch (error) {
+			return notFound
+		}
 	};
 
 	fetchPokeDataSpecies = async (pokemon: any) => {
+		
 		const pokemonId = "/" + pokemon.id;
 		let pokeFlavor: string = "";
 		if (pokemon.species) {
@@ -219,18 +230,18 @@ export default class Layout extends React.Component<Props, State> {
 }
 
 
-const buttWrapperStyle: React.CSSProperties = {
-	position: "absolute",
+// const buttWrapperStyle: React.CSSProperties = {
+// 	position: "absolute",
 
-	top: 0,
-	left: "50%",
-	transform: "translatex(-50%)"
-};
-const buttStyle: React.CSSProperties = {
-	padding: ".5rem",
-	margin: ".2rem",
+// 	top: 0,
+// 	left: "50%",
+// 	transform: "translatex(-50%)"
+// };
+// const buttStyle: React.CSSProperties = {
+// 	padding: ".5rem",
+// 	margin: ".2rem",
 
-	color: "#e7e7e7",
-	background: "#333",
-	border: ".3rem double #ee8866"
-};
+// 	color: "#e7e7e7",
+// 	background: "#333",
+// 	border: ".3rem double #ee8866"
+// };
