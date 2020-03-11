@@ -1,7 +1,33 @@
+
+/*Css for mainDisplay desktop */
 .mainDisplay {
-    background-color: orange
+    width: 55%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.box.hidden {
-    background-color: green;
+.idNavpadWrapper {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/*Css for mainDisplay mobile */
+.mainDisplay.mobile {
+    width: 55%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.idNavpadWrapper.mobile {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

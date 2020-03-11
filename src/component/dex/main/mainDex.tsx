@@ -13,32 +13,16 @@ interface Props {
 	isDesktop: boolean;
 }
 
-interface State {
-	isMainDisplayVisible: boolean;
-}
-
-export default class MainDex extends React.Component<Props, State> {
-
-	constructor (props: Props) {
-		super(props)
-		this.state = {
-			isMainDisplayVisible: false
-		}
-	}
+export default class MainDex extends React.Component<Props> {
 	
-	toggleBox = () => {
-		this.setState(prevState => ({ isMainDisplayVisible:
-		!prevState.isMainDisplayVisible}));
-	};
-
 	render() {
-		const { isMainDisplayVisible } = this.state;
-
+		
 		return (
-			<div className="mainDisplay" /*style={mainStyle}*/>
-				<button onClick={this.toggleBox}>Show Maindisplay</button>
-				
-				<div className={`box ${isMainDisplayVisible ?  "" : "hidden"}`}>
+			<div className={`mainDisplay ${this.props.isDesktop ? "" : "mobile"}`}>
+				{/*Klassen får  ett namn beroende på om
+				boolean är true eller false, är den true heter classen mainDisplay, är
+				den false heter klassen mainDisplay.mobile */ }
+
 					<MainDisplay
 						sprite={this.props.pokemon.sprites}
 						name={this.props.pokemon.name}
@@ -50,24 +34,17 @@ export default class MainDex extends React.Component<Props, State> {
 						placeHolder="Search for a pokemon..."
 						/>
 					</MainDisplay>
-					<div style={idNavpadWrapper}>
+					<div className={`idNavpadWrapper ${this.props.isDesktop ? "" : "mobile"}`}>
 						<MainID id={this.props.pokemon.id} />
 						<MainNavpad />
 					</div>
-				</div>
+				
 			</div>
 		);
 	}
 }
 
-const mainStyle: React.CSSProperties = {
-	width: "55%",
-	display: "flex",
-	flexDirection: "column",
-	justifyContent:	"space-between",
-	alignItems: "center",
 
-};
 const idNavpadWrapper: React.CSSProperties = {
 	width: "80%",
 	display: "flex",
