@@ -1,14 +1,24 @@
 import * as React from "react";
 
 interface Props {
-	id: any;
+	id: number | undefined
 }
 export default class MainID extends React.Component<Props> {
+
 	render() {
+		const id = this.props.id
 		return (
 			<div style={IdStyle}>
 				<p style={absoluteText}>ID</p>
-				<p style={idText}>0{this.props.id}</p>
+				{(id !== undefined && id < 10) && 
+					<p style={idText}>00{this.props.id}</p> 
+				}
+				{(id !== undefined && id >= 10 && id <= 100) && 
+					<p style={idText}>0{this.props.id}</p> 
+				}
+				{(id !== undefined && id > 99) && 
+					<p style={idText}>{this.props.id}</p> 
+				}
 			</div>
 		);
 	}

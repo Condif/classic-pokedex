@@ -1,74 +1,41 @@
 import React, { Suspense } from "react";
 import PokeLoad from '../PokeLoad'
+import "../../mainDisplayStyle.css"
 
 const PokeSprite = React.lazy(() =>
 import ('./PokeSprite'))
-
 interface Props {
 	sprite: any;
 	name: any;
 	weight: any;
 	height: any;
+	isDesktop: boolean;
 }
 
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
-			<div style={{ ...outerDisplayStyle, ...center }}>
-				<div style={innerDisplayStyle}>
+			<div className={`outerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
+				<div className={`innerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
 					<Suspense fallback={
 						<PokeLoad />
 					}>
 						{this.props.children}
 						<PokeSprite image={this.props.name} />
 					</Suspense>
-						<h2 style={nameStyle}>{this.props.name}</h2>
-						<div style={whWrapperStyle}>
-							<p style={whStyle}>height</p>
-							<p style={whValueStyle}>{this.props.height / 10}&nbsp;m</p>
-							<p style={whStyle}>weight</p>
-							<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
-						</div>
+					<h2 style={nameStyle}>{this.props.name}</h2>
+					<div style={whWrapperStyle}>
+						<p style={whStyle}>height</p>
+						<p style={whValueStyle}>{this.props.height / 10}&nbsp;m</p>
+						<p style={whStyle}>weight</p>
+						<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
+					</div>
 				</div>
 			</div>
+
 		);
 	}
 }
-
-const outerDisplayStyle: React.CSSProperties = {
-	position: "relative",
-
-	margin: "4rem 0 1rem 0",
-
-	width: "80%",
-	maxWidth: "37rem",
-	minWidth: "10rem",
-
-	height: "65%",
-	maxHeight: "30rem",
-	minHeight: "15rem",
-
-	padding: "1.2rem",
-
-	background: "#e7e7e7",
-	borderRadius: ".5rem"
-};
-
-const innerDisplayStyle: React.CSSProperties = {
-	position: "relative",
-
-	width: "100%",
-	height: "100%",
-
-	background: "#272727",
-	borderRadius: ".5rem",
-
-	display: "flex",
-	flexDirection:"column",
-	justifyContent: "center",
-	alignItems: "center",
-	overflow: "hidden"
-};
 
 const nameStyle: React.CSSProperties = {
 	position: "absolute",
