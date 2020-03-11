@@ -6,6 +6,8 @@ interface Props {
 	weight: any;
 	height: any;
 }
+
+
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
