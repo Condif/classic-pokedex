@@ -1,14 +1,20 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
-export default class MainNavpad extends React.Component {
+interface Props {
+	idUp: () => void;
+	idDown: () => void;
+}
+
+export default class MainNavpad extends React.Component<Props> {
 	render() {
 		return (
 			<div style={navpadStyle}>
-				<button style={{ ...u, ...btn }}></button>
+				<button style={{ ...u, ...btn }} onClick={this.props.idUp}></button>
 				<button style={{ ...r, ...btn }}></button>
-				<button style={{ ...btn, ...m }}></button>
-				<button style={{ ...d, ...btn }}></button>
+				<Link to="/hej"style={{ ...btn, ...m }}></Link>
 				<button style={{ ...l, ...btn }}></button>
+				<button style={{ ...d, ...btn }} onClick={this.props.idDown}></button>
 			</div>
 		);
 	}
@@ -45,7 +51,7 @@ const l: React.CSSProperties = {
 	borderRadius: ".5rem 0 0 .5rem"
 };
 const m: React.CSSProperties = {
-	gridArea: "m",
+	gridArea: "m"
 	// borderRadius:"50%",
 };
 

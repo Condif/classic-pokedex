@@ -87,7 +87,6 @@ export default class TeamWeak extends React.Component<Props, State> {
 		const weakList = typeRes.data.damage_relations.double_damage_from;
 
 		weakList.forEach((type: any) => {
-			console.log(type.name);
 			switch (type.name) {
 				case "normal":
 					this.setState({ normal: [...this.state.normal, [""]] });
@@ -146,7 +145,6 @@ export default class TeamWeak extends React.Component<Props, State> {
 			}
 		});
 	};
-
 
 	generateSupers = () => {
 		const weakList: any = [];

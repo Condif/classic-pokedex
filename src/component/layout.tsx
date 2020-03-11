@@ -3,11 +3,12 @@ import axios from "axios";
 import { createBrowserHistory } from "history";
 import { Switch, Route } from "react-router-dom";
 
-import { Pokemon } from "../types";
+import { Pokemon, myPokemon } from "../types";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
+import { type } from "os";
 
 const history = createBrowserHistory();
 
@@ -17,6 +18,7 @@ interface Props {
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
+	myPokemon: myPokemon[];
 }
 export default class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -32,7 +34,9 @@ export default class Layout extends React.Component<Props, State> {
 			currentPokemon: {
 				height: 0,
 				weight: 0
-			}
+			},
+			myPokemon: [
+			]
 		};
 	}
 
@@ -172,12 +176,35 @@ export default class Layout extends React.Component<Props, State> {
 		this.updateNewPokemon(searchResult);
 	};
 
+	handleAddToTeam = (
+		addName: string,
+		addMoves: [],
+		addSprite: string,
+		addType: []
+	) => {
+		if(this.state.myPokemon.length < 6)
+		this.setState({
+			myPokemon: [
+				...this.state.myPokemon,
+				{
+					name: addName,
+					moves: addMoves,
+					sprite: addSprite,
+					types: addType
+				}
+			]
+		});
+		console.log(this.state.myPokemon);
+
+		//{ normal: [...this.state.normal, [""]] }
+	};
+
 	render() {
 		return (
 			<Switch>
 				<Route path="/hej">
 					<div style={layoutWrapperStyle}>
-						<TeamBuilder />
+						<TeamBuilder myPokemon={this.state.myPokemon} />
 					</div>
 				</Route>
 				<Route path="/">
@@ -187,6 +214,9 @@ export default class Layout extends React.Component<Props, State> {
 								<MainDex
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
+									addToTeam={this.handleAddToTeam}
+									idDown={this.downState}
+									idUp={this.upState}
 								/>
 								<InfoDex pokemon={this.state.currentPokemon} />
 							</div>
@@ -196,6 +226,9 @@ export default class Layout extends React.Component<Props, State> {
 									<MainDex
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
+										addToTeam={this.handleAddToTeam}
+										idDown={this.downState}
+										idUp={this.upState}
 									/>
 								</Route>
 								<Route path="/info">

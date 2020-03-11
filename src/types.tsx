@@ -15,7 +15,7 @@ export type myPokemon = {
 	name: string,
 	moves: string[]
 	sprite: string,
-	type: string[]
+	types: any[]
 }
 
 export type NavPage = "bio" | "moves"

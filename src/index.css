@@ -41,17 +41,19 @@ body ::-webkit-scrollbar-track-piece:start {
 	margin-top: 0.2rem;
 }
 
-
 /* -- -- -- */
-.teamMember:nth-child(2n){
-  transform: translateY(50%);
+.teamMember:nth-child(2n) {
+	transform: translateY(50%);
 }
 
 .teamWrapper :nth-child(2n) {
-  flex-direction: row-reverse;
+	flex-direction: row-reverse;
 }
-.teamWrapper :nth-child(2n) .imageWrapper button{
-  left:0;
+.teamWrapper :nth-child(2n) p {
+	text-align: left !important;
+}
+.teamWrapper :nth-child(2n) .imageWrapper button {
+	left: 0;
 }
 
 /* .removeButton:nth-child(2n) {

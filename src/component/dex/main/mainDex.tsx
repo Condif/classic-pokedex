@@ -9,26 +9,40 @@ import SearchBar from "./searchBar";
 interface Props {
 	pokemon: Pokemon;
 	searchClick: (searchReasult: string) => void;
+	addToTeam: (name: any, moves: any, sprite: any, type: any) => void;
+	idUp: () => void;
+	idDown: () => void;
 }
 
 export default class MainDex extends React.Component<Props> {
+	onClick = () => {
+		this.props.addToTeam(
+			this.props.pokemon.name,
+			["1","2","3","4"],
+			this.props.pokemon.sprites,
+			this.props.pokemon.types
+		);
+	};
+
 	render() {
 		return (
 			<div style={mainStyle}>
+				<button onClick={this.onClick} style={addStyle}>
+					+
+				</button>
 				<MainDisplay
 					sprite={this.props.pokemon.sprites}
 					name={this.props.pokemon.name}
 					weight={this.props.pokemon.weight}
-					height={this.props.pokemon.height}
-				>
+					height={this.props.pokemon.height}>
 					<SearchBar
-					searchClick={this.props.searchClick}
-					placeHolder="Search for a pokemon..."
+						searchClick={this.props.searchClick}
+						placeHolder="Search for a pokemon..."
 					/>
 				</MainDisplay>
 
 				<MainID id={this.props.pokemon.id} />
-				<MainNavpad />
+				<MainNavpad idDown={this.props.idDown} idUp={this.props.idUp}/>
 			</div>
 		);
 	}
@@ -40,5 +54,19 @@ const mainStyle: React.CSSProperties = {
 	display: "flex",
 	justifyContent: "space-evenly",
 	alignItems: "center",
-	flexWrap: "wrap",
+	flexWrap: "wrap"
+};
+
+const addStyle: React.CSSProperties = {
+	position: "absolute",
+	right: 0,
+	bottom: 0,
+
+	height: "2rem",
+	width: "2rem",
+
+	padding: ".5rem",
+	margin: "1rem",
+
+	textAlign: "center"
 };

@@ -17,8 +17,6 @@ export default class MyTeam extends React.Component<Props, State> {
 		};
 	}
 
-	
-
 	imageClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 		console.log(event.target);
 	};
@@ -59,7 +57,9 @@ export default class MyTeam extends React.Component<Props, State> {
 									src={member.sprite}
 									style={imgStyle}
 									onClick={this.imageClick}></img>
-								<button style={removeButton} onClick={this.removeMember}></button>
+								<button
+									style={removeButton}
+									onClick={this.removeMember}></button>
 							</div>
 						</div>
 					);
@@ -92,23 +92,36 @@ const memberStyle: React.CSSProperties = {
 };
 
 const imageWrapper: React.CSSProperties = {
-	position: "relative"
+	position: "relative",
+
+	height: "8rem",
+	width: "8rem",
+
+	border: ".1rem solid #272727",
+	borderRadius: ".1rem",
+
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+
+	overflow: "hidden"
 };
 const imgStyle: React.CSSProperties = {
-	height: "8rem",
 	padding: ".5rem",
 	margin: ".5rem",
 
-	background: "#ff562288",
+	background: "#1238",
 
-	objectFit: "contain"
+	objectFit: "contain",
+
+	transform: "scale(1.2)"
 };
 const removeButton: React.CSSProperties = {
 	position: "absolute",
 	top: 0,
 	right: 0,
 
-	margin: "1rem",
+	margin: ".5rem",
 
 	height: ".4rem",
 	width: "1.2rem",
@@ -119,6 +132,8 @@ const removeButton: React.CSSProperties = {
 };
 
 const memberTextWrapper: React.CSSProperties = {
+	position: "relative",
+
 	width: "70%",
 	height: "100%",
 
@@ -129,6 +144,7 @@ const memberTextWrapper: React.CSSProperties = {
 	justifyContent: "center"
 };
 const memberName: React.CSSProperties = {
+	textAlign: "right",
 	fontSize: "1.5rem",
 	fontWeight: "bold",
 	color: "#333",
