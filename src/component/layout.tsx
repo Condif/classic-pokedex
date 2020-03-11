@@ -62,26 +62,11 @@ export default class Layout extends React.Component<Props, State> {
 
 	async updateNewPokemon(newId: string) {
 		const pokemon = await this.fetchPokeData(newId);
-		console.log(pokemon);
 		
 		this.updateUrlHistory(pokemon.name);
 		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, null);
+		this.setPokemonInState(pokemon, pokemonBio)
 	}
-
-	fetchMovesState = async (pokemon: any) => {
-		const id = this.state.currentPokemon.id;
-		if (id !== undefined) {
-			if (id > 1) {
-				const newId = "/" + id.toString();
-				const pokemon = await this.fetchPokeData(newId);
-				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-
-				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
-			}
-		}
-	};
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
@@ -126,38 +111,9 @@ export default class Layout extends React.Component<Props, State> {
 		return pokeFlavor;
 	};
 
-	fetchPokeDataMoves = async (pokemon: any) => {
-		let listOfMovesUrls: string[] = [];
-		let pokemonMovesList: [] = pokemon.moves;
-		let engMoveFlavor: string[] = [];
-
-		for (let i: number = 0; i < pokemonMovesList.length; i++) {
-			listOfMovesUrls.push(pokemon.moves[i].move.url);
-		}
-		for (let i: number = 0; i < 746; i++) {
-			for (let index: number = 0; index < listOfMovesUrls.length; index++) {
-				if (
-					listOfMovesUrls[index].includes(
-						"https://pokeapi.co/api/v2/move/" + i + "/"
-					)
-				) {
-					const getPokemonMoves = await axios.get(
-						"https://pokeapi.co/api/v2/move/" + i + "/"
-					);
-					const dataPokemonMoves = getPokemonMoves.data;
-					engMoveFlavor.push(
-						dataPokemonMoves.flavor_text_entries[2].flavor_text
-					);
-				}
-			}
-		}
-		return engMoveFlavor;
-	};
-
 	setPokemonInState(
 		pokemon: any,
 		pokemonBio: any,
-		pokemonMovesFlavorText: any
 	) {
 		this.setState({
 			lastPokemon: pokemon.id,
@@ -171,7 +127,6 @@ export default class Layout extends React.Component<Props, State> {
 				abilities: pokemon.abilities,
 				pokemonBio: pokemonBio,
 				moves: pokemon.moves,
-				movesFlavorText: pokemonMovesFlavorText
 			}
 		});
 	}

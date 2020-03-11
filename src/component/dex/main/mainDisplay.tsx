@@ -87,8 +87,3 @@ const whValueStyle: React.CSSProperties = {
 // 	imageRendering: "pixelated"
 // };
 
-const center: React.CSSProperties = {
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center"
-};
