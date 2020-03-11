@@ -10,6 +10,7 @@ interface Props {
 	weight: any;
 	height: any;
 }
+
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
@@ -19,7 +20,7 @@ export default class MainDisplay extends React.Component<Props> {
 						<PokeLoad />
 					}>
 						{this.props.children}
-						<PokeSprite image={this.props.sprite} />
+						<PokeSprite image={this.props.name} />
 					</Suspense>
 						<h2 style={nameStyle}>{this.props.name}</h2>
 						<div style={whWrapperStyle}>
@@ -113,11 +114,11 @@ const whValueStyle: React.CSSProperties = {
 	borderBottom: ".1rem solid #555"
 };
 
-const imageStyle: React.CSSProperties = {
-	width: "65%",
-	objectFit: "cover",
-	imageRendering: "pixelated"
-};
+// const imageStyle: React.CSSProperties = {
+// 	width: "65%",
+// 	objectFit: "cover",
+// 	imageRendering: "pixelated"
+// };
 
 const center: React.CSSProperties = {
 	display: "flex",
