@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { myPokemon } from "../../types";
+import { TeamPokemons } from "../../types";
 
 interface Props {
-	myTeam: myPokemon[];
+	myTeam: TeamPokemons[];
 }
 interface State {
 	chosenpokemon: any;
@@ -21,7 +21,6 @@ export default class MyTeam extends React.Component<Props, State> {
 		console.log(event.target);
 	};
 	removeMember = () => {
-		console.log("remove Member");
 	};
 
 	render() {

@@ -16,12 +16,14 @@ interface Props {
 
 export default class MainDex extends React.Component<Props> {
 	onClick = () => {
+
 		this.props.addToTeam(
 			this.props.pokemon.name,
-			["1","2","3","4"],
+			["move : 1", "move : 2", "move : 3", "move : 4"],
 			this.props.pokemon.sprites,
 			this.props.pokemon.types
 		);
+		
 	};
 
 	render() {
@@ -30,6 +32,7 @@ export default class MainDex extends React.Component<Props> {
 				<button onClick={this.onClick} style={addStyle}>
 					+
 				</button>
+
 				<MainDisplay
 					sprite={this.props.pokemon.sprites}
 					name={this.props.pokemon.name}
@@ -40,9 +43,10 @@ export default class MainDex extends React.Component<Props> {
 						placeHolder="Search for a pokemon..."
 					/>
 				</MainDisplay>
+
 				<div style={idNavpadWrapper}>
 					<MainID id={this.props.pokemon.id} />
-					<MainNavpad  idDown={this.props.idDown} idUp={this.props.idUp}/>
+					<MainNavpad idDown={this.props.idDown} idUp={this.props.idUp} />
 				</div>
 			</div>
 		);
@@ -53,9 +57,8 @@ const mainStyle: React.CSSProperties = {
 	width: "55%",
 	display: "flex",
 	flexDirection: "column",
-	justifyContent:	"space-between",
-	alignItems: "center",
-
+	justifyContent: "space-between",
+	alignItems: "center"
 };
 const idNavpadWrapper: React.CSSProperties = {
 	width: "80%",
@@ -69,7 +72,7 @@ const addStyle: React.CSSProperties = {
 	position: "absolute",
 	right: 0,
 	bottom: 0,
-	zIndex:1000,
+	zIndex: 1000,
 
 	height: "2rem",
 	width: "2rem",

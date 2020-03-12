@@ -93,7 +93,7 @@ class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
-		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemon);
+		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
 		return res.data;
 	};
 
@@ -189,57 +189,51 @@ class Layout extends React.Component<Props, State> {
 		console.log("added : ", addName);
 
 		if (this.state.myTeam.length < 6)
-			this.setState({
-				myTeam: [
-					...this.state.myTeam,
-					{
-						name: addName,
-						moves: addMoves,
-						sprite: addSprite,
-						types: addType
-					}
-				]
-			});
-
-		//{ normal: [...this.state.normal, [""]] }
+			this.setState(
+				{
+					myTeam: [
+						...this.state.myTeam,
+						{
+							name: addName,
+							moves: addMoves,
+							sprite: addSprite,
+							types: addType
+						}
+					]
+				}
+			);
 	};
 
 	async componentDidUpdate(prevProps: Props) {
-		// if (prevProps.location.pathname !== this.props.location.pathname) {
-		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
-		// }
-		console.log("updated", this.state.myTeam);
+		if (prevProps.location.pathname !== this.props.location.pathname) {
+
+			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+			const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
+			const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+			this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+		}
 
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
 	handleRemoveLast = () => {
-		console.log("remove last" + "\n", "before", this.state.myTeam);
 		this.setState({
 			myTeam: []
 		});
 	};
 	handleClearAll = () => {
-		console.log("clear all" + "\n", "before", this.state.myTeam);
 		this.setState(
 			{
 				myTeam: []
-			},
-			() => console.log("after", this.state.myTeam)
+			})
 		);
 	};
 
 	render() {
-		console.log(this.state.myTeam);
-
-		console.log("render layout");
 
 		return (
 			<Switch>
-				<Route path="/hej">
+				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
 						<TeamBuilder
 							myTeam={this.state.myTeam}

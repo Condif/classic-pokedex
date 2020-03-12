@@ -12,7 +12,7 @@ export default class MainNavpad extends React.Component<Props> {
 			<div style={navpadStyle}>
 				<button style={{ ...u, ...btn }} onClick={this.props.idUp}></button>
 				<button style={{ ...r, ...btn }}></button>
-				<Link to="/hej"style={{ ...btn, ...m }}></Link>
+				<Link to="/teamPage"style={{ ...btn, ...m }}></Link>
 				<button style={{ ...l, ...btn }}></button>
 				<button style={{ ...d, ...btn }} onClick={this.props.idDown}></button>
 			</div>
