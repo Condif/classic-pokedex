@@ -1,9 +1,14 @@
 import * as React from "react";
 import axios from "axios";
 import { createBrowserHistory } from "history";
-import { Switch, Route } from "react-router-dom";
+import {
+	Switch,
+	Route,
+	withRouter,
+	RouteComponentProps
+} from "react-router-dom";
 
-import { Pokemon, myPokemon } from "../types";
+import { Pokemon, TeamPokemons } from "../types";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
@@ -11,17 +16,18 @@ import TeamBuilder from "./team/teamBuilder";
 
 const history = createBrowserHistory();
 
-interface Props {
+interface Props extends RouteComponentProps {
 	isDesktop: boolean;
 }
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
-	myPokemon: myPokemon[];
+	myTeam: TeamPokemons[];
 }
-export default class Layout extends React.Component<Props, State> {
+class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+
 		const lastUrl =
 			history.location.pathname.slice(1) !== ""
 				? history.location.pathname
@@ -34,8 +40,7 @@ export default class Layout extends React.Component<Props, State> {
 				height: 0,
 				weight: 0
 			},
-			myPokemon: [
-			]
+			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]")
 		};
 	}
 
@@ -88,7 +93,7 @@ export default class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
-		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
+		const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemon);
 		return res.data;
 	};
 
@@ -181,29 +186,66 @@ export default class Layout extends React.Component<Props, State> {
 		addSprite: string,
 		addType: []
 	) => {
-		if(this.state.myPokemon.length < 6)
-		this.setState({
-			myPokemon: [
-				...this.state.myPokemon,
-				{
-					name: addName,
-					moves: addMoves,
-					sprite: addSprite,
-					types: addType
-				}
-			]
-		});
-		console.log(this.state.myPokemon);
+		console.log("added : ", addName);
+
+		if (this.state.myTeam.length < 6)
+			this.setState({
+				myTeam: [
+					...this.state.myTeam,
+					{
+						name: addName,
+						moves: addMoves,
+						sprite: addSprite,
+						types: addType
+					}
+				]
+			});
 
 		//{ normal: [...this.state.normal, [""]] }
 	};
 
+	async componentDidUpdate(prevProps: Props) {
+		// if (prevProps.location.pathname !== this.props.location.pathname) {
+		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
+		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
+		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+		// }
+		console.log("updated", this.state.myTeam);
+
+		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
+	}
+
+	handleRemoveLast = () => {
+		console.log("remove last" + "\n", "before", this.state.myTeam);
+		this.setState({
+			myTeam: []
+		});
+	};
+	handleClearAll = () => {
+		console.log("clear all" + "\n", "before", this.state.myTeam);
+		this.setState(
+			{
+				myTeam: []
+			},
+			() => console.log("after", this.state.myTeam)
+		);
+	};
+
 	render() {
+		console.log(this.state.myTeam);
+
+		console.log("render layout");
+
 		return (
 			<Switch>
 				<Route path="/hej">
 					<div style={layoutWrapperStyle}>
-						<TeamBuilder myPokemon={this.state.myPokemon} />
+						<TeamBuilder
+							myTeam={this.state.myTeam}
+							removeLast={this.handleRemoveLast}
+							clearAll={this.handleClearAll}
+						/>
 					</div>
 				</Route>
 				<Route path="/">
@@ -242,6 +284,8 @@ export default class Layout extends React.Component<Props, State> {
 	}
 }
 
+export default withRouter(Layout);
+
 const layoutWrapperStyle: React.CSSProperties = {
 	position: "relative",
 
@@ -259,9 +303,10 @@ const layoutWrapperStyle: React.CSSProperties = {
 
 const layoutStyle: React.CSSProperties = {
 	width: "100%",
-	maxWidth: "60rem",
+	maxWidth: "70rem",
 	height: "100vh",
-	maxHeight: "40rem",
+	maxHeight: "50rem",
+
 	display: "flex",
 	justifyContent: "center",
 
