@@ -2,13 +2,14 @@ import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
 import { normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy } from "../../css"
 import PokeLoad from "../PokeLoad";
+import GenerateBio from './GenerateBio'
 // import Abilities from "./infoAbilities";
 
 const Abilities = React.lazy(() =>
 import('./infoAbilities'))
 
 interface Props {
-	pokemon: Pokemon;
+	pokemon: Pokemon
 }
 export default class InfoDisplay extends React.Component<Props> {
 	typeColor = (type: string) => {
@@ -62,14 +63,14 @@ export default class InfoDisplay extends React.Component<Props> {
 				<Suspense fallback={ <PokeLoad />}>
 				<div style={bioWrapperStyle}>
 					<h4>Bio</h4>
-					<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
+					<GenerateBio pokeName={this.props.pokemon.name} />
 				</div>
 
 				<div style={abilityWrapperStyle}>
 					<h4>Abilities</h4>
-					{this.props.pokemon.abilities?.map(ability => (
+					{/* {this.props.pokemon.abilities?.map(ability => (
 						<Abilities key={ability.ability.name} url={ability.ability.url} />
-					))}
+					))} */}
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
 				</Suspense>
@@ -105,8 +106,6 @@ const bioWrapperStyle: React.CSSProperties = {
 	background: "#333",
 	border: ".3rem double #272727"
 
-};
-const bioStyle: React.CSSProperties = {
 };
 
 const abilityWrapperStyle: React.CSSProperties = {
