@@ -12,21 +12,10 @@
     font-size: 1.2rem;
 }
 
-
-
-/* searchResults for mobile */
-.searchResultTitle.mobile {
-    margin: .3rem 0 .2rem 0;
-    display: flex;
-    justify-content: space-evenly;
-    color: #d1d1d1;
-    font-size: 0.8rem;
-}
-
-.searchResultUL.mobile {
-    list-style: none;
-    color: #E7E7E7;
-    font-size: 0.8rem;
+@media screen and (max-width: 36rem) {
+    .searchResultTitle, .searchResultUL {
+        font-size:  0.8rem;
+    }
 }
 
 
