@@ -44,12 +44,13 @@
     .searchBarInput {
         height: 0.8rem;
         padding: 0.8rem;
-        font-size: 3vw;
+        font-size: 3.5vw;
     }
 }
 
-@media screen and (max-width: 54rem) {
+@media screen and (min-width: 36rem) {
     .searchBarInput {
-        font-size: 2vw;
+        font-size: 1rem;
     }
 }
+
