@@ -42,7 +42,7 @@ export default class MainDex extends React.Component<Props> {
 				</MainDisplay>
 				<div style={idNavpadWrapper}>
 					<MainID id={this.props.pokemon.id} />
-					<MainNavpad />
+					<MainNavpad  idDown={this.props.idDown} idUp={this.props.idUp}/>
 				</div>
 			</div>
 		);
@@ -69,6 +69,7 @@ const addStyle: React.CSSProperties = {
 	position: "absolute",
 	right: 0,
 	bottom: 0,
+	zIndex:1000,
 
 	height: "2rem",
 	width: "2rem",
