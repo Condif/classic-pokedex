@@ -23,12 +23,12 @@ export default class MainDisplay extends React.Component<Props> {
 						{this.props.children}
 						<PokeSprite image={this.props.name} />
 					</Suspense>
-					<h2 style={nameStyle}>{this.props.name}</h2>
-					<div style={whWrapperStyle}>
-						<p style={whStyle}>height</p>
-						<p style={whValueStyle}>{this.props.height / 10}&nbsp;m</p>
-						<p style={whStyle}>weight</p>
-						<p style={whValueStyle}>{this.props.weight / 10}&nbsp;kg</p>
+					<h2 className="nameStyle">{this.props.name}</h2>
+					<div className="whWrapperStyle">
+						<p className="whStyle">{"height "}</p>
+						<p className="whValueStyle">{this.props.height / 10}&nbsp;m</p>
+						<p className="whStyle">weight</p>
+						<p className="whValueStyle">{this.props.weight / 10}&nbsp;kg</p>
 					</div>
 				</div>
 			</div>
@@ -36,23 +36,6 @@ export default class MainDisplay extends React.Component<Props> {
 		);
 	}
 }
-
-const nameStyle: React.CSSProperties = {
-	position: "absolute",
-	bottom: '4.5rem',
-
-	// margin:"1rem",
-
-	width: "90%",
-
-	color: "#e7e7e7",
-
-	padding: "1rem .5rem 0 .5rem",
-	borderBottom: ".2rem solid #e7e7e7",
-
-	textTransform: "capitalize",
-	fontSize: "2rem"
-};
 
 const whWrapperStyle: React.CSSProperties = {
 	position:"absolute",
@@ -72,7 +55,7 @@ const whStyle: React.CSSProperties = {
 	margin: ".2rem",
 
 	borderRight: ".2rem solid #555",
-	textTransform: "capitalize"
+	textTransform: "capitalize",
 };
 const whValueStyle: React.CSSProperties = {
 	width: "40%",
