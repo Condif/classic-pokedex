@@ -39,9 +39,3 @@ const m: React.CSSProperties = {
 	gridArea: "m",
 	// borderRadius:"50%",
 };
-
-const btn: React.CSSProperties = {
-	outline: "none",
-	background: "#555",
-	border: ".5rem solid #333"
-};
