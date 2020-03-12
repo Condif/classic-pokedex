@@ -11,11 +11,12 @@ export type Pokemon = {
 	movesFlavorText?: any[];
 };
 
-export type myPokemon = {
-	name: string,
-	moves: string[]
-	sprite: string,
-	types: any[]
-}
+export type TeamPokemons = {
+	name: string;
+	moves: string[];
+	sprite: string;
+	types: any[];
+};
 
-export type NavPage = "bio" | "moves"
+export type NavPage = "bio" | "moves";
+export type Effect = "super" | "weak";
