@@ -187,54 +187,98 @@ class Layout extends React.Component<Props, State> {
 		addType: []
 	) => {
 		console.log("added : ", addName);
+		for (let i = 0; i < this.state.myTeam.length; i++) {
+			console.log(this.state.myTeam[i]);
 
-		if (this.state.myTeam.length < 6)
+			if (this.state.myTeam[i].empty) {
+				this.setState({
+					myTeam: this.state.myTeam.splice(i, 1)
+				});
+			} else if (this.state.myTeam.length < 6) {
+				console.log(this.state.myTeam);
+
+				// this.setState({
+				// 	myTeam: [
+				// 		...this.state.myTeam,
+				// 		{
+				// 			name: addName,
+				// 			moves: addMoves,
+				// 			sprite: addSprite,
+				// 			types: addType,
+				// 			empty: false
+				// 		}
+				// 	]
+				// });
+			}
+		}
+	};
+
+	generateEmpty = () => {
+		const emptySlots: number = (6 - this.state.myTeam.length) | 0;
+		console.log("empty slots :", emptySlots);
+
+		for (let i = 1; i <= emptySlots; i++) {
 			this.setState(
 				{
 					myTeam: [
 						...this.state.myTeam,
 						{
-							name: addName,
-							moves: addMoves,
-							sprite: addSprite,
-							types: addType
+							name: "empty",
+							moves: [],
+							sprite:
+								"http://www.pngall.com/wp-content/uploads/4/Pokemon-Pokeball-PNG-Photo.png",
+							types: [],
+							empty: true
 						}
 					]
 				}
+				// () => console.log("generate slot nr", i, this.state.myTeam)
 			);
+		}
 	};
 
 	async componentDidUpdate(prevProps: Props) {
 		if (prevProps.location.pathname !== this.props.location.pathname) {
-
 			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 			const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 			const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 			this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 		}
-
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
+	handleAddFake = () => {
+		console.log("clicked");
+		if (this.state.myTeam.length < 6) {
+			console.log("clicked");
+			this.state.myTeam.forEach(member => {
+				if(member.empty) {
+					console.log(member);
+					
+				}
+				
+			});
+		}
+	};
 	handleRemoveLast = () => {
+	};
+	handleClearAll = () => {
 		this.setState({
 			myTeam: []
 		});
 	};
-	handleClearAll = () => {
-		this.setState(
-			{
-				myTeam: []
-			})
-		);
-	};
 
 	render() {
+		this.generateEmpty();
+
+		console.log("render", this.state.myTeam);
 
 		return (
 			<Switch>
 				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
+						<button onClick={this.handleAddFake}>ADD 1 : fake</button>
+
 						<TeamBuilder
 							myTeam={this.state.myTeam}
 							removeLast={this.handleRemoveLast}

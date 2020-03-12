@@ -24,21 +24,24 @@ class TeamBuilder extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
+		// console.log("teamBuilder - mounted");
 		this.setState(
 			{
 				myTeam: this.props.myTeam
 			},
-			() => console.log("state changed on mount - teambuilder")
+			// () => this.generateEmpty()
 		);
 	}
 	componentDidUpdate() {
+		// console.log("teamBuilder - updated");
+
 		if (this.state.myTeam != this.props.myTeam) {
-			this.setState(
-				{
-					myTeam: this.props.myTeam
-				},
-				() => console.log("state changed on mount - teambuilder")
-			);
+			this.setState({
+				myTeam: this.props.myTeam
+			});
+		} else if(this.state.myTeam.length >= 6) {
+			
+			// this.generateEmpty();
 		}
 	}
 
@@ -54,8 +57,8 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	render() {
-		console.log("teambuilder - props", this.props.myTeam);
-		console.log("teambuilder - state", this.state.myTeam);
+		// console.log("render",this.state.myTeam);
+
 		return (
 			<div style={teamBuilderStyle}>
 				<TeamSuper teamTypes={this.returnTeamTypes()} />

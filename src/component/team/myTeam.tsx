@@ -20,8 +20,7 @@ export default class MyTeam extends React.Component<Props, State> {
 	imageClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 		console.log(event.target);
 	};
-	removeMember = () => {
-	};
+	removeMember = () => {};
 
 	render() {
 		return (
@@ -56,9 +55,11 @@ export default class MyTeam extends React.Component<Props, State> {
 									src={member.sprite}
 									style={imgStyle}
 									onClick={this.imageClick}></img>
-								<button
-									style={removeButton}
-									onClick={this.removeMember}></button>
+								{member.empty ? null : (
+									<button
+										style={removeButton}
+										onClick={this.removeMember}></button>
+								)}
 							</div>
 						</div>
 					);

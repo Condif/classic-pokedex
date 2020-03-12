@@ -16,6 +16,7 @@ export type TeamPokemons = {
 	moves: string[];
 	sprite: string;
 	types: any[];
+	empty?: boolean;
 };
 
 export type NavPage = "bio" | "moves";
