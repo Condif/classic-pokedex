@@ -126,15 +126,15 @@ export default class SearchBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className={`searchBarContainer ${this.props.isDesktop ? "" : "mobile"}`}>
-                <input type="text" id="searchField" className={`searchBarInput ${this.props.isDesktop ? "" : "mobile"}`} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+            <div className="searchBarContainer">
+                <input type="text" id="searchField" className="searchBarInput" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
                     <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
                             <p style={noResult}>No results</p>
                             : null
                         }
-                        <div className={`searchBarResultList ${this.props.isDesktop ? "" : "mobile"}`}>
+                        <div className="searchBarResultList">
                             {(this.state.showPokemon.pokeName.length > 0) ? 
                             <SearchResults title="matching name..." value={this.state.showPokemon.pokeName.length} isDesktop={this.props.isDesktop}>
                                 {this.state.showPokemon.pokeName}
