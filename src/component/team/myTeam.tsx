@@ -4,6 +4,7 @@ import { TeamPokemons } from "../../types";
 
 interface Props {
 	myTeam: TeamPokemons;
+	isDesktop: boolean;
 }
 interface State {
 	chosenpokemon: any;
@@ -23,13 +24,11 @@ export default class MyTeam extends React.Component<Props, State> {
 	removeMember = () => {};
 
 	render() {
-		// console.log(this.props.myTeam);
-
 		return (
-			<div style={teamWrapperStyle} className="teamWrapper">
+			<div
+				style={this.props.isDesktop ? teamWrapperStyle : teamWrapperStyleMobile}
+				className="teamWrapper">
 				{this.props.myTeam.map((member: any) => {
-					// console.log(member);
-
 					return (
 						<div style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
@@ -50,6 +49,7 @@ export default class MyTeam extends React.Component<Props, State> {
 									) : null}
 								</ul>
 							</div>
+
 							<div style={imageWrapper} className="imageWrapper">
 								<img
 									src={member.sprites.front_default}
@@ -69,6 +69,14 @@ export default class MyTeam extends React.Component<Props, State> {
 	}
 }
 
+const teamWrapperStyleMobile: React.CSSProperties = {
+	width: "100%",
+
+	display: "flex",
+	flexWrap: "wrap",
+	justifyContent: "space-around",
+	alignItems: "flex-start"
+};
 const teamWrapperStyle: React.CSSProperties = {
 	width: "60%",
 

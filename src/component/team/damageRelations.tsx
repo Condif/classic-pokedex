@@ -54,6 +54,8 @@ interface State {
 class DamageRelations extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		console.log("DR");
+
 		this.state = {
 			normal: [],
 			fire: [],
@@ -81,6 +83,27 @@ class DamageRelations extends React.Component<Props, State> {
 	}
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.teamTypes !== this.props.teamTypes) {
+			this.setState({
+				normal: [],
+				fire: [],
+				water: [],
+				electric: [],
+				grass: [],
+				ice: [],
+				fighting: [],
+				poison: [],
+				ground: [],
+				flying: [],
+				psychic: [],
+				bug: [],
+				rock: [],
+				ghost: [],
+				dragon: [],
+				dark: [],
+				steel: [],
+				fairy: []
+			});
+
 			this.filterSupers();
 		}
 	}
@@ -370,11 +393,11 @@ class DamageRelations extends React.Component<Props, State> {
 	};
 
 	render() {
+		console.log("in DR", this.props.teamTypes);
 
 		let effects: any = this.generateSupers();
 
 		return <div style={measureList}>{effects}</div>;
-
 	}
 }
 

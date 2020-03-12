@@ -16,10 +16,9 @@ interface Props {
 
 export default class MainDex extends React.Component<Props> {
 	onClick = () => {
-		console.log(this.props.pokemon);
-		
-		this.props.addToTeam("https://pokeapi.co/api/v2/pokemon/" + this.props.pokemon.name);
-		
+		this.props.addToTeam(
+			"https://pokeapi.co/api/v2/pokemon/" + this.props.pokemon.name
+		);
 	};
 
 	render() {

@@ -186,11 +186,6 @@ class Layout extends React.Component<Props, State> {
 		});
 	};
 
-	generateEmpty = () => {
-		const emptySlots: number = (6 - this.state.myTeam.length) | 0;
-		// console.log("empty slots :", emptySlots);
-	};
-
 	async componentDidUpdate(prevProps: Props) {
 		if (prevProps.location.pathname !== this.props.location.pathname) {
 			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
@@ -204,27 +199,46 @@ class Layout extends React.Component<Props, State> {
 
 	handleAddFake = () => {
 		console.log("clicked");
+		let nameChooser = Math.floor(Math.random() * 3)
+
 		if (this.state.myTeam.length < 6) {
-			this.setState({
-				myTeam: [
-					...this.state.myTeam,
-					"https://pokeapi.co/api/v2/pokemon/charmander"
-				]
-			});
+			if(nameChooser === 0) {
+				this.setState({
+					myTeam: [
+						...this.state.myTeam,
+						"https://pokeapi.co/api/v2/pokemon/bulbasaur"
+					]
+				});
+			}
+			if(nameChooser === 1) {
+				this.setState({
+					myTeam: [
+						...this.state.myTeam,
+						"https://pokeapi.co/api/v2/pokemon/charmander"
+					]
+				});
+			}
+			if(nameChooser === 2) {
+				this.setState({
+					myTeam: [
+						...this.state.myTeam,
+						"https://pokeapi.co/api/v2/pokemon/squirtle"
+					]
+				});
+			}
+
 		}
 	};
 	handleClearAll = () => {
-		const emptyList: [] = [];
 		this.setState({
-			myTeam: emptyList
+			myTeam: [
+				...[]
+			]
 		});
 	};
 	handleRemoveLast = () => {};
 
 	render() {
-		this.generateEmpty();
-
-		// console.log("render", this.state.myTeam);
 
 		return (
 			<Switch>
@@ -240,8 +254,7 @@ class Layout extends React.Component<Props, State> {
 						</div>
 						<TeamBuilder
 							teamURLs={this.state.myTeam}
-							removeLast={this.handleRemoveLast}
-							clearAll={this.handleClearAll}
+							isDesktop={this.props.isDesktop}
 						/>
 					</div>
 				</Route>
@@ -316,10 +329,11 @@ const layoutStyle: React.CSSProperties = {
 };
 
 const buttWrapperStyle: React.CSSProperties = {
-	position: "relative"
+	position: "absolute",
+	top:"50%",
+	left:0,
 };
 const buttStyle: React.CSSProperties = {
-	position: "absolute",
 
 	padding: ".5rem",
 	margin: ".2rem",

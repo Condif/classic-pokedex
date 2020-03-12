@@ -9,10 +9,10 @@ import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
 interface Props extends RouteComponentProps {
 	teamURLs: TeamPokemons;
-	removeLast: () => void;
-	clearAll: () => void;
+	isDesktop: boolean;
 }
 interface State {
+	teamURLs: TeamPokemons;
 	myTeam: any[];
 	teamTypes: any[];
 }
@@ -21,6 +21,7 @@ class TeamBuilder extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
+			teamURLs: this.props.teamURLs,
 			myTeam: [],
 			teamTypes: []
 		};
@@ -30,33 +31,39 @@ class TeamBuilder extends React.Component<Props, State> {
 		this.setTeam();
 	}
 	componentDidUpdate(prevProps: Props) {
-		console.log("teamBuilder UPDATed");
-		
-		// console.log(prevProps.teamURLs);
-		// console.log(this.props.teamURLs);
-		
-		if (prevProps.teamURLs === this.props.teamURLs) {
-			console.log("no change");
-			
-			this.setTeam();
-		} else if(prevProps.teamURLs !== this.props.teamURLs) {
-			console.log("change occured");
-			
+		if (
+			prevProps.teamURLs !== this.props.teamURLs
+		) {
+			console.log("TeamBuilder - UPDATED");
+			this.setState(
+				{
+					teamURLs: this.props.teamURLs,
+					myTeam: [],
+					teamTypes: []
+				},
+				() => {
+					console.log("state", this.state.teamTypes);
+					this.setTeam();
+				}
+			);
 		}
 	}
 
 	setTeam = () => {
 		let index: number = 0;
 
-		this.props.teamURLs.forEach(async member => {
-			const memberRes = await Axios.get(member);
+		this.state.teamURLs.forEach(async member => {
+			const memberRes: any = await Axios.get(member);
+			let memberData: any = memberRes.data;
+
 			this.setState(
 				{
-					myTeam: [...this.state.myTeam, memberRes.data]
+					myTeam: [...this.state.myTeam, memberData]
 				},
 				() => {
 					index++;
 					if (index === this.props.teamURLs.length) {
+						console.log("before setTeamTypes()", this.state.teamTypes);
 						this.setTeamTypes();
 					}
 				}
@@ -70,10 +77,16 @@ class TeamBuilder extends React.Component<Props, State> {
 		this.state.myTeam.forEach(member => {
 			member.types.forEach((type: any) => {
 				teamTypes.push(type.type);
+				console.log(type, ":", teamTypes);
 
-				this.setState({
-					teamTypes: teamTypes
-				});
+				this.setState(
+					{
+						teamTypes: teamTypes
+					},
+					() => {
+						console.log("types set", this.state.teamTypes);
+					}
+				);
 			});
 		});
 	};
@@ -84,16 +97,39 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	render() {
-		return (
+		return this.props.isDesktop ? (
 			<div style={teamBuilderStyle}>
-				<TeamSuper teamTypes={this.state.teamTypes} />
-				<MyTeam myTeam={this.state.myTeam} />
-				<TeamWeak teamTypes={this.state.teamTypes} />
+				<TeamSuper
+					teamTypes={this.state.teamTypes}
+					isDesktop={this.props.isDesktop}
+				/>
+				<MyTeam myTeam={this.state.myTeam} isDesktop={this.props.isDesktop} />
+				<TeamWeak
+					teamTypes={this.state.teamTypes}
+					isDesktop={this.props.isDesktop}
+				/>
 
 				<div style={btnWrapper}>
 					<Link to="/">BACK</Link>
-					<button onClick={this.props.removeLast}>REMOVE LAST</button>
-					<button onClick={this.props.clearAll}>CLEAR ALL</button>
+					{/* <button onClick={this.props.clearAll}>CLEAR ALL</button> */}
+					<button onClick={this.logState}>log State</button>
+				</div>
+			</div>
+		) : (
+			<div style={teamBuilderStyleMobile}>
+				<MyTeam myTeam={this.state.myTeam} isDesktop={this.props.isDesktop} />
+				<TeamSuper
+					teamTypes={this.state.teamTypes}
+					isDesktop={this.props.isDesktop}
+				/>
+				<TeamWeak
+					teamTypes={this.state.teamTypes}
+					isDesktop={this.props.isDesktop}
+				/>
+
+				<div style={btnWrapper}>
+					<Link to="/">BACK</Link>
+					{/* <button onClick={this.props.clearAll}>CLEAR ALL</button> */}
 					<button onClick={this.logState}>log State</button>
 				</div>
 			</div>
@@ -103,6 +139,17 @@ class TeamBuilder extends React.Component<Props, State> {
 
 export default withRouter(TeamBuilder);
 
+const teamBuilderStyleMobile: React.CSSProperties = {
+	width: "100%",
+	height: "100%",
+
+	padding: "1rem",
+
+	display: "flex",
+	flexWrap: "wrap",
+	justifyContent: "center",
+	alignItems: "flex-start"
+};
 const teamBuilderStyle: React.CSSProperties = {
 	width: "100%",
 	height: "100%",
