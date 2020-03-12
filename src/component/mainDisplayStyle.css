@@ -1,4 +1,3 @@
-/* outerDisplayStyle for desktop */
 .outerDisplayStyle {
     position: relative;
     margin: 4rem 0 1rem 0;
@@ -21,7 +20,6 @@
     align-items: center;
 }
 
-/* innerDisplayStyle for desktop */
 .innerDisplayStyle {
     position: relative;
 
@@ -35,7 +33,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .nameStyle {
@@ -82,58 +80,20 @@
     
 }
 
+/* innerDisplayStyle for mobile */
 @media screen and (max-width: 36rem) {
+    .outerDisplayStyle {
+        width: 100%;
+    }
+    .innerDisplayStyle {
+        align-items: space-between;
+    }
     .nameStyle {
         font-size: 9vw;
     }
-  }
-
-  @media screen and (max-width: 36rem) {
     .whWrapperStyle {
         font-size: 3.5vw;
     }
   }
+
   
-
-
-/* outerDisplayStyle for mobile */
-
-.outerDisplayStyle.mobile {
-    position: relative;
-    margin: 4rem 0 1rem 0;
-    
-    width: 100%;
-    max-width: 37rem;
-    min-width: 10rem;
-
-    height: 65%;
-    max-height: 30rem;
-    min-height: 15rem;
-
-    padding: 1.2rem;
-
-    background: #e7e7e7;
-    border-radius: 0.5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* innerDisplayStyle for mobile */
-
-.innerDisplayStyle.mobile {
-    position: relative;
-
-	width: 100%;
-	height: 100%;
-
-	background: #272727;
-	border-radius: .5rem;
-
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: space-between;
-	overflow: hidden;
-}

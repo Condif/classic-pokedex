@@ -15,8 +15,8 @@ interface Props {
 export default class MainDisplay extends React.Component<Props> {
 	render() {
 		return (
-			<div className={`outerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
-				<div className={`innerDisplayStyle ${this.props.isDesktop ? "" : "mobile"}`}>
+			<div className="outerDisplayStyle">
+				<div className="innerDisplayStyle">
 					<Suspense fallback={
 						<PokeLoad />
 					}>
@@ -37,36 +37,4 @@ export default class MainDisplay extends React.Component<Props> {
 	}
 }
 
-const whWrapperStyle: React.CSSProperties = {
-	position:"absolute",
-	bottom:".5rem",
-	left:"50%",
-	transform:"translatex(-50%)",
-
-	color:"#777",
-
-	display: "flex",
-	flexWrap: "wrap",
-	justifyContent: "space-evenly",
-	alignItems: "center"
-};
-const whStyle: React.CSSProperties = {
-	width: "40%",
-	margin: ".2rem",
-
-	borderRight: ".2rem solid #555",
-	textTransform: "capitalize",
-};
-const whValueStyle: React.CSSProperties = {
-	width: "40%",
-	margin: ".3rem",
-	textAlign: "right",
-	borderBottom: ".1rem solid #555"
-};
-
-// const imageStyle: React.CSSProperties = {
-// 	width: "65%",
-// 	objectFit: "cover",
-// 	imageRendering: "pixelated"
-// };
 
