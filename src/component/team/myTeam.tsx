@@ -3,7 +3,7 @@ import * as React from "react";
 import { TeamPokemons } from "../../types";
 
 interface Props {
-	myTeam: TeamPokemons[];
+	myTeam: TeamPokemons;
 }
 interface State {
 	chosenpokemon: any;
@@ -23,36 +23,36 @@ export default class MyTeam extends React.Component<Props, State> {
 	removeMember = () => {};
 
 	render() {
+		// console.log(this.props.myTeam);
+
 		return (
 			<div style={teamWrapperStyle} className="teamWrapper">
-				{this.props.myTeam.map(member => {
+				{this.props.myTeam.map((member: any) => {
+					// console.log(member);
+
 					return (
 						<div style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
 								<p style={memberName}>{member.name}</p>
 
 								<ul style={memberMoveList}>
-									{member.moves[0] && (
-										<li style={memberMove}>{member.moves[0]}</li>
-									)}
-									{!member.moves[0] && <li style={memberMove}>...</li>}
-									{member.moves[1] && (
-										<li style={memberMove}>{member.moves[1]}</li>
-									)}
-									{!member.moves[1] && <li style={memberMove}>...</li>}
-									{member.moves[2] && (
-										<li style={memberMove}>{member.moves[2]}</li>
-									)}
-									{!member.moves[2] && <li style={memberMove}>...</li>}
-									{member.moves[3] && (
-										<li style={memberMove}>{member.moves[3]}</li>
-									)}
-									{!member.moves[3] && <li style={memberMove}>...</li>}
+									{member.moves[0] ? (
+										<li style={memberMove}>{member.moves[0].move.name}</li>
+									) : null}
+									{member.moves[1] ? (
+										<li style={memberMove}>{member.moves[1].move.name}</li>
+									) : null}
+									{member.moves[2] ? (
+										<li style={memberMove}>{member.moves[2].move.name}</li>
+									) : null}
+									{member.moves[3] ? (
+										<li style={memberMove}>{member.moves[3].move.name}</li>
+									) : null}
 								</ul>
 							</div>
 							<div style={imageWrapper} className="imageWrapper">
 								<img
-									src={member.sprite}
+									src={member.sprites.front_default}
 									style={imgStyle}
 									onClick={this.imageClick}></img>
 								{member.empty ? null : (

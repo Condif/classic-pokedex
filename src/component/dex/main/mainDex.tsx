@@ -9,20 +9,16 @@ import SearchBar from "./searchBar";
 interface Props {
 	pokemon: Pokemon;
 	searchClick: (searchReasult: string) => void;
-	addToTeam: (name: any, moves: any, sprite: any, type: any) => void;
+	addToTeam: (url: string) => void;
 	idUp: () => void;
 	idDown: () => void;
 }
 
 export default class MainDex extends React.Component<Props> {
 	onClick = () => {
-
-		this.props.addToTeam(
-			this.props.pokemon.name,
-			["move : 1", "move : 2", "move : 3", "move : 4"],
-			this.props.pokemon.sprites,
-			this.props.pokemon.types
-		);
+		console.log(this.props.pokemon);
+		
+		this.props.addToTeam("https://pokeapi.co/api/v2/pokemon/" + this.props.pokemon.name);
 		
 	};
 

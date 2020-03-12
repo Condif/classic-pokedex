@@ -1,73 +1,101 @@
 import * as React from "react";
+import Axios from "axios";
 
 import MyTeam from "./myTeam";
 import TeamSuper from "./teamSuper";
 import TeamWeak from "./teamWeak";
-import { TeamPokemons } from "../../types";
+import { TeamPokemons, Pokemon } from "../../types";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
 interface Props extends RouteComponentProps {
-	myTeam: TeamPokemons[];
+	teamURLs: TeamPokemons;
 	removeLast: () => void;
 	clearAll: () => void;
 }
 interface State {
-	myTeam: TeamPokemons[];
+	myTeam: any[];
+	teamTypes: any[];
 }
 
 class TeamBuilder extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			myTeam: []
+			myTeam: [],
+			teamTypes: []
 		};
 	}
 
 	componentDidMount() {
-		// console.log("teamBuilder - mounted");
-		this.setState(
-			{
-				myTeam: this.props.myTeam
-			},
-			// () => this.generateEmpty()
-		);
+		this.setTeam();
 	}
-	componentDidUpdate() {
-		// console.log("teamBuilder - updated");
-
-		if (this.state.myTeam != this.props.myTeam) {
-			this.setState({
-				myTeam: this.props.myTeam
-			});
-		} else if(this.state.myTeam.length >= 6) {
+	componentDidUpdate(prevProps: Props) {
+		console.log("teamBuilder UPDATed");
+		
+		// console.log(prevProps.teamURLs);
+		// console.log(this.props.teamURLs);
+		
+		if (prevProps.teamURLs === this.props.teamURLs) {
+			console.log("no change");
 			
-			// this.generateEmpty();
+			this.setTeam();
+		} else if(prevProps.teamURLs !== this.props.teamURLs) {
+			console.log("change occured");
+			
 		}
 	}
 
-	returnTeamTypes = () => {
-		const teamTypes: string[] = [];
+	setTeam = () => {
+		let index: number = 0;
 
-		this.state.myTeam.forEach(pokemon => {
-			pokemon.types.forEach(type => {
-				teamTypes.push(type.type.name);
+		this.props.teamURLs.forEach(async member => {
+			const memberRes = await Axios.get(member);
+			this.setState(
+				{
+					myTeam: [...this.state.myTeam, memberRes.data]
+				},
+				() => {
+					index++;
+					if (index === this.props.teamURLs.length) {
+						this.setTeamTypes();
+					}
+				}
+			);
+		});
+	};
+
+	setTeamTypes = () => {
+		let teamTypes: any = [];
+
+		this.state.myTeam.forEach(member => {
+			member.types.forEach((type: any) => {
+				teamTypes.push(type.type);
+
+				this.setState({
+					teamTypes: teamTypes
+				});
 			});
 		});
-		return teamTypes;
+	};
+
+	logState = () => {
+		console.log("my-team", this.state.myTeam);
+		console.log("my-types", this.state.teamTypes);
 	};
 
 	render() {
-		// console.log("render",this.state.myTeam);
-
 		return (
 			<div style={teamBuilderStyle}>
-				<TeamSuper teamTypes={this.returnTeamTypes()} />
+				<TeamSuper teamTypes={this.state.teamTypes} />
 				<MyTeam myTeam={this.state.myTeam} />
-				<TeamWeak teamTypes={this.returnTeamTypes()} />
-				<Link to="/">BACK</Link>
+				<TeamWeak teamTypes={this.state.teamTypes} />
 
-				<button onClick={this.props.removeLast}>REMOVE LAST</button>
-				<button onClick={this.props.clearAll}>CLEAR ALL</button>
+				<div style={btnWrapper}>
+					<Link to="/">BACK</Link>
+					<button onClick={this.props.removeLast}>REMOVE LAST</button>
+					<button onClick={this.props.clearAll}>CLEAR ALL</button>
+					<button onClick={this.logState}>log State</button>
+				</div>
 			</div>
 		);
 	}
@@ -84,4 +112,16 @@ const teamBuilderStyle: React.CSSProperties = {
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "flex-start"
+};
+
+const btnWrapper: React.CSSProperties = {
+	position: "absolute",
+	bottom: 0,
+	left: "50%",
+	transform: "translateX(-50%)",
+
+	padding: ".5rem",
+
+	border: ".2rem solid #333",
+	background: "#e7e7e7"
 };

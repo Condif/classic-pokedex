@@ -1,31 +1,8 @@
 import * as React from "react";
 import DamageRelations from "./damageRelations";
 
-import {
-	normal,
-	fire,
-	water,
-	electric,
-	grass,
-	ice,
-	fighting,
-	poison,
-	ground,
-	flying,
-	psychic,
-	bug,
-	rock,
-	ghost,
-	dragon,
-	dark,
-	steel,
-	fairy
-} from "../css";
-
-import axios from "axios";
-
 interface Props {
-	teamTypes: string[];
+	teamTypes: any[];
 }
 
 export default class TeamSuper extends React.Component<Props> {
@@ -33,6 +10,7 @@ export default class TeamSuper extends React.Component<Props> {
 		return (
 			<div style={superStyle}>
 				<h2>Supereffective</h2>
+				<hr />
 				<DamageRelations teamTypes={this.props.teamTypes} effect={"super"} />
 				<hr />
 			</div>

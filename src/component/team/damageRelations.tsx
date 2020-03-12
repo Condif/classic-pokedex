@@ -22,9 +22,10 @@ import {
 } from "../css";
 
 import axios from "axios";
-import { Effect } from "../../types";
+import { Effect, Type } from "../../types";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface Props {
+interface Props extends RouteComponentProps {
 	teamTypes: any;
 	effect: Effect;
 }
@@ -50,7 +51,7 @@ interface State {
 	fairy: any[];
 }
 
-export default class DamageRelations extends React.Component<Props, State> {
+class DamageRelations extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -78,15 +79,18 @@ export default class DamageRelations extends React.Component<Props, State> {
 	componentDidMount() {
 		this.filterSupers();
 	}
+	componentDidUpdate(prevProps: Props) {
+		if (prevProps.teamTypes !== this.props.teamTypes) {
+			this.filterSupers();
+		}
+	}
 
 	filterSupers = async () => {
 		this.props.teamTypes.forEach((type: any) => this.fetchSuper(type));
 	};
 
-	fetchSuper = async (type: string) => {
-		const typeRes: any = await axios.get(
-			"https://pokeapi.co/api/v2/type/" + type
-		);
+	fetchSuper = async (type: Type) => {
+		const typeRes: any = await axios.get(type.url);
 
 		let superList;
 
@@ -366,11 +370,15 @@ export default class DamageRelations extends React.Component<Props, State> {
 	};
 
 	render() {
+
 		let effects: any = this.generateSupers();
 
 		return <div style={measureList}>{effects}</div>;
+
 	}
 }
+
+export default withRouter(DamageRelations);
 
 const measureWrapper: React.CSSProperties = {
 	padding: ".5rem",

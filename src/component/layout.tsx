@@ -1,5 +1,5 @@
 import * as React from "react";
-import axios from "axios";
+import Axios from "axios";
 import { createBrowserHistory } from "history";
 import {
 	Switch,
@@ -22,7 +22,7 @@ interface Props extends RouteComponentProps {
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
-	myTeam: TeamPokemons[];
+	myTeam: TeamPokemons;
 }
 class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -93,7 +93,7 @@ class Layout extends React.Component<Props, State> {
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
-		const res = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
+		const res = await Axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
 		return res.data;
 	};
 
@@ -101,7 +101,7 @@ class Layout extends React.Component<Props, State> {
 		const pokemonId = "/" + pokemon.id;
 		let pokeFlavor: string = "";
 		if (pokemon.species) {
-			const resSpecies = await axios.get(
+			const resSpecies = await Axios.get(
 				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
 			);
 			const bioList = resSpecies.data.flavor_text_entries;
@@ -137,7 +137,7 @@ class Layout extends React.Component<Props, State> {
 						"https://pokeapi.co/api/v2/move/" + i + "/"
 					)
 				) {
-					const getPokemonMoves = await axios.get(
+					const getPokemonMoves = await Axios.get(
 						"https://pokeapi.co/api/v2/move/" + i + "/"
 					);
 					const dataPokemonMoves = getPokemonMoves.data;
@@ -180,61 +180,15 @@ class Layout extends React.Component<Props, State> {
 		this.updateNewPokemon(searchResult);
 	};
 
-	handleAddToTeam = (
-		addName: string,
-		addMoves: [],
-		addSprite: string,
-		addType: []
-	) => {
-		console.log("added : ", addName);
-		for (let i = 0; i < this.state.myTeam.length; i++) {
-			console.log(this.state.myTeam[i]);
-
-			if (this.state.myTeam[i].empty) {
-				this.setState({
-					myTeam: this.state.myTeam.splice(i, 1)
-				});
-			} else if (this.state.myTeam.length < 6) {
-				console.log(this.state.myTeam);
-
-				// this.setState({
-				// 	myTeam: [
-				// 		...this.state.myTeam,
-				// 		{
-				// 			name: addName,
-				// 			moves: addMoves,
-				// 			sprite: addSprite,
-				// 			types: addType,
-				// 			empty: false
-				// 		}
-				// 	]
-				// });
-			}
-		}
+	handleAddToTeam = (url: string) => {
+		this.setState({
+			myTeam: [...this.state.myTeam, url]
+		});
 	};
 
 	generateEmpty = () => {
 		const emptySlots: number = (6 - this.state.myTeam.length) | 0;
-		console.log("empty slots :", emptySlots);
-
-		for (let i = 1; i <= emptySlots; i++) {
-			this.setState(
-				{
-					myTeam: [
-						...this.state.myTeam,
-						{
-							name: "empty",
-							moves: [],
-							sprite:
-								"http://www.pngall.com/wp-content/uploads/4/Pokemon-Pokeball-PNG-Photo.png",
-							types: [],
-							empty: true
-						}
-					]
-				}
-				// () => console.log("generate slot nr", i, this.state.myTeam)
-			);
-		}
+		// console.log("empty slots :", emptySlots);
 	};
 
 	async componentDidUpdate(prevProps: Props) {
@@ -244,43 +198,48 @@ class Layout extends React.Component<Props, State> {
 			const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 			this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
 		}
+
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
 	handleAddFake = () => {
 		console.log("clicked");
 		if (this.state.myTeam.length < 6) {
-			console.log("clicked");
-			this.state.myTeam.forEach(member => {
-				if(member.empty) {
-					console.log(member);
-					
-				}
-				
+			this.setState({
+				myTeam: [
+					...this.state.myTeam,
+					"https://pokeapi.co/api/v2/pokemon/charmander"
+				]
 			});
 		}
 	};
-	handleRemoveLast = () => {
-	};
 	handleClearAll = () => {
+		const emptyList: [] = [];
 		this.setState({
-			myTeam: []
+			myTeam: emptyList
 		});
 	};
+	handleRemoveLast = () => {};
 
 	render() {
 		this.generateEmpty();
 
-		console.log("render", this.state.myTeam);
+		// console.log("render", this.state.myTeam);
 
 		return (
 			<Switch>
 				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
-						<button onClick={this.handleAddFake}>ADD 1 : fake</button>
-
+						<div style={buttWrapperStyle}>
+							<button style={buttStyle} onClick={this.handleAddFake}>
+								ADD 1 : fake
+							</button>
+							<button style={buttStyle} onClick={this.handleClearAll}>
+								Clear
+							</button>
+						</div>
 						<TeamBuilder
-							myTeam={this.state.myTeam}
+							teamURLs={this.state.myTeam}
 							removeLast={this.handleRemoveLast}
 							clearAll={this.handleClearAll}
 						/>
@@ -357,13 +316,11 @@ const layoutStyle: React.CSSProperties = {
 };
 
 const buttWrapperStyle: React.CSSProperties = {
-	position: "absolute",
-
-	top: 0,
-	left: "50%",
-	transform: "translatex(-50%)"
+	position: "relative"
 };
 const buttStyle: React.CSSProperties = {
+	position: "absolute",
+
 	padding: ".5rem",
 	margin: ".2rem",
 
