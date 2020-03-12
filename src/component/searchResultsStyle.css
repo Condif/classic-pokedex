@@ -1,0 +1,14 @@
+/* searchResult for desktop */
+.searchResultUL {
+    list-style: none;
+    color: #E7E7E7;
+    font-size: 1.2rem;
+}
+
+
+/* searchResult for mobile */
+.searchResultUL.mobile {
+    list-style: none;
+    color: #E7E7E7;
+    font-size: 0.8rem;
+}
