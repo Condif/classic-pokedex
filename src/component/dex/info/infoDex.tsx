@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import InfoDisplay from "./infoDisplay";
+import InfoDisplay from "./infoDisplayAbility";
 import InfoNavbar from "./infoNavbar";
 import { Pokemon } from "../../../types";
 import { NavPage } from "../../../types";
@@ -60,6 +60,7 @@ const infoStyle: React.CSSProperties = {
 	position: "relative",
 
 	width: "45%",
+	height: "100%",
 	borderLeft: ".5rem solid #123",
 	borderRadius: "2%",
 

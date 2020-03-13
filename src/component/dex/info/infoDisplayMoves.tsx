@@ -2,16 +2,18 @@ import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
 import PokeLoad from "../PokeLoad";
 
-// import Move from "./infoMove";
-
-const Move = React.lazy(() => 
-import('./infoMove'))
+const ListGenerator = React.lazy(() => 
+import('./ListGenerator'))
 
 interface Props {
 	pokemon: Pokemon;
 }
 
 export default class InfoDisplayMoves extends React.Component<Props> {
+
+	constructor(props:Props) {
+		super(props)
+	}
 
 	render() {
 
@@ -20,9 +22,12 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 				<h1 style={movesHeaderStyle}>Moves:</h1>
 				<Suspense fallback={ <PokeLoad /> }>
 				<div style={movesListStyle}>
-					{this.props.pokemon.moves?.map(move => (
-						<Move key={move.move.name} url={move.move.url} />
-					))}
+					<ListGenerator  
+					listItems={this.props.pokemon.moves}
+					textStyle={flavorTextStyle}
+					nameStyle={flavorNameStyle}
+					// flavorText
+					/>
 				</div>
 				</Suspense>
 			</div>
@@ -30,15 +35,35 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 	}
 }
 
+const flavorTextStyle: React.CSSProperties = {
+	position: "relative",
+	// width: "95%",
+	padding: ".5rem 1rem",
+	margin: ".2rem .5rem .2rem 0rem",
+	
+	background: "#333",
+	
+	fontSize: ".8rem"
+};
+
+const flavorNameStyle: React.CSSProperties = {
+	position: "relative",
+	// width: "90%",
+	margin:".5rem .5rem .2rem 2rem",
+    padding: ".3rem 0 .3rem .8rem",
+    background: "#333",
+    
+};
+
 const displayStyle: React.CSSProperties = {
-	height: "100%",
+	position: "absolute",
+	top: "5rem",
+	bottom: "6rem",
 	width: "90%",
 
 	maxWidth: "35rem",
 
 	padding: "1rem",
-	margin: "2rem",
-	marginTop: "6rem",
 
 	background: "#272727",
 	color: "#e7e7e7",
@@ -58,10 +83,12 @@ const movesHeaderStyle: React.CSSProperties = {
 };
 
 const movesListStyle: React.CSSProperties = {
+	position: "relative",
 	width: "100%",
 
 	background: "#272727",
 
-	overflowY: "scroll"
+	overflowY: "auto",
+	overflowX: "hidden"
 };
 
