@@ -12,6 +12,7 @@ interface Props {
 	searchClick: (searchReasult: string) => void;
 	isDesktop: boolean;
 	handleUpclick: () => void;
+	handleDownclick: () => void;
 }
 
 export default class MainDex extends React.Component<Props> {
@@ -39,7 +40,10 @@ export default class MainDex extends React.Component<Props> {
 					</MainDisplay>
 					<div className={`idNavpadWrapper ${this.props.isDesktop ? "" : "mobile"}`}>
 						<MainID id={this.props.pokemon.id} />
-						<MainNavpad handleUpclick={this.props.handleUpclick} />
+						<MainNavpad 
+						handleUpclick={this.props.handleUpclick}
+						handleDownclick={this.props.handleDownclick}
+						/>
 					</div>
 				
 			</div>

@@ -3,6 +3,7 @@ import "../../mainNavpadStyle.css"
 
 interface Props {
 	handleUpclick: () => void
+	handleDownclick: () => void
 }
 
 export default class MainNavpad extends React.Component<Props> {
@@ -13,7 +14,7 @@ export default class MainNavpad extends React.Component<Props> {
 				<button onClick={this.props.handleUpclick} className="btn" style={r}></button>
 				<button className="btn" style={m}></button>
 				<button className="btn" style={d}></button>
-				<button className="btn" style={l}></button>
+				<button onClick={this.props.handleDownclick} className="btn" style={l}></button>
 			</div>
 		);
 	}
