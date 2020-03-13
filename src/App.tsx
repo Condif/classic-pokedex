@@ -17,7 +17,6 @@ export default class App extends React.Component<Props, State> {
 
 	componentDidMount = () => {
 		window.addEventListener("resize", () => {
-			console.log(window.innerWidth);
 			if (window.innerWidth < 582) {
 				this.setState({
 					isDesktop: false
