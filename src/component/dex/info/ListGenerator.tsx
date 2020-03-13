@@ -70,18 +70,22 @@ export default class ListGenerator extends React.Component<Props, State> {
 	render() {
 
 		return (
-			<Suspense fallback={<PokeLoad />}>
-			<div>
+			<div style={wrapper}>
+				<Suspense fallback={<PokeLoad />}>
 				{(this.state.listItems) 
 				? this.state.listItems.map((item: any) => (
 					<ListItem move={item.move} url={item.url} key={item.name} name={item.name} textStyle={this.props.textStyle} nameStyle={this.props.nameStyle}/>
 				))
 				: <p>couldn't fetch data...</p>
 				}	
+				</Suspense>
 			</div>
-			</Suspense>
 		);
 	}
+}
+
+const wrapper: React.CSSProperties = {
+	height: '100%'
 }
 
 
