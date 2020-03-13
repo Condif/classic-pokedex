@@ -76,7 +76,7 @@ const backBtn: React.CSSProperties = {
 
 	position: "absolute",
 	bottom: ".5rem",
-	right: "0",
+	right: "-2rem",
 
 	color: "#aa5522",
 	fontSize: ".7em",

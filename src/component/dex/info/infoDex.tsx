@@ -61,19 +61,6 @@ export default class InfoDex extends React.Component<Props, State> {
 	}
 }
 
-const infoStyle: React.CSSProperties = {
-	position: "relative",
-
-	width: "45%",
-	height: "100%",
-	borderLeft: ".5rem solid #123",
-	borderRadius: "2%",
-
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	justifyContent: "space-around"
-};
 const cutout_1: React.CSSProperties = {
 	position: "absolute",
 	top: 0,
