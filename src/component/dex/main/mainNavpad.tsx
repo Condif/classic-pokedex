@@ -1,12 +1,16 @@
 import * as React from "react";
 import "../../mainNavpadStyle.css"
 
-export default class MainNavpad extends React.Component {
+interface Props {
+	handleUpclick: () => void
+}
+
+export default class MainNavpad extends React.Component<Props> {
 	render() {
 		return (
 			<div className="navpadStyle">
 				<button className="btn" style={u}></button>
-				<button className="btn" style={r}></button>
+				<button onClick={this.props.handleUpclick} className="btn" style={r}></button>
 				<button className="btn" style={m}></button>
 				<button className="btn" style={d}></button>
 				<button className="btn" style={l}></button>
