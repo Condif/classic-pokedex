@@ -40,7 +40,7 @@
     background-color: #272727B3;
 }
 
-@media screen and (max-width: 36rem) {
+@media screen and (max-width: 42.5rem) {
     .searchBarInput {
         height: 0.8rem;
         padding: 0.8rem;
@@ -48,7 +48,7 @@
     }
 }
 
-@media screen and (min-width: 36rem) {
+@media screen and (min-width: 42.5rem) {
     .searchBarInput {
         font-size: 1rem;
     }

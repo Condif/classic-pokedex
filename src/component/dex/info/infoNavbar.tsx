@@ -4,6 +4,7 @@ import * as React from "react";
 interface Props {
 	navigateToBio: () => void
 	navigateToMoves: () => void
+	isDesktop: boolean;
 }
 
 export default class InfoNavbar extends React.Component<Props> {
@@ -20,7 +21,8 @@ export default class InfoNavbar extends React.Component<Props> {
 					onClick={this.props.navigateToMoves}>
 					moves
 				</p>
-				<p style={backBtn}></p>
+				{ (!this.props.isDesktop &&
+				<p style={backBtn}></p>) }
 			</div>
 		);
 	}
@@ -72,7 +74,7 @@ const backBtn: React.CSSProperties = {
 
 	position: "absolute",
 	bottom: ".5rem",
-	right: ".5rem",
+	right: "0",
 
 	color: "#aa5522",
 	fontSize: ".7em",

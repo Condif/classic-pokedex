@@ -52,6 +52,7 @@ export default class InfoDex extends React.Component<Props, State> {
 					)}
 
 				<InfoNavbar
+					isDesktop={this.props.isDesktop}
 					navigateToBio={this.handleNavigateToBio}
 					navigateToMoves={this.handleNavigateToMoves}
 				/>

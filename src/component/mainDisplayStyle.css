@@ -81,7 +81,7 @@
 }
 
 /* innerDisplayStyle for mobile */
-@media screen and (max-width: 36rem) {
+@media screen and (max-width: 42.5rem) {
     .outerDisplayStyle {
         width: 100%;
     }

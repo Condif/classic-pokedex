@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
 import PokeLoad from "../PokeLoad";
+import "../../infoDisplayMovesStyle.css"
 
 // import Move from "./infoMove";
 
@@ -16,7 +17,7 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 	render() {
 
 		return (
-			<div style={displayStyle}>
+			<div className="displayStyle">
 				<h1 style={movesHeaderStyle}>Moves:</h1>
 				<Suspense fallback={ <PokeLoad /> }>
 				<div style={movesListStyle}>
@@ -38,7 +39,7 @@ const displayStyle: React.CSSProperties = {
 
 	padding: "1rem",
 	margin: "2rem",
-	marginTop: "6rem",
+	marginTop: "3rem",
 
 	background: "#272727",
 	color: "#e7e7e7",
