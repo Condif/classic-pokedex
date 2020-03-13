@@ -31,6 +31,7 @@ export default class MainDex extends React.Component<Props> {
 						height={this.props.pokemon.height}
 					>
 						<SearchBar
+						isDesktop={this.props.isDesktop}
 						searchClick={this.props.searchClick}
 						placeHolder="Search for a pokemon..."
 						/>
