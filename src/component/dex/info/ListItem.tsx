@@ -133,7 +133,7 @@ export default class ListItem extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if(prevProps.url !== this.props.url) {
+        if(prevProps.name !== this.props.name) {
             this.loadFlavorText()
         }
     }
