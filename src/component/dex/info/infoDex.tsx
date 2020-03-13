@@ -45,7 +45,7 @@ export default class InfoDex extends React.Component<Props, State> {
 				{/* <div>
 					</div> */}
 					{this.state.page === "bio" && (
-						<InfoDisplay pokemon={this.props.pokemon} />
+						<InfoDisplay isDesktop={this.props.isDesktop} pokemon={this.props.pokemon} />
 					)}
 					{this.state.page === "moves" && (
 						<InfoDisplayMoves pokemon={this.props.pokemon} />

@@ -12,10 +12,6 @@ interface Props {
 
 export default class InfoDisplayMoves extends React.Component<Props> {
 
-	constructor(props:Props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div className="displayStyle">
