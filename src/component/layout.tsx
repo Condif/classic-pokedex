@@ -61,11 +61,9 @@ export default class Layout extends React.Component<Props, State> {
 	};
 
 	async updateNewPokemon(newId: string) {
-		const pokemon = await this.fetchPokeData(newId);
-		
+		const pokemon = await this.fetchPokeData(newId);		
 		this.updateUrlHistory(pokemon.name);
-		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio)
+		this.setPokemonInState(pokemon);
 	}
 
 	fetchPokeData = async (newId: string) => {
@@ -85,47 +83,17 @@ export default class Layout extends React.Component<Props, State> {
 		}
 	};
 
-	fetchPokeDataSpecies = async (pokemon: any) => {
-		
-		const pokemonId = "/" + pokemon.id;
-		let pokeFlavor: string = "";
-		if (pokemon.species) {
-			const resSpecies = await axios.get(
-				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
-			);
-			const bioList = resSpecies.data.flavor_text_entries;
-			bioList.some((bioText: any) => {
-				if (
-					bioText !== undefined &&
-					bioText !== null &&
-					bioText.language.name === "en"
-				) {
-					pokeFlavor = bioText.flavor_text;
-				}
-				return pokeFlavor;
-			});
-		} else {
-			return (pokeFlavor = "");
-		}
+	setPokemonInState(pokemon: any) {
 
-		return pokeFlavor;
-	};
-
-	setPokemonInState(
-		pokemon: any,
-		pokemonBio: any,
-	) {
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
 				name: pokemon.name,
 				id: pokemon.id,
-				sprites: pokemon.sprites.front_default,
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
 				abilities: pokemon.abilities,
-				pokemonBio: pokemonBio,
 				moves: pokemon.moves,
 			}
 		});

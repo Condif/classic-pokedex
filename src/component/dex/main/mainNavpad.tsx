@@ -39,4 +39,3 @@ const m: React.CSSProperties = {
 	gridArea: "m",
 	// borderRadius:"50%",
 };
-

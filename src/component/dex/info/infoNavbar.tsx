@@ -29,10 +29,12 @@ export default class InfoNavbar extends React.Component<Props> {
 }
 
 const navStyle: React.CSSProperties = {
+	position: "absolute",
+	bottom: "1.5rem",
 	width: "90%",
 	maxWidth: "33rem",
 
-	margin: "0 2rem 2rem 2rem",
+	// margin: "0 2rem 2rem 2rem",
 
 	display: "flex",
 	justifyContent: "center",
