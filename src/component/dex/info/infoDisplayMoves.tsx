@@ -17,7 +17,6 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 	}
 
 	render() {
-
 		return (
 			<div className="displayStyle">
 				<h1 style={movesHeaderStyle}>Moves:</h1>
@@ -52,29 +51,8 @@ const flavorNameStyle: React.CSSProperties = {
 	// width: "90%",
 	margin:".5rem .5rem .2rem 2rem",
     padding: ".3rem 0 .3rem .8rem",
-    background: "#333",
+	background: "#333",
     
-};
-
-const displayStyle: React.CSSProperties = {
-	position: "absolute",
-	top: "5rem",
-	bottom: "6rem",
-	width: "90%",
-
-	maxWidth: "35rem",
-
-	padding: "1rem",
-	margin: "2rem",
-	marginTop: "3rem",
-
-	background: "#272727",
-	color: "#e7e7e7",
-	borderRadius: "1rem",
-
-	display: "flex",
-	flexDirection: "column",
-	overflow: "hidden"
 };
 
 
