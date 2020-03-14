@@ -1,0 +1,18 @@
+.infoStyle {
+    position: relative;
+	width: 45%;
+	border-left: .5rem solid #123;
+	border-radius: 2%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+@media screen and (max-width: 42.5rem) {
+    .infoStyle {
+        border-left: none;
+        width: 85%;
+    }
+}

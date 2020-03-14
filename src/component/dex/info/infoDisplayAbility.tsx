@@ -9,6 +9,7 @@ import('./ListGenerator'))
 
 interface Props {
 	pokemon: Pokemon
+	isDesktop: boolean;
 }
 export default class InfoDisplay extends React.Component<Props> {
 	typeColor = (type: string) => {
@@ -58,9 +59,9 @@ export default class InfoDisplay extends React.Component<Props> {
 			types.push(type.type.name);
 		});
 		return (
-			<div style={displayStyle}>
+			<div style={this.props.isDesktop ? displayStyle : displayStyleMobile}>
 				<Suspense fallback={ <PokeLoad />}>
-				<div style={bioWrapperStyle}>
+				<div style={this.props.isDesktop ? bioWrapperStyle : bioWrapperStyleMobile}>
 					<h4>Bio</h4>
 					<GenerateBio pokeName={this.props.pokemon.name} />
 				</div>
@@ -101,7 +102,7 @@ const flavorTextStyle: React.CSSProperties = {
 
 const displayStyle: React.CSSProperties = {
 	position: 'absolute',
-	top: "5rem",
+	top: "6rem",
 	bottom: "6rem",
 	width: '90%',
 
@@ -118,6 +119,25 @@ const displayStyle: React.CSSProperties = {
 	justifyContent: "space-between"
 };
 
+const displayStyleMobile: React.CSSProperties= {
+	position: 'absolute',
+	top: "2rem",
+	bottom: "6rem",
+	width: '90%',
+
+	maxWidth: "35rem",
+
+	padding: "1rem",
+
+	background: "#272727",
+	color: "#e7e7e7",
+	borderRadius: "1rem",
+
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between"
+}
+
 const bioWrapperStyle: React.CSSProperties = {
 	height: "40%",
 	
@@ -127,6 +147,15 @@ const bioWrapperStyle: React.CSSProperties = {
 	border: ".3rem double #272727"
 
 };
+
+const bioWrapperStyleMobile: React.CSSProperties = {
+	height: "50%",
+	
+	padding: ".8rem",
+	
+	background: "#333",
+	border: ".3rem double #272727"
+}
 
 const abilityWrapperStyle: React.CSSProperties = {
 	height: "50%",

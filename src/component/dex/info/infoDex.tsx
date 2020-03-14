@@ -5,9 +5,11 @@ import InfoNavbar from "./infoNavbar";
 import { Pokemon } from "../../../types";
 import { NavPage } from "../../../types";
 import InfoDisplayMoves from "./infoDisplayMoves";
+import "../../infodexStyle.css"
 
 interface Props {
 	pokemon: Pokemon;
+	isDesktop: boolean;
 }
 interface State {
 	page: NavPage;
@@ -34,20 +36,23 @@ export default class InfoDex extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div style={infoStyle}>
-				<div style={cutout_1}></div>
-				<div style={cutout_2}></div>
+			<div className="infoStyle">
+				{ this.props.isDesktop && 
+				<div style={cutout_1}></div>} 
+				{this.props.isDesktop &&
+				<div style={cutout_2}></div>}
 
 				{/* <div>
 					</div> */}
 					{this.state.page === "bio" && (
-						<InfoDisplay pokemon={this.props.pokemon} />
+						<InfoDisplay isDesktop={this.props.isDesktop} pokemon={this.props.pokemon} />
 					)}
 					{this.state.page === "moves" && (
 						<InfoDisplayMoves pokemon={this.props.pokemon} />
 					)}
 
 				<InfoNavbar
+					isDesktop={this.props.isDesktop}
 					navigateToBio={this.handleNavigateToBio}
 					navigateToMoves={this.handleNavigateToMoves}
 				/>
@@ -56,19 +61,6 @@ export default class InfoDex extends React.Component<Props, State> {
 	}
 }
 
-const infoStyle: React.CSSProperties = {
-	position: "relative",
-
-	width: "45%",
-	height: "100%",
-	borderLeft: ".5rem solid #123",
-	borderRadius: "2%",
-
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	justifyContent: "space-around"
-};
 const cutout_1: React.CSSProperties = {
 	position: "absolute",
 	top: 0,
