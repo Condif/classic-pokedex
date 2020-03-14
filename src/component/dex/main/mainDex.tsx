@@ -5,6 +5,7 @@ import MainID from "./mainID";
 import MainNavpad from "./mainNavpad";
 import { Pokemon } from "../../../types";
 import SearchBar from "./searchBar";
+import '../../mainDex.css'
 
 interface Props {
 	pokemon: Pokemon;
@@ -22,58 +23,32 @@ export default class MainDex extends React.Component<Props> {
 	};
 
 	render() {
+		
 		return (
-			<div style={mainStyle}>
-				<button onClick={this.onClick} style={addStyle}>
-					+
-				</button>
+			<div className={`mainDisplay ${this.props.isDesktop ? "" : "mobile"}`}>
+				{/*Klassen får  ett namn beroende på om
+				boolean är true eller false, är den true heter classen mainDisplay, är
+				den false heter klassen mainDisplay.mobile */ }
 
-				<MainDisplay
-					sprite={this.props.pokemon.sprites}
-					name={this.props.pokemon.name}
-					weight={this.props.pokemon.weight}
-					height={this.props.pokemon.height}>
-					<SearchBar
+					<MainDisplay
+						isDesktop={this.props.isDesktop}
+						sprite={this.props.pokemon.sprites}
+						name={this.props.pokemon.name}
+						weight={this.props.pokemon.weight}
+						height={this.props.pokemon.height}
+					>
+						<SearchBar
+						isDesktop={this.props.isDesktop}
 						searchClick={this.props.searchClick}
 						placeHolder="Search for a pokemon..."
-					/>
-				</MainDisplay>
-
-				<div style={idNavpadWrapper}>
-					<MainID id={this.props.pokemon.id} />
-					<MainNavpad idDown={this.props.idDown} idUp={this.props.idUp} />
-				</div>
+						/>
+					</MainDisplay>
+					<div className={`idNavpadWrapper ${this.props.isDesktop ? "" : "mobile"}`}>
+						<MainID id={this.props.pokemon.id} />
+						<MainNavpad />
+					</div>
+				
 			</div>
 		);
 	}
 }
-
-const mainStyle: React.CSSProperties = {
-	width: "55%",
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "space-between",
-	alignItems: "center"
-};
-const idNavpadWrapper: React.CSSProperties = {
-	width: "80%",
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	flexWrap: "wrap"
-};
-
-const addStyle: React.CSSProperties = {
-	position: "absolute",
-	right: 0,
-	bottom: 0,
-	zIndex: 1000,
-
-	height: "2rem",
-	width: "2rem",
-
-	padding: ".5rem",
-	margin: "1rem",
-
-	textAlign: "center"
-};

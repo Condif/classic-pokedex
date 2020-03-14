@@ -1,10 +1,15 @@
-import * as React from "react";
+import React, { Suspense } from "react";
 import { Pokemon } from "../../../types";
 import { normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy } from "../../css"
-import Abilities from "./infoAbilities";
+import PokeLoad from "../PokeLoad";
+import GenerateBio from './GenerateBio'
+
+const GenerateAbilities = React.lazy(() =>
+import('./ListGenerator'))
 
 interface Props {
-	pokemon: Pokemon;
+	pokemon: Pokemon
+	isDesktop: boolean;
 }
 export default class InfoDisplay extends React.Component<Props> {
 	typeColor = (type: string) => {
@@ -54,32 +59,56 @@ export default class InfoDisplay extends React.Component<Props> {
 			types.push(type.type.name);
 		});
 		return (
-			<div style={displayStyle}>
-				<div style={bioWrapperStyle}>
+			<div style={this.props.isDesktop ? displayStyle : displayStyleMobile}>
+				<Suspense fallback={ <PokeLoad />}>
+				<div style={this.props.isDesktop ? bioWrapperStyle : bioWrapperStyleMobile}>
 					<h4>Bio</h4>
-					<p style={bioStyle}>{this.props.pokemon.pokemonBio}</p>
+					<GenerateBio pokeName={this.props.pokemon.name} />
 				</div>
-
+ 
 				<div style={abilityWrapperStyle}>
 					<h4>Abilities</h4>
-					{this.props.pokemon.abilities?.map(ability => (
-						<Abilities key={ability.ability.name} url={ability.ability.url} />
-					))}
+					<GenerateAbilities 
+					textStyle={flavorTextStyle}
+					nameStyle={flavorNameStyle} 
+					listItems={this.props.pokemon.abilities} 
+					/>
 				</div>
 				<div style={typeStyle}>{types.map(type => this.typeColor(type))}</div>
+				</Suspense>
 			</div>
 		);
 	}
 }
 
+const flavorNameStyle: React.CSSProperties = {
+    margin:".2rem 0",
+    padding:".2rem 1rem",
+
+    background:"#333",
+    borderLeft:".2rem solid #e7e7e7",
+
+    fontSize: "1.1rem",
+    cursor:"pointer"
+};
+const flavorTextStyle: React.CSSProperties = {
+    padding: ".5rem 1rem",
+    margin:"0 0 .5rem 1rem",
+
+    background:"#333",
+
+	fontSize: ".8rem"
+};
+
 const displayStyle: React.CSSProperties = {
-	height: "100%",
+	position: 'absolute',
+	top: "6rem",
+	bottom: "6rem",
+	width: '90%',
 
 	maxWidth: "35rem",
 
 	padding: "1rem",
-	margin: "2rem",
-	marginTop: "6rem",
 
 	background: "#272727",
 	color: "#e7e7e7",
@@ -90,6 +119,25 @@ const displayStyle: React.CSSProperties = {
 	justifyContent: "space-between"
 };
 
+const displayStyleMobile: React.CSSProperties= {
+	position: 'absolute',
+	top: "2rem",
+	bottom: "6rem",
+	width: '90%',
+
+	maxWidth: "35rem",
+
+	padding: "1rem",
+
+	background: "#272727",
+	color: "#e7e7e7",
+	borderRadius: "1rem",
+
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between"
+}
+
 const bioWrapperStyle: React.CSSProperties = {
 	height: "40%",
 	
@@ -99,8 +147,15 @@ const bioWrapperStyle: React.CSSProperties = {
 	border: ".3rem double #272727"
 
 };
-const bioStyle: React.CSSProperties = {
-};
+
+const bioWrapperStyleMobile: React.CSSProperties = {
+	height: "50%",
+	
+	padding: ".8rem",
+	
+	background: "#333",
+	border: ".3rem double #272727"
+}
 
 const abilityWrapperStyle: React.CSSProperties = {
 	height: "50%",
@@ -108,7 +163,8 @@ const abilityWrapperStyle: React.CSSProperties = {
 	padding: ".8rem",
 
 	background: "#333",
-	border: ".3rem double #272727"
+	border: ".3rem double #272727",
+	overflowY: "auto"
 };
 
 // -- -- -- -- -- types

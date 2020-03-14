@@ -1,6 +1,7 @@
 import * as React from 'react'
 import axios from 'axios'
 import SearchResults from './searchResults'
+import "../../searchBarStyle.css"
 
 interface PokeData {
     id: number
@@ -16,6 +17,7 @@ interface Pokebundle {
 interface Props {
     placeHolder: string
     searchClick: (searchResult: string) => void;
+    isDesktop: boolean;
 }
 
 interface State {
@@ -124,23 +126,24 @@ export default class SearchBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div style={searchBarContainer}>
-                <input type="text" id="searchField" style={searchBarInput} placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
+            <div className="searchBarContainer">
+                <input type="text" id="searchField" className="searchBarInput" placeholder={this.props.placeHolder} onChange={this.handleOnChange}/>
                 {(this.state.showList) ? 
                     <> 
                         {(this.state.showPokemon.pokeName.length === 0 && this.state.showPokemon.pokeID.length === 0) ? 
                             <p style={noResult}>No results</p>
                             : null
                         }
-                        <div style={searchBarResultList}>
+                        <div className="searchBarResultList">
                             {(this.state.showPokemon.pokeName.length > 0) ? 
-                            <SearchResults title="matching name..." value={this.state.showPokemon.pokeName.length}>
+                            <SearchResults title="matching name..." value={this.state.showPokemon.pokeName.length} isDesktop={this.props.isDesktop}>
                                 {this.state.showPokemon.pokeName}
+                                
                             </SearchResults>
                             : null
                             }
                             {(this.state.showPokemon.pokeID.length > 0) ?
-                            <SearchResults title="matching ID... ">
+                            <SearchResults title="matching ID... " isDesktop={this.props.isDesktop}>
                                 {this.state.showPokemon.pokeID}
                             </SearchResults>
                             : null
@@ -154,47 +157,7 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 }
 
-const searchBarContainer: React.CSSProperties = {
-    position: 'absolute',
-    zIndex: 1,
-    top: '.5rem',
-    bottom: '.5rem',
-    
-    width: '90%',
-    maxHeight: '30rem',
-    minHeight: '15rem',
-    overflow: 'hidden',
-}
 
-const searchBarInput: React.CSSProperties = {
-    position: 'absolute',
-    top: '0%',
-    left: '50%',
-    transform: 'translateX(-50%)',
-
-    width: '80%',
-    height: '1.5rem',
-    padding: '1rem',
-
-    fontSize: '1.2rem',
-    color: '#E7E7E7',
-
-    backgroundColor: '#212121',
-    border: '1px solid #171717',
-    borderRadius: '1rem',
-}
-
-const searchBarResultList: React.CSSProperties = {
-    position: 'absolute',
-    top: '2.4rem',
-    left: '0rem',
-    right: '0rem',
-    bottom: '0rem',
-
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    backgroundColor: '#272727B3',
-}
 
 const resultListItem: React.CSSProperties = {
     margin: '.1rem .5rem .4rem .5rem',

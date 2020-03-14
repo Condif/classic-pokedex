@@ -1,0 +1,26 @@
+.navpadStyle {
+    width: 8rem;
+    height: 8rem;
+    margin-bottom: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: '. u .' 'l m r' '. d .';
+}
+
+.btn {
+    outline: none;
+    background: #555;
+    border: .5rem solid #333;
+}
+
+@media screen and (max-width: 42.5rem) {
+    .navpadStyle {
+        width: 24vw;
+        height: 24vw;
+    }
+    .btn {
+        border: 1.6vw solid #333;
+    }
+}

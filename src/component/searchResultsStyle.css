@@ -1,0 +1,23 @@
+/* searchResults for desktop */
+.searchResultTitle {
+    margin: .3rem 0 .2rem 0;
+    display: flex;
+    justify-content: space-evenly;
+    color: #d1d1d1;
+}
+
+.searchResultUL {
+    list-style: none;
+    color: #E7E7E7;
+    font-size: 1.2rem;
+}
+
+@media screen and (max-width: 42.5rem) {
+    .searchResultTitle, .searchResultUL {
+        font-size:  0.8rem;
+    }
+}
+
+
+
+

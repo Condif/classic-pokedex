@@ -13,6 +13,7 @@ import { Pokemon, TeamPokemons } from "../types";
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
+import "./layoutStyle.css"
 
 const history = createBrowserHistory();
 
@@ -45,10 +46,7 @@ class Layout extends React.Component<Props, State> {
 	}
 
 	async componentDidMount() {
-		const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+		this.updateNewPokemon(this.state.lastPokemon)
 	}
 
 	upState = async () => {
@@ -71,31 +69,25 @@ class Layout extends React.Component<Props, State> {
 	};
 
 	async updateNewPokemon(newId: string) {
-		const pokemon = await this.fetchPokeData(newId);
+		const pokemon = await this.fetchPokeData(newId);		
 		this.updateUrlHistory(pokemon.name);
-		const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-		this.setPokemonInState(pokemon, pokemonBio, null);
+		this.setPokemonInState(pokemon);
 	}
-
-	fetchMovesState = async (pokemon: any) => {
-		const id = this.state.currentPokemon.id;
-		if (id !== undefined) {
-			if (id > 1) {
-				const newId = "/" + id.toString();
-				const pokemon = await this.fetchPokeData(newId);
-				const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-
-				const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-				this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
-			}
-		}
-	};
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
-		const res = await Axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon);
-		return res.data;
-	};
+		const notFound = {
+			height: 404,
+			weight: 404,
+			id: 404,
+			name: 'MissingNo',
+		}
+		
+		try {
+			const res:any = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon)
+			return res.data;
+		} catch (error) {
+			return notFound
 
 	fetchPokeDataSpecies = async (pokemon: any) => {
 		const pokemonId = "/" + pokemon.id;
@@ -147,27 +139,20 @@ class Layout extends React.Component<Props, State> {
 				}
 			}
 		}
-		return engMoveFlavor;
 	};
 
-	setPokemonInState(
-		pokemon: any,
-		pokemonBio: any,
-		pokemonMovesFlavorText: any
-	) {
+	setPokemonInState(pokemon: any) {
+
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
 				name: pokemon.name,
 				id: pokemon.id,
-				sprites: pokemon.sprites.front_default,
 				weight: pokemon.weight,
 				height: pokemon.height,
 				types: pokemon.types,
 				abilities: pokemon.abilities,
-				pokemonBio: pokemonBio,
 				moves: pokemon.moves,
-				movesFlavorText: pokemonMovesFlavorText
 			}
 		});
 	}
@@ -261,22 +246,35 @@ class Layout extends React.Component<Props, State> {
 					</div>
 				</Route>
 				<Route path="/">
-					<div style={layoutWrapperStyle}>
+					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
-							<div style={layoutStyle}>
+							<div className="layoutStyle">
 								<MainDex
+									isDesktop={this.props.isDesktop}
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
 									addToTeam={this.handleAddToTeam}
 									idDown={this.downState}
 									idUp={this.upState}
 								/>
-								<InfoDex pokemon={this.state.currentPokemon} />
+								<InfoDex 
+								pokemon={this.state.currentPokemon} 
+								isDesktop={this.props.isDesktop}
+								/>
 							</div>
 						) : (
 							<Switch>
 								<Route path="/">
-									<MainDex
+									<div className="layoutStyleMobile">
+										<MainDex
+											isDesktop={this.props.isDesktop}
+											pokemon={this.state.currentPokemon}
+											searchClick={this.handleSearchClick}
+										/>
+									</div>
+									<div style={betweenDivs}></div>
+									<div className="layoutStyleMobile">
+										<InfoDex 
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
 										addToTeam={this.handleAddToTeam}
@@ -296,6 +294,11 @@ class Layout extends React.Component<Props, State> {
 	}
 }
 
+
+const betweenDivs: React.CSSProperties = {
+	height: "1rem",
+	width: "80%",
+	border: ".2rem solid #123",
 export default withRouter(Layout);
 
 const layoutWrapperStyle: React.CSSProperties = {
@@ -326,21 +329,21 @@ const layoutStyle: React.CSSProperties = {
 	backgroundImage:
 		'url("https://www.transparenttextures.com/patterns/cartographer.png")',
 	borderRadius: "1rem",
+	backgroundColor: "#111",
+}
 
-	boxShadow: "-.5rem .5rem .5rem #123"
-};
+// const buttWrapperStyle: React.CSSProperties = {
+// 	position: "absolute",
 
-const buttWrapperStyle: React.CSSProperties = {
-	position: "absolute",
-	bottom: "5%",
-	left: "50%",
-	transform: "translateX(-50%)"
-};
-const buttStyle: React.CSSProperties = {
-	padding: ".5rem",
-	margin: ".2rem",
+// 	top: 0,
+// 	left: "50%",
+// 	transform: "translatex(-50%)"
+// };
+// const buttStyle: React.CSSProperties = {
+// 	padding: ".5rem",
+// 	margin: ".2rem",
 
-	color: "#e7e7e7",
-	background: "#333",
-	border: ".3rem double #ee8866"
-};
+// 	color: "#e7e7e7",
+// 	background: "#333",
+// 	border: ".3rem double #ee8866"
+// };

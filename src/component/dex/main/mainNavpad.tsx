@@ -1,4 +1,5 @@
 import * as React from "react";
+import "../../mainNavpadStyle.css"
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -19,17 +20,6 @@ export default class MainNavpad extends React.Component<Props> {
 		);
 	}
 }
-
-const navpadStyle: React.CSSProperties = {
-	width: "8rem",
-	height: "8rem",
-	marginBottom: "1rem",
-
-	display: "grid",
-	gridTemplateColumns: "1fr 1fr 1fr",
-	gridTemplateRows: "1fr 1fr 1fr",
-	gridTemplateAreas: "'. u .' 'l m r' '. d .'"
-};
 
 const u: React.CSSProperties = {
 	gridArea: "u",
@@ -54,10 +44,4 @@ const l: React.CSSProperties = {
 const m: React.CSSProperties = {
 	gridArea: "m"
 	// borderRadius:"50%",
-};
-
-const btn: React.CSSProperties = {
-	outline: "none",
-	background: "#555",
-	border: ".5rem solid #333"
 };

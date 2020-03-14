@@ -8,7 +8,6 @@ export type Pokemon = {
 	abilities?: any[];
 	moves?: any[];
 	pokemonBio?: string;
-	movesFlavorText?: any[];
 };
 
 export type TeamPokemons = string[];
