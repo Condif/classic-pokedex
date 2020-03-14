@@ -7,60 +7,80 @@ interface Props {
 	isDesktop: boolean;
 }
 interface State {
-	chosenpokemon: any;
+	myTeam: TeamPokemons;
 }
 
 export default class MyTeam extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			chosenpokemon: this.props.myTeam[0]
+			myTeam: this.props.myTeam
 		};
+	}
+	componentDidUpdate() {
+		console.log("UPDATED \n myTeam : ", this.state.myTeam);
+		
 	}
 
 	imageClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-		console.log(event.target);
+		console.log("image Clicked");
+		console.log(event.relatedTarget);
 	};
-	removeMember = () => {};
+
+	removeMember = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		console.log("button Clicked");
+	};
 
 	render() {
+		console.log("my team props - render", this.props.myTeam);
+		console.log("my team state - render", this.state.myTeam);
+
 		return (
 			<div
 				style={this.props.isDesktop ? teamWrapperStyle : teamWrapperStyleMobile}
 				className="teamWrapper">
 				{this.props.myTeam.map((member: any) => {
 					return (
-						<div style={memberStyle} className="teamMember">
+						<div key={member} style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
-								<p style={memberName}>{member.name}</p>
+								<p style={memberName}>{member.name ? member.name : "empty"}</p>
 
 								<ul style={memberMoveList}>
-									{member.moves[0] ? (
+									{member.moves ? (
 										<li style={memberMove}>{member.moves[0].move.name}</li>
-									) : null}
+									) : (
+										<li style={memberMove}>. . .</li>
+									)}
 									{member.moves[1] ? (
 										<li style={memberMove}>{member.moves[1].move.name}</li>
-									) : null}
+									) : (
+										<li style={memberMove}>. . .</li>
+									)}
 									{member.moves[2] ? (
 										<li style={memberMove}>{member.moves[2].move.name}</li>
-									) : null}
+									) : (
+										<li style={memberMove}>. . .</li>
+									)}
 									{member.moves[3] ? (
 										<li style={memberMove}>{member.moves[3].move.name}</li>
-									) : null}
+									) : (
+										<li style={memberMove}>. . .</li>
+									)}
 								</ul>
 							</div>
 
 							<div style={imageWrapper} className="imageWrapper">
 								<img
 									src={member.sprites.front_default}
+									alt="sprite"
 									style={imgStyle}
 									onClick={this.imageClick}></img>
-								{member.empty ? null : (
-									<button
-										style={removeButton}
-										onClick={this.removeMember}></button>
-								)}
 							</div>
+							{member.name === "empty" ? null : (
+								<button
+									style={removeButton}
+									onClick={this.removeMember}></button>
+							)}
 						</div>
 					);
 				})}
@@ -87,12 +107,15 @@ const teamWrapperStyle: React.CSSProperties = {
 };
 
 const memberStyle: React.CSSProperties = {
+	position:"relative",
+
 	width: "50%",
 	height: "10rem",
 
 	padding: ".5rem",
 
 	objectFit: "contain",
+	textTransform: "capitalize",
 
 	display: "flex",
 	justifyContent: "space-around",

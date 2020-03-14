@@ -181,9 +181,14 @@ class Layout extends React.Component<Props, State> {
 	};
 
 	handleAddToTeam = (url: string) => {
-		this.setState({
-			myTeam: [...this.state.myTeam, url]
-		});
+		if (this.state.myTeam.length < 6) {
+			this.setState({
+				myTeam: [...this.state.myTeam, url]
+			});
+		} else {
+			console.log("TEAM FULL");
+			
+		}
 	};
 
 	async componentDidUpdate(prevProps: Props) {
@@ -199,10 +204,10 @@ class Layout extends React.Component<Props, State> {
 
 	handleAddFake = () => {
 		console.log("clicked");
-		let nameChooser = Math.floor(Math.random() * 3)
+		let nameChooser = Math.floor(Math.random() * 3);
 
 		if (this.state.myTeam.length < 6) {
-			if(nameChooser === 0) {
+			if (nameChooser === 0) {
 				this.setState({
 					myTeam: [
 						...this.state.myTeam,
@@ -210,7 +215,7 @@ class Layout extends React.Component<Props, State> {
 					]
 				});
 			}
-			if(nameChooser === 1) {
+			if (nameChooser === 1) {
 				this.setState({
 					myTeam: [
 						...this.state.myTeam,
@@ -218,7 +223,7 @@ class Layout extends React.Component<Props, State> {
 					]
 				});
 			}
-			if(nameChooser === 2) {
+			if (nameChooser === 2) {
 				this.setState({
 					myTeam: [
 						...this.state.myTeam,
@@ -226,20 +231,17 @@ class Layout extends React.Component<Props, State> {
 					]
 				});
 			}
-
 		}
 	};
 	handleClearAll = () => {
+		console.log("CLEAR ALL");
+
 		this.setState({
-			myTeam: [
-				...[]
-			]
+			myTeam: []
 		});
 	};
-	handleRemoveLast = () => {};
 
 	render() {
-
 		return (
 			<Switch>
 				<Route path="/teamPage">
@@ -330,11 +332,11 @@ const layoutStyle: React.CSSProperties = {
 
 const buttWrapperStyle: React.CSSProperties = {
 	position: "absolute",
-	top:"50%",
-	left:0,
+	bottom: "5%",
+	left: "50%",
+	transform: "translateX(-50%)"
 };
 const buttStyle: React.CSSProperties = {
-
 	padding: ".5rem",
 	margin: ".2rem",
 

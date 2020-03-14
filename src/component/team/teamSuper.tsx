@@ -8,7 +8,6 @@ interface Props {
 
 export default class TeamSuper extends React.Component<Props> {
 	render() {
-		console.log("in super", this.props.teamTypes);
 
 		return (
 			<div  style={this.props.isDesktop ? superStyle : superStyleMobile}>

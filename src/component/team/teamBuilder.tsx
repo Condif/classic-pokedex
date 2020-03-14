@@ -4,7 +4,7 @@ import Axios from "axios";
 import MyTeam from "./myTeam";
 import TeamSuper from "./teamSuper";
 import TeamWeak from "./teamWeak";
-import { TeamPokemons, Pokemon } from "../../types";
+import { TeamPokemons } from "../../types";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
 interface Props extends RouteComponentProps {
@@ -15,6 +15,7 @@ interface State {
 	teamURLs: TeamPokemons;
 	myTeam: any[];
 	teamTypes: any[];
+	emptySlots: number;
 }
 
 class TeamBuilder extends React.Component<Props, State> {
@@ -23,18 +24,28 @@ class TeamBuilder extends React.Component<Props, State> {
 		this.state = {
 			teamURLs: this.props.teamURLs,
 			myTeam: [],
-			teamTypes: []
+			teamTypes: [],
+
+			emptySlots: 6 - this.props.teamURLs.length
 		};
 	}
 
 	componentDidMount() {
+		console.log("empty slots", this.state.emptySlots);
+
 		this.setTeam();
+		if (this.state.myTeam.length === 0) {
+			console.log("my team is empty");
+
+			this.generateEmpty();
+		}
 	}
+
 	componentDidUpdate(prevProps: Props) {
-		if (
-			prevProps.teamURLs !== this.props.teamURLs
-		) {
-			console.log("TeamBuilder - UPDATED");
+		// console.log("url length",this.state.teamURLs.length);
+		console.log("teambuilder - UPDATED");
+
+		if (prevProps.teamURLs !== this.props.teamURLs) {
 			this.setState(
 				{
 					teamURLs: this.props.teamURLs,
@@ -42,7 +53,6 @@ class TeamBuilder extends React.Component<Props, State> {
 					teamTypes: []
 				},
 				() => {
-					console.log("state", this.state.teamTypes);
 					this.setTeam();
 				}
 			);
@@ -63,7 +73,6 @@ class TeamBuilder extends React.Component<Props, State> {
 				() => {
 					index++;
 					if (index === this.props.teamURLs.length) {
-						console.log("before setTeamTypes()", this.state.teamTypes);
 						this.setTeamTypes();
 					}
 				}
@@ -73,29 +82,76 @@ class TeamBuilder extends React.Component<Props, State> {
 
 	setTeamTypes = () => {
 		let teamTypes: any = [];
+		let index: number = 0;
 
 		this.state.myTeam.forEach(member => {
+			index++;
+			console.log(index);
 			member.types.forEach((type: any) => {
 				teamTypes.push(type.type);
-				console.log(type, ":", teamTypes);
 
-				this.setState(
-					{
-						teamTypes: teamTypes
-					},
-					() => {
-						console.log("types set", this.state.teamTypes);
-					}
-				);
+				this.setState({
+					teamTypes: teamTypes
+				});
+				if (index === this.props.teamURLs.length) {
+					console.log("done");
+					let emptySlots = this.generateEmpty();
+					console.log(emptySlots);
+
+					this.setState({
+						myTeam: [...this.state.myTeam, ...emptySlots]
+					});
+				}
 			});
 		});
 	};
+
+	generateEmpty = () => {
+		const emptySlots = 6 - this.props.teamURLs.length;
+		let fakeList: any = [];
+		console.log("empty slots : ", emptySlots);
+
+		const fakeMember: any = {
+			moves: [
+				{
+					move: {
+						name: "",
+						url: ""
+					}
+				}
+			],
+			name: "empty",
+			sprites: {
+				front_default: "https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+			},
+			types: [
+				{
+					type: {
+						name: "",
+						url: ""
+					}
+				}
+			],
+			exists: false
+		};
+
+		for (let i = 0; i < emptySlots; i++) {
+			fakeList.push(fakeMember);
+
+			if (i === emptySlots) {
+				console.log(fakeList);
+				return fakeList;
+			}
+		}
+
+		return fakeList;
+	};
+
 
 	logState = () => {
 		console.log("my-team", this.state.myTeam);
 		console.log("my-types", this.state.teamTypes);
 	};
-
 	render() {
 		return this.props.isDesktop ? (
 			<div style={teamBuilderStyle}>
@@ -111,7 +167,6 @@ class TeamBuilder extends React.Component<Props, State> {
 
 				<div style={btnWrapper}>
 					<Link to="/">BACK</Link>
-					{/* <button onClick={this.props.clearAll}>CLEAR ALL</button> */}
 					<button onClick={this.logState}>log State</button>
 				</div>
 			</div>
@@ -129,7 +184,6 @@ class TeamBuilder extends React.Component<Props, State> {
 
 				<div style={btnWrapper}>
 					<Link to="/">BACK</Link>
-					{/* <button onClick={this.props.clearAll}>CLEAR ALL</button> */}
 					<button onClick={this.logState}>log State</button>
 				</div>
 			</div>

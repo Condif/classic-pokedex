@@ -52,10 +52,10 @@ body ::-webkit-scrollbar-track-piece:start {
 .teamWrapper :nth-child(2n) p {
 	text-align: left !important;
 }
-.teamWrapper :nth-child(2n) .imageWrapper button {
+.teamWrapper :nth-child(2n) button {
 	left: 0;
-}
-
-/* .removeButton:nth-child(2n) {
-  right:0;
 } */
+
+.removeButton:nth-child(2n) {
+  right:0;
+}

@@ -54,8 +54,6 @@ interface State {
 class DamageRelations extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		console.log("DR");
-
 		this.state = {
 			normal: [],
 			fire: [],
@@ -393,8 +391,6 @@ class DamageRelations extends React.Component<Props, State> {
 	};
 
 	render() {
-		console.log("in DR", this.props.teamTypes);
-
 		let effects: any = this.generateSupers();
 
 		return <div style={measureList}>{effects}</div>;
