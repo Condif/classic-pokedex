@@ -22,6 +22,7 @@ export default class MainNavpad extends React.Component<Props> {
 
 const u: React.CSSProperties = {
 	gridArea: "u",
+	boxShadow: ".5rem solid #333",
 
 	borderRadius: ".5rem .5rem 0 0"
 };

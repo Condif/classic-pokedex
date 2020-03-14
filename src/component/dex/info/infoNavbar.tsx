@@ -57,6 +57,7 @@ const btnStyle: React.CSSProperties = {
 
 	background: "#2aa9fe",
 	color: "",
+	boxShadow: "-.1rem .1rem .1rem #123",
 	// border:".5rem solid #dc0a2d",
 
 	cursor: "pointer"
@@ -76,7 +77,7 @@ const backBtn: React.CSSProperties = {
 
 	position: "absolute",
 	bottom: ".5rem",
-	right: "-2rem",
+	right: "-2.3rem",
 
 	color: "#aa5522",
 	fontSize: ".7em",
@@ -90,5 +91,7 @@ const backBtn: React.CSSProperties = {
 	justifyContent: "center",
 	alignItems: "center",
 
-	cursor: "pointer"
+	cursor: "pointer",
+
+	boxShadow: "-.1rem .1rem .1rem #123",
 };
