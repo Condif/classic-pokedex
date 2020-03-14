@@ -36,6 +36,8 @@ interface State {
 }
 
 export default class ListItem extends React.Component<Props, State> {
+    _isMounted: boolean = false
+
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -48,50 +50,52 @@ export default class ListItem extends React.Component<Props, State> {
     }
 
     giveType = (): any => {
-		switch (this.state.data.type) {
-			case "normal":
-                return { ...typeBox, ...normal };
-            case "fire":
-                return { ...typeBox, ...fire };
-            case "water":
-                return { ...typeBox, ...water };
-            case "electric":
-                return { ...typeBox, ...electric };
-            case "grass":
-                return { ...typeBox, ...grass };
-            case "ice":
-                return { ...typeBox, ...ice };
-            case "fighting":
-                return { ...typeBox, ...fighting };
-            case "poison":
-                return { ...typeBox, ...poison };
-            case "ground":
-                return { ...typeBox, ...ground };
-            case "flying":
-                return { ...typeBox, ...flying };
-            case "psychic":
-                return { ...typeBox, ...psychic };
-            case "bug":
-                return { ...typeBox, ...bug };
-            case "rock":
-                return { ...typeBox, ...rock };
-            case "ghost":
-                return { ...typeBox, ...ghost };
-            case "dragon":
-                return { ...typeBox, ...dragon };
-            case "dark":
-                return { ...typeBox, ...dark };
-            case "steel":
-                return { ...typeBox, ...steel };
-            case "fairy":
-                return { ...typeBox, ...steel };
-			}
+        if (this._isMounted) {
+            switch (this.state.data.type) {
+                case "normal":
+                    return { ...typeBox, ...normal };
+                case "fire":
+                    return { ...typeBox, ...fire };
+                case "water":
+                    return { ...typeBox, ...water };
+                case "electric":
+                    return { ...typeBox, ...electric };
+                case "grass":
+                    return { ...typeBox, ...grass };
+                case "ice":
+                    return { ...typeBox, ...ice };
+                case "fighting":
+                    return { ...typeBox, ...fighting };
+                case "poison":
+                    return { ...typeBox, ...poison };
+                case "ground":
+                    return { ...typeBox, ...ground };
+                case "flying":
+                    return { ...typeBox, ...flying };
+                case "psychic":
+                    return { ...typeBox, ...psychic };
+                case "bug":
+                    return { ...typeBox, ...bug };
+                case "rock":
+                    return { ...typeBox, ...rock };
+                case "ghost":
+                    return { ...typeBox, ...ghost };
+                case "dragon":
+                    return { ...typeBox, ...dragon };
+                case "dark":
+                    return { ...typeBox, ...dark };
+                case "steel":
+                    return { ...typeBox, ...steel };
+                case "fairy":
+                    return { ...typeBox, ...steel };
+                }
+        }
 	};
 
     async fetchItemInfo() {
         try {
+            this._isMounted = true
             const result = await Axios.get(this.props.url)
-            
             if (this.props.move) {
                 return {
                     flavor: result.data.flavor_text_entries[2].flavor_text,
@@ -120,11 +124,13 @@ export default class ListItem extends React.Component<Props, State> {
 
     async loadFlavorText(){
         if (this.state.firstFetch) {
-            const info = await this.fetchItemInfo()            
-            this.setState({
-                firstFetch: false,
-                data: info
-            })
+            const info = await this.fetchItemInfo()
+            if(this._isMounted) {
+                this.setState({
+                    firstFetch: false,
+                    data: info
+                })
+            }            
         }
     }
 
@@ -136,6 +142,10 @@ export default class ListItem extends React.Component<Props, State> {
         if(prevProps.name !== this.props.name) {
             this.loadFlavorText()
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     render() {
