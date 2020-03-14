@@ -46,3 +46,9 @@
 
     
 }
+
+@media screen and (max-width: 42.5rem) {
+    .layoutWrapperStyle {
+        flex-wrap: wrap;
+    }
+}

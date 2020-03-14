@@ -191,7 +191,7 @@ const typeStyle: React.CSSProperties = {
     color: "#bfbfbf",
     margin: "0 .5rem 0 0",
     padding: ".2rem 1rem .2rem 1rem",
-    fontSize: ".8rem",
+    fontSize: ".7rem",
     textTransform: "uppercase"
 }
 

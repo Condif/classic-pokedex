@@ -124,7 +124,10 @@ export default class Layout extends React.Component<Props, State> {
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
 								/>
-								<InfoDex pokemon={this.state.currentPokemon} />
+								<InfoDex 
+								pokemon={this.state.currentPokemon} 
+								isDesktop={this.props.isDesktop}
+								/>
 							</div>
 						) : (
 							<Switch>
@@ -136,11 +139,12 @@ export default class Layout extends React.Component<Props, State> {
 											searchClick={this.handleSearchClick}
 										/>
 									</div>
-								</Route>
-								{/*Uppdaterar pokemon efter url vilket vilket gör att sidan kraschar med /info, kan använda link */}
-								<Route path="/info">
+									<div style={betweenDivs}></div>
 									<div className="layoutStyleMobile">
-										<InfoDex pokemon={this.state.currentPokemon} />
+										<InfoDex 
+										pokemon={this.state.currentPokemon}
+										isDesktop={this.props.isDesktop}
+										/>
 									</div>
 								</Route>
 							</Switch>
@@ -151,3 +155,28 @@ export default class Layout extends React.Component<Props, State> {
 		);
 	}
 }
+
+
+const betweenDivs: React.CSSProperties = {
+	height: "1rem",
+	width: "80%",
+	border: ".2rem solid #123",
+	borderRadius: "1rem",
+	backgroundColor: "#111",
+}
+
+// const buttWrapperStyle: React.CSSProperties = {
+// 	position: "absolute",
+
+// 	top: 0,
+// 	left: "50%",
+// 	transform: "translatex(-50%)"
+// };
+// const buttStyle: React.CSSProperties = {
+// 	padding: ".5rem",
+// 	margin: ".2rem",
+
+// 	color: "#e7e7e7",
+// 	background: "#333",
+// 	border: ".3rem double #ee8866"
+// };
