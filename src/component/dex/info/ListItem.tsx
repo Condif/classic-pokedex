@@ -87,7 +87,7 @@ export default class ListItem extends React.Component<Props, State> {
                 case "steel":
                     return { ...typeBox, ...steel };
                 case "fairy":
-                    return { ...typeBox, ...steel };
+                    return { ...typeBox, ...fairy };
                 }
         }
 	};
