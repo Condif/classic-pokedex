@@ -1,15 +1,20 @@
 import * as React from "react";
 import "../../mainNavpadStyle.css"
 
-export default class MainNavpad extends React.Component {
+interface Props {
+	handleUpclick: () => void
+	handleDownclick: () => void
+}
+
+export default class MainNavpad extends React.Component<Props> {
 	render() {
 		return (
 			<div className="navpadStyle">
 				<button className="btn" style={u}></button>
-				<button className="btn" style={r}></button>
+				<button onClick={this.props.handleUpclick} className="btn" style={r}></button>
 				<button className="btn" style={m}></button>
 				<button className="btn" style={d}></button>
-				<button className="btn" style={l}></button>
+				<button onClick={this.props.handleDownclick} className="btn" style={l}></button>
 			</div>
 		);
 	}
@@ -17,6 +22,7 @@ export default class MainNavpad extends React.Component {
 
 const u: React.CSSProperties = {
 	gridArea: "u",
+	boxShadow: ".5rem solid #333",
 
 	borderRadius: ".5rem .5rem 0 0"
 };
