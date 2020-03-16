@@ -70,9 +70,11 @@ export default class GenerateBio extends React.Component<Props, State> {
     async componentDidMount() {
         const pokeBio = await this.loadPokeBio()
         this.setLoading(false)
-        this.setState({
-            bio: pokeBio
-        })
+        if (this._isMounted) {
+            this.setState({
+                bio: pokeBio
+            })
+        }
         
     }
 
