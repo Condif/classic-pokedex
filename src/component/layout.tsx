@@ -75,6 +75,14 @@ class Layout extends React.Component<Props, State> {
 		this.setPokemonInState(pokemon);
 	}
 
+	handleUpclick = () => {
+		this.upState();
+	};
+
+	handleDownclick = () => {
+		this.downState();
+	};
+
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
 		const notFound = {
@@ -191,41 +199,13 @@ class Layout extends React.Component<Props, State> {
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
-	handleAddFake = () => {
-		console.log("clicked");
-		let nameChooser = Math.floor(Math.random() * 3);
-
-		if (this.state.myTeam.length < 6) {
-			if (nameChooser === 0) {
-				this.setState({
-					myTeam: [
-						...this.state.myTeam,
-						"https://pokeapi.co/api/v2/pokemon/bulbasaur"
-					]
-				});
-			}
-			if (nameChooser === 1) {
-				this.setState({
-					myTeam: [
-						...this.state.myTeam,
-						"https://pokeapi.co/api/v2/pokemon/charmander"
-					]
-				});
-			}
-			if (nameChooser === 2) {
-				this.setState({
-					myTeam: [
-						...this.state.myTeam,
-						"https://pokeapi.co/api/v2/pokemon/squirtle"
-					]
-				});
-			}
-		}
-	};
 	handleClearAll = () => {
-		this.setState({
-			myTeam: []
-		}, () => console.log("Cleared team",this.state.myTeam));
+		this.setState(
+			{
+				myTeam: []
+			},
+			() => console.log("Cleared team", this.state.myTeam)
+		);
 	};
 
 	render() {
@@ -249,9 +229,9 @@ class Layout extends React.Component<Props, State> {
 									isDesktop={this.props.isDesktop}
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
+									handleUpclick={this.handleUpclick}
+									handleDownclick={this.handleDownclick}
 									addToTeam={this.handleAddToTeam}
-									idDown={this.downState}
-									idUp={this.upState}
 								/>
 								<InfoDex
 									pokemon={this.state.currentPokemon}
@@ -265,9 +245,9 @@ class Layout extends React.Component<Props, State> {
 										isDesktop={this.props.isDesktop}
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
+										handleUpclick={this.handleUpclick}
+										handleDownclick={this.handleDownclick}
 										addToTeam={this.handleAddToTeam}
-										idUp={this.upState}
-										idDown={this.downState}
 									/>
 								</div>
 								<div style={betweenDivs}></div>

@@ -3,19 +3,19 @@ import "../../mainNavpadStyle.css"
 import { Link } from "react-router-dom";
 
 interface Props {
-	idUp: () => void;
-	idDown: () => void;
+	handleUpclick: () => void
+	handleDownclick: () => void
 }
 
 export default class MainNavpad extends React.Component<Props> {
 	render() {
 		return (
-			<div style={navpadStyle}>
-				<button style={{ ...u, ...btn }} onClick={this.props.idUp}></button>
-				<button style={{ ...r, ...btn }}></button>
+			<div className="navpadStyle">
+				<button className="btn" style={u}></button>
+				<button onClick={this.props.handleUpclick} className="btn" style={r}></button>
+				<button className="btn" style={d}></button>
+				<button onClick={this.props.handleDownclick} className="btn" style={l}></button>
 				<Link to="/teamPage"style={{ ...btn, ...m }}></Link>
-				<button style={{ ...l, ...btn }}></button>
-				<button style={{ ...d, ...btn }} onClick={this.props.idDown}></button>
 			</div>
 		);
 	}
@@ -23,6 +23,7 @@ export default class MainNavpad extends React.Component<Props> {
 
 const u: React.CSSProperties = {
 	gridArea: "u",
+	boxShadow: ".5rem solid #333",
 
 	borderRadius: ".5rem .5rem 0 0"
 };

@@ -63,7 +63,7 @@ export default class InfoDisplay extends React.Component<Props> {
 				<Suspense fallback={ <PokeLoad />}>
 				<div style={this.props.isDesktop ? bioWrapperStyle : bioWrapperStyleMobile}>
 					<h4>Bio</h4>
-					<GenerateBio pokeName={this.props.pokemon.name} />
+					<GenerateBio pokeName={this.props.pokemon.id?.toString()} />
 				</div>
  
 				<div style={abilityWrapperStyle}>
@@ -116,13 +116,14 @@ const displayStyle: React.CSSProperties = {
 
 	display: "flex",
 	flexDirection: "column",
-	justifyContent: "space-between"
+	justifyContent: "space-between",
+	boxShadow: "-.2rem .2rem .2rem #123",
 };
 
 const displayStyleMobile: React.CSSProperties= {
 	position: 'absolute',
 	top: "2rem",
-	bottom: "6rem",
+	bottom: "7rem",
 	width: '90%',
 
 	maxWidth: "35rem",
@@ -135,7 +136,9 @@ const displayStyleMobile: React.CSSProperties= {
 
 	display: "flex",
 	flexDirection: "column",
-	justifyContent: "space-between"
+	justifyContent: "space-between",
+	boxShadow: "-.2rem .2rem .2rem #123",
+	
 }
 
 const bioWrapperStyle: React.CSSProperties = {

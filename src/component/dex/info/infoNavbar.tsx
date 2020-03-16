@@ -21,8 +21,6 @@ export default class InfoNavbar extends React.Component<Props> {
 					onClick={this.props.navigateToMoves}>
 					moves
 				</p>
-				{ (!this.props.isDesktop &&
-				<p style={backBtn}></p>) }
 			</div>
 		);
 	}
@@ -34,8 +32,6 @@ const navStyle: React.CSSProperties = {
 	width: "90%",
 	maxWidth: "33rem",
 
-	// margin: "0 2rem 2rem 2rem",
-
 	display: "flex",
 	justifyContent: "center",
 
@@ -44,7 +40,6 @@ const navStyle: React.CSSProperties = {
 	textTransform: "uppercase"
 };
 
-// - - -- -- -- - -
 
 const btnStyle: React.CSSProperties = {
 	width: "50%",
@@ -57,38 +52,13 @@ const btnStyle: React.CSSProperties = {
 
 	background: "#2aa9fe",
 	color: "",
-	// border:".5rem solid #dc0a2d",
+	boxShadow: "-.1rem .1rem .1rem #123",
 
 	cursor: "pointer"
 };
 const bioBtn: React.CSSProperties = {
 	borderRadius: "4rem 0 0 4rem"
-	// borderRight:".5rem solid #dc0a2d"
 };
 const movesBtn: React.CSSProperties = {
 	borderRadius: "0 4rem 4rem 0"
-	// borderLeft:".5rem solid #dc0a2d"
-};
-
-const backBtn: React.CSSProperties = {
-	width: "2rem",
-	height: "2rem",
-
-	position: "absolute",
-	bottom: ".5rem",
-	right: "-2rem",
-
-	color: "#aa5522",
-	fontSize: ".7em",
-	textTransform: "uppercase",
-
-	background: "#ee7755",
-	border: ".5rem double #aa5522",
-	borderRadius: "50%",
-
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-
-	cursor: "pointer"
 };

@@ -27,6 +27,9 @@ interface State {
 }
 
 export default class SearchBar extends React.Component<Props, State> {
+
+    _isMounted: boolean = false
+
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -41,6 +44,7 @@ export default class SearchBar extends React.Component<Props, State> {
     }
 
     async componentDidMount() {
+        this._isMounted = true
         const pokemon = await this.fetchPokeData()
         this.setPokemonInState(pokemon)        
     }
@@ -54,9 +58,11 @@ export default class SearchBar extends React.Component<Props, State> {
                 url: val.url,
             })
         })   
-        this.setState({
-            pokemonList: generatePokemon
-        })     
+        if (this._isMounted) {
+            this.setState({
+                pokemonList: generatePokemon
+            })     
+        }
     }
 
     fetchPokeData = async () => {
@@ -73,19 +79,22 @@ export default class SearchBar extends React.Component<Props, State> {
             targetValue = e.currentTarget.value            
         }
         
-        if (targetValue === '') {
-            this.setState({
-                showList: false
-            })
-        } else {
-            const validPokemon = await this.checkMatchingPokemonNames(targetValue)
-            const remappedPokemon = await this.remapPokemon(validPokemon)
-            
-            this.setState({
-                showList: true,
-                showPokemon: remappedPokemon
-            })          
-        }        
+        if(this._isMounted) {
+            if (targetValue === '') {
+                this.setState({
+                    showList: false
+                })
+            } else {
+                const validPokemon = await this.checkMatchingPokemonNames(targetValue)
+                const remappedPokemon = await this.remapPokemon(validPokemon)
+                
+                this.setState({
+                    showList: true,
+                    showPokemon: remappedPokemon
+                })          
+            }        
+        }
+
     }
 
     async checkMatchingPokemonNames(value: string) {
@@ -121,6 +130,10 @@ export default class SearchBar extends React.Component<Props, State> {
             searchBar.value = ''
             this.handleOnChange(searchBar)
         }        
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
 

@@ -10,10 +10,12 @@ import "../../mainDex.css";
 interface Props {
 	pokemon: Pokemon;
 	isDesktop: boolean;
+
 	searchClick: (searchReasult: string) => void;
+	handleUpclick: () => void;
+	handleDownclick: () => void;
 	addToTeam: (url: string) => void;
-	idUp: () => void;
-	idDown: () => void;
+
 }
 
 export default class MainDex extends React.Component<Props> {
@@ -29,7 +31,8 @@ export default class MainDex extends React.Component<Props> {
 				{/*Klassen får  ett namn beroende på om
 				boolean är true eller false, är den true heter classen mainDisplay, är
 				den false heter klassen mainDisplay.mobile */}
-			<button onClick={this.onClick}>ADD</button>
+
+				<button onClick={this.onClick}>ADD</button>
 				<MainDisplay
 					isDesktop={this.props.isDesktop}
 					sprite={this.props.pokemon.sprites}
@@ -45,7 +48,10 @@ export default class MainDex extends React.Component<Props> {
 				<div
 					className={`idNavpadWrapper ${this.props.isDesktop ? "" : "mobile"}`}>
 					<MainID id={this.props.pokemon.id} />
-					<MainNavpad idDown={this.props.idDown} idUp={this.props.idUp} />
+					<MainNavpad
+						handleUpclick={this.props.handleUpclick}
+						handleDownclick={this.props.handleDownclick}
+					/>
 				</div>
 			</div>
 		);

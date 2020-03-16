@@ -15,6 +15,8 @@ interface State {
 
 export default class PokeSprite extends React.Component<Props, State> {
 
+    _isMounted: boolean = false
+
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -31,27 +33,36 @@ export default class PokeSprite extends React.Component<Props, State> {
     }
 
     async loadImage() {
-        this.setState({
-            isLoading: true
-        })
+        if (this._isMounted) {
+            this.setState({
+                isLoading: true
+            })
+        }
         
         const image = new Image()
         image.onload = () => {
+            if (this._isMounted) {
                 this.setState({
                     isLoading: false
                 })
             }
-            try {
+        }
+        try {
+                this._isMounted = true
                 const pokemon = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${this.props.image}`)
                 image.src = pokemon.data.sprites.front_default
-                this.setState({
-                    img: image,
-                    isError: false
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        img: image,
+                        isError: false
+                    })
+                }
             } catch (error) {
-                this.setState({
-                    isError: true
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        isError: true
+                    })
+                }
                 
             }
         }
@@ -61,6 +72,10 @@ export default class PokeSprite extends React.Component<Props, State> {
             this.loadImage()
             
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     render() {

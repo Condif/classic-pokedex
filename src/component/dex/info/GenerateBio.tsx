@@ -25,6 +25,8 @@ interface Result {
 
 export default class GenerateBio extends React.Component<Props, State> {
 
+    _isMounted: boolean = false
+
     constructor(props:Props){
         super(props)
         this.state = {
@@ -34,6 +36,7 @@ export default class GenerateBio extends React.Component<Props, State> {
     }
 
     async fetchPokeBio() {
+        this._isMounted = true
         const speciesBio: Result = await Axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.props.pokeName}`)
         return speciesBio.data
         
@@ -54,6 +57,7 @@ export default class GenerateBio extends React.Component<Props, State> {
                     bio = bioText.flavor_text
                     return bio
                 } 
+                return bio
             })
         } catch (error) {
             console.log(error);
@@ -67,26 +71,36 @@ export default class GenerateBio extends React.Component<Props, State> {
     async componentDidMount() {
         const pokeBio = await this.loadPokeBio()
         this.setLoading(false)
-        this.setState({
-            bio: pokeBio
-        })
+        if (this._isMounted) {
+            this.setState({
+                bio: pokeBio
+            })
+        }
         
     }
 
     setLoading(value: boolean) {
-        this.setState({
-            isLoading: value
-        })
+        if(this._isMounted) {
+            this.setState({
+                isLoading: value
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: Props) {
         if(prevProps.pokeName !== this.props.pokeName) {
             const pokeBio = await this.loadPokeBio()
             this.setLoading(false)
-            this.setState({
-                bio: pokeBio
-            })
+            if (this._isMounted) {
+                this.setState({
+                    bio: pokeBio
+                })
+            }
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     render() {
