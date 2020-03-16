@@ -201,8 +201,7 @@ class Layout extends React.Component<Props, State> {
 		this.setState(
 			{
 				myTeam: []
-			},
-			() => console.log("Cleared team", this.state.myTeam)
+			}
 		);
 	};
 

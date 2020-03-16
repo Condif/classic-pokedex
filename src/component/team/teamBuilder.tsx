@@ -188,9 +188,6 @@ class TeamBuilder extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps: Props) {
-		// console.log("url length",this.state.teamURLs.length);
-		console.log("teambuilder - UPDATED");
-		console.log(this.props.teamURLs);
 
 		if (prevProps.teamURLs !== this.props.teamURLs) {
 			this.setState(
@@ -222,7 +219,6 @@ class TeamBuilder extends React.Component<Props, State> {
 				},
 				() => {
 					index++;
-					console.log("new Team", newTeam);
 
 					if (index === this.props.teamURLs.length) {
 						this.setTeamTypes();
@@ -238,7 +234,6 @@ class TeamBuilder extends React.Component<Props, State> {
 
 		this.state.myTeam.forEach(member => {
 			index++;
-			console.log(index);
 			member.types.forEach((type: any) => {
 				teamTypes.push(type.type);
 
@@ -250,8 +245,6 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	clearAll = () => {
-		console.log("CLEAR");
-		console.log("empty", this.state.emptyTeam);
 
 		this.setState({
 			teamURLs: [],
@@ -263,7 +256,6 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	render() {
-		console.log("builder render", this.state.myTeam);
 
 		return this.props.isDesktop ? (
 			<div style={teamBuilderStyle}>

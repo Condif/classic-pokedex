@@ -10,36 +10,22 @@ interface Props extends RouteComponentProps {
 interface State {}
 
 class MyTeam extends React.Component<Props, State> {
-
-
-	componentDidUpdate(prevProps: Props) {
-		console.log("myTeam - UPDATED");
-		console.log(prevProps.myTeam);
-		console.log(this.props.myTeam);
-	}
-
-	imageClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-		console.log("image Clicked");
-		console.log(event);
-	};
-
 	removeMember = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		console.log("button Clicked");
 		console.log(event);
 	};
 
 	render() {
-		console.log("team render - props :  ", this.props.myTeam);
-		let index: number = 0
+		let index: number = 0;
 
 		return (
 			<div
 				style={this.props.isDesktop ? teamWrapperStyle : teamWrapperStyleMobile}
 				className="teamWrapper">
 				{this.props.myTeam.map((member: any) => {
-					index++
+					index++;
 					return (
-						<div key={index} style={memberStyle} className="teamMember">
+						<div key={} style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
 								<p style={memberName}>{member.name ? member.name : "empty"}</p>
 
@@ -71,8 +57,7 @@ class MyTeam extends React.Component<Props, State> {
 								<img
 									src={member.sprites.front_default}
 									alt="sprite"
-									style={imgStyle}
-									onClick={this.imageClick}></img>
+									style={imgStyle}></img>
 							</div>
 							{member.name === "empty" ? null : (
 								<button
