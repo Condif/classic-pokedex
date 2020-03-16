@@ -19,22 +19,8 @@
 
 @media screen and (max-width: 42.5rem) {
     .displayStyle {
-	position: absolute;
 	bottom: 7rem;
 	top: 2rem;
 	margin: 0;
-	width: 90%;
-
-	max-width: 35rem;
-
-	padding: 1rem;
-
-	background: #272727;
-	color: #e7e7e7;
-	border-radius: 1rem;
-
-	display: flex;
-	flex-direction: column;
-	box-shadow: -.2rem .2rem .2rem #123;
     }
 }

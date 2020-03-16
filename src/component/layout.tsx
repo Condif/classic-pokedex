@@ -176,19 +176,3 @@ const betweenDivs: React.CSSProperties = {
 	borderRadius: "1rem",
 	backgroundColor: "#111",
 }
-
-// const buttWrapperStyle: React.CSSProperties = {
-// 	position: "absolute",
-
-// 	top: 0,
-// 	left: "50%",
-// 	transform: "translatex(-50%)"
-// };
-// const buttStyle: React.CSSProperties = {
-// 	padding: ".5rem",
-// 	margin: ".2rem",
-
-// 	color: "#e7e7e7",
-// 	background: "#333",
-// 	border: ".3rem double #ee8866"
-// };
