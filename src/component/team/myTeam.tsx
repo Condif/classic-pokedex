@@ -25,7 +25,7 @@ class MyTeam extends React.Component<Props, State> {
 				{this.props.myTeam.map((member: any) => {
 					index++;
 					return (
-						<div key={} style={memberStyle} className="teamMember">
+						<div key={index} style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
 								<p style={memberName}>{member.name ? member.name : "empty"}</p>
 
