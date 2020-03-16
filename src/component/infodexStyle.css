@@ -15,10 +15,4 @@
         border-left: none;
 		width: 100%;
 	}
-	.displayStyle {
-		height: 80.5%;
-		margin-bottom: 6.9rem;
-		margin-top: 1.9rem;
-		box-shadow: -.2rem .2rem .2rem #123;
-	}
 }
