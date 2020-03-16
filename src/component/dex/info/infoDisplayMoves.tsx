@@ -22,7 +22,6 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 					listItems={this.props.pokemon.moves}
 					textStyle={flavorTextStyle}
 					nameStyle={flavorNameStyle}
-					// flavorText
 					/>
 				</div>
 				</Suspense>
@@ -33,7 +32,6 @@ export default class InfoDisplayMoves extends React.Component<Props> {
 
 const flavorTextStyle: React.CSSProperties = {
 	position: "relative",
-	// width: "95%",
 	padding: ".5rem 1rem",
 	margin: ".2rem .5rem .2rem 0rem",
 	
@@ -44,7 +42,6 @@ const flavorTextStyle: React.CSSProperties = {
 
 const flavorNameStyle: React.CSSProperties = {
 	position: "relative",
-	// width: "90%",
 	margin:".5rem .5rem .2rem 2rem",
     padding: ".3rem 0 .3rem .8rem",
 	background: "#333",

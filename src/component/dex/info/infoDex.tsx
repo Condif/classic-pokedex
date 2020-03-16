@@ -41,9 +41,6 @@ export default class InfoDex extends React.Component<Props, State> {
 				<div style={cutout_1}></div>} 
 				{this.props.isDesktop &&
 				<div style={cutout_2}></div>}
-
-				{/* <div>
-					</div> */}
 					{this.state.page === "bio" && (
 						<InfoDisplay isDesktop={this.props.isDesktop} pokemon={this.props.pokemon} />
 					)}
@@ -72,7 +69,6 @@ const cutout_1: React.CSSProperties = {
 	background: "#e7e7e7",
 	backgroundImage:
 		"url(https://www.transparenttextures.com/patterns/hexellence.png)"
-	// border:"1px solid red",
 };
 const cutout_2: React.CSSProperties = {
 	position: "absolute",
@@ -85,7 +81,6 @@ const cutout_2: React.CSSProperties = {
 	background: "#e7e7e7",
 	backgroundImage:
 		"url(https://www.transparenttextures.com/patterns/hexellence.png)",
-	// border:"1px solid red",
 
 	transformOrigin: "100% 100%",
 	transform: "rotate(45deg)"
