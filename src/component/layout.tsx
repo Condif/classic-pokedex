@@ -191,8 +191,6 @@ class Layout extends React.Component<Props, State> {
 	async componentDidUpdate(prevProps: Props) {
 		if (prevProps.location.pathname !== this.props.location.pathname) {
 			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-			const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
-			const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
 			this.setPokemonInState(pokemon);
 		}
 
@@ -289,35 +287,3 @@ const layoutWrapperStyle: React.CSSProperties = {
 	backgroundImage:
 		'url("https://www.transparenttextures.com/patterns/hexellence.png")'
 };
-
-const layoutStyle: React.CSSProperties = {
-	width: "100%",
-	maxWidth: "70rem",
-	height: "100vh",
-	maxHeight: "50rem",
-
-	display: "flex",
-	justifyContent: "center",
-
-	background: "#dc0a2d",
-	backgroundImage:
-		'url("https://www.transparenttextures.com/patterns/cartographer.png")',
-	borderRadius: "1rem",
-	backgroundColor: "#111"
-};
-
-// const buttWrapperStyle: React.CSSProperties = {
-// 	position: "absolute",
-
-// 	top: 0,
-// 	left: "50%",
-// 	transform: "translatex(-50%)"
-// };
-// const buttStyle: React.CSSProperties = {
-// 	padding: ".5rem",
-// 	margin: ".2rem",
-
-// 	color: "#e7e7e7",
-// 	background: "#333",
-// 	border: ".3rem double #ee8866"
-// };

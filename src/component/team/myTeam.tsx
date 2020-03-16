@@ -10,9 +10,7 @@ interface Props extends RouteComponentProps {
 interface State {}
 
 class MyTeam extends React.Component<Props, State> {
-	constructor(props: Props) {
-		super(props);
-	}
+
 
 	componentDidUpdate(prevProps: Props) {
 		console.log("myTeam - UPDATED");

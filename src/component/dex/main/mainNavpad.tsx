@@ -47,17 +47,6 @@ const m: React.CSSProperties = {
 	// borderRadius:"50%",
 };
 
-const navpadStyle: React.CSSProperties = {
-	width: "8rem",
-	height: "8rem",
-	marginBottom: "1rem",
-
-	display: "grid",
-	gridTemplateColumns: "1fr 1fr 1fr",
-	gridTemplateRows: "1fr 1fr 1fr",
-	gridTemplateAreas: "'. u .' 'l m r' '. d .'"
-};
-
 const btn: React.CSSProperties = {
 	outline: "none",
 	background: "#555",

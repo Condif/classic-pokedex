@@ -189,7 +189,7 @@ class TeamBuilder extends React.Component<Props, State> {
 		console.log("teambuilder - UPDATED");
 		console.log(this.props.teamURLs);
 
-		if (prevProps.teamURLs != this.props.teamURLs) {
+		if (prevProps.teamURLs !== this.props.teamURLs) {
 			this.setState(
 				{
 					teamURLs: this.props.teamURLs,
