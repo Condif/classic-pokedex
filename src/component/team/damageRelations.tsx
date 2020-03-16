@@ -79,6 +79,7 @@ class DamageRelations extends React.Component<Props, State> {
 	componentDidMount() {
 		this.filterSupers();
 	}
+	
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.teamTypes !== this.props.teamTypes) {
 			this.setState({

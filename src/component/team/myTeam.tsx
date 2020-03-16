@@ -1,39 +1,37 @@
 import * as React from "react";
 
 import { TeamPokemons } from "../../types";
+import { RouteComponentProps, withRouter } from "react-router";
 
-interface Props {
+interface Props extends RouteComponentProps {
 	myTeam: TeamPokemons;
 	isDesktop: boolean;
 }
-interface State {
-	myTeam: TeamPokemons;
-}
+interface State {}
 
-export default class MyTeam extends React.Component<Props, State> {
+class MyTeam extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		this.state = {
-			myTeam: this.props.myTeam
-		};
 	}
-	componentDidUpdate() {
-		console.log("UPDATED \n myTeam : ", this.state.myTeam);
-		
+
+	componentDidUpdate(prevProps: Props) {
+		console.log("myTeam - UPDATED");
+		console.log(prevProps.myTeam);
+		console.log(this.props.myTeam);
 	}
 
 	imageClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 		console.log("image Clicked");
-		console.log(event.relatedTarget);
+		console.log(event);
 	};
 
 	removeMember = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		console.log("button Clicked");
+		console.log(event);
 	};
 
 	render() {
-		console.log("my team props - render", this.props.myTeam);
-		console.log("my team state - render", this.state.myTeam);
+		console.log("team render - props :  ", this.props.myTeam);
 
 		return (
 			<div
@@ -89,6 +87,8 @@ export default class MyTeam extends React.Component<Props, State> {
 	}
 }
 
+export default withRouter(MyTeam);
+
 const teamWrapperStyleMobile: React.CSSProperties = {
 	width: "100%",
 
@@ -107,7 +107,7 @@ const teamWrapperStyle: React.CSSProperties = {
 };
 
 const memberStyle: React.CSSProperties = {
-	position:"relative",
+	position: "relative",
 
 	width: "50%",
 	height: "10rem",

@@ -10,46 +10,190 @@ import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 interface Props extends RouteComponentProps {
 	teamURLs: TeamPokemons;
 	isDesktop: boolean;
+	clearAll: () => void;
 }
 interface State {
 	teamURLs: TeamPokemons;
 	myTeam: any[];
 	teamTypes: any[];
-	emptySlots: number;
+	emptyTeam: any[];
 }
 
 class TeamBuilder extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+
 		this.state = {
+			emptyTeam: [
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				},
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				},
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				},
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				},
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				},
+				{
+					moves: [
+						{
+							move: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					name: "empty",
+					sprites: {
+						front_default:
+							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+					},
+					types: [
+						{
+							type: {
+								name: "",
+								url: ""
+							}
+						}
+					],
+					exists: false
+				}
+			],
 			teamURLs: this.props.teamURLs,
 			myTeam: [],
-			teamTypes: [],
-
-			emptySlots: 6 - this.props.teamURLs.length
+			teamTypes: []
 		};
 	}
 
 	componentDidMount() {
-		console.log("empty slots", this.state.emptySlots);
+		this.setState({
+			myTeam: this.state.emptyTeam
+		});
 
 		this.setTeam();
-		if (this.state.myTeam.length === 0) {
-			console.log("my team is empty");
-
-			this.generateEmpty();
-		}
 	}
 
 	componentDidUpdate(prevProps: Props) {
 		// console.log("url length",this.state.teamURLs.length);
 		console.log("teambuilder - UPDATED");
+		console.log(this.props.teamURLs);
 
-		if (prevProps.teamURLs !== this.props.teamURLs) {
+		if (prevProps.teamURLs != this.props.teamURLs) {
 			this.setState(
 				{
 					teamURLs: this.props.teamURLs,
-					myTeam: [],
+					myTeam: this.state.emptyTeam,
 					teamTypes: []
 				},
 				() => {
@@ -65,13 +209,18 @@ class TeamBuilder extends React.Component<Props, State> {
 		this.state.teamURLs.forEach(async member => {
 			const memberRes: any = await Axios.get(member);
 			let memberData: any = memberRes.data;
+			let newTeam = this.state.emptyTeam;
+
+			newTeam.splice(index, 1, memberData);
 
 			this.setState(
 				{
-					myTeam: [...this.state.myTeam, memberData]
+					myTeam: newTeam
 				},
 				() => {
 					index++;
+					console.log("new Team", newTeam);
+
 					if (index === this.props.teamURLs.length) {
 						this.setTeamTypes();
 					}
@@ -93,66 +242,26 @@ class TeamBuilder extends React.Component<Props, State> {
 				this.setState({
 					teamTypes: teamTypes
 				});
-				if (index === this.props.teamURLs.length) {
-					console.log("done");
-					let emptySlots = this.generateEmpty();
-					console.log(emptySlots);
-
-					this.setState({
-						myTeam: [...this.state.myTeam, ...emptySlots]
-					});
-				}
 			});
 		});
 	};
 
-	generateEmpty = () => {
-		const emptySlots = 6 - this.props.teamURLs.length;
-		let fakeList: any = [];
-		console.log("empty slots : ", emptySlots);
+	clearAll = () => {
+		console.log("CLEAR");
+		console.log("empty", this.state.emptyTeam);
 
-		const fakeMember: any = {
-			moves: [
-				{
-					move: {
-						name: "",
-						url: ""
-					}
-				}
-			],
-			name: "empty",
-			sprites: {
-				front_default: "https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
-			},
-			types: [
-				{
-					type: {
-						name: "",
-						url: ""
-					}
-				}
-			],
-			exists: false
-		};
+		this.setState({
+			teamURLs: [],
+			myTeam: [],
+			teamTypes: []
+		});
 
-		for (let i = 0; i < emptySlots; i++) {
-			fakeList.push(fakeMember);
-
-			if (i === emptySlots) {
-				console.log(fakeList);
-				return fakeList;
-			}
-		}
-
-		return fakeList;
+		this.props.clearAll();
 	};
 
-
-	logState = () => {
-		console.log("my-team", this.state.myTeam);
-		console.log("my-types", this.state.teamTypes);
-	};
 	render() {
+		console.log("builder render", this.state.myTeam);
+
 		return this.props.isDesktop ? (
 			<div style={teamBuilderStyle}>
 				<TeamSuper
@@ -165,9 +274,28 @@ class TeamBuilder extends React.Component<Props, State> {
 					isDesktop={this.props.isDesktop}
 				/>
 
-				<div style={btnWrapper}>
-					<Link to="/">BACK</Link>
-					<button onClick={this.logState}>log State</button>
+				<div style={{ ...btnWrapper, ...toTheRight }}>
+					<Link to="/">
+						<img
+							src="https://i.imgur.com/OZ8Rl4Z.png"
+							alt=""
+							style={{ height: "5rem" }}
+						/>
+					</Link>
+				</div>
+				<div style={{ ...btnWrapper, ...toTheLeft }}>
+					<button
+						onClick={this.clearAll}
+						style={{
+							background: "none",
+							border: "none"
+						}}>
+						<img
+							src="https://i.imgur.com/sH6poLn.png"
+							alt=""
+							style={{ height: "5rem" }}
+						/>
+					</button>
 				</div>
 			</div>
 		) : (
@@ -184,7 +312,6 @@ class TeamBuilder extends React.Component<Props, State> {
 
 				<div style={btnWrapper}>
 					<Link to="/">BACK</Link>
-					<button onClick={this.logState}>log State</button>
 				</div>
 			</div>
 		);
@@ -217,12 +344,19 @@ const teamBuilderStyle: React.CSSProperties = {
 
 const btnWrapper: React.CSSProperties = {
 	position: "absolute",
+
+	padding: "1rem",
+	margin: "1rem",
+
+	background: "#3338",
+	borderRadius: ".5rem"
+};
+
+const toTheRight: React.CSSProperties = {
 	bottom: 0,
-	left: "50%",
-	transform: "translateX(-50%)",
-
-	padding: ".5rem",
-
-	border: ".2rem solid #333",
-	background: "#e7e7e7"
+	right: 0
+};
+const toTheLeft: React.CSSProperties = {
+	bottom: 0,
+	left: 0
 };

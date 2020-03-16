@@ -171,6 +171,7 @@ class Layout extends React.Component<Props, State> {
 
 	handleAddToTeam = (url: string) => {
 		if (this.state.myTeam.length < 6) {
+			console.log("added : ", url);
 			this.setState({
 				myTeam: [...this.state.myTeam, url]
 			});
@@ -222,11 +223,9 @@ class Layout extends React.Component<Props, State> {
 		}
 	};
 	handleClearAll = () => {
-		console.log("CLEAR ALL");
-
 		this.setState({
 			myTeam: []
-		});
+		}, () => console.log("Cleared team",this.state.myTeam));
 	};
 
 	render() {
@@ -234,13 +233,10 @@ class Layout extends React.Component<Props, State> {
 			<Switch>
 				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
-						<div>
-							<button onClick={this.handleAddFake}>ADD 1 : fake</button>
-							<button onClick={this.handleClearAll}>Clear</button>
-						</div>
 						<TeamBuilder
 							teamURLs={this.state.myTeam}
 							isDesktop={this.props.isDesktop}
+							clearAll={this.handleClearAll}
 						/>
 					</div>
 				</Route>
