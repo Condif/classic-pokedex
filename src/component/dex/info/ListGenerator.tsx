@@ -17,6 +17,7 @@ interface Props {
 
 export default class ListGenerator extends React.Component<Props, State> {
 	newList: any
+	_isMounted: boolean = false
 
 	constructor(props: Props) {
 		super(props);
@@ -29,7 +30,7 @@ export default class ListGenerator extends React.Component<Props, State> {
 
 	generateNewList() {
 		if (this.props.listItems !== undefined) {
-
+			this._isMounted = true
 			let newList: any = []
 			if (this.props.listItems) {
 				this.props.listItems.forEach((item: any) => {
@@ -61,10 +62,16 @@ export default class ListGenerator extends React.Component<Props, State> {
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.listItems !== this.props.listItems) {
 			const newList = this.generateNewList()
-			this.setState({
-				listItems: newList
-			})
+			if(this._isMounted) {
+				this.setState({
+					listItems: newList
+				})
+			}
 		}
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false
 	}
 
 	render() {
@@ -72,7 +79,7 @@ export default class ListGenerator extends React.Component<Props, State> {
 		return (
 			<div style={wrapper}>
 				<Suspense fallback={<PokeLoad />}>
-				{(this.state.listItems) 
+				{(this.state.listItems && this._isMounted) 
 				? this.state.listItems.map((item: any) => (
 					<ListItem move={item.move} url={item.url} key={item.name} name={item.name} textStyle={this.props.textStyle} nameStyle={this.props.nameStyle}/>
 				))
