@@ -13,7 +13,7 @@ import { Pokemon, TeamPokemons } from "../types";
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
-import "./layoutStyle.css"
+import "./layoutStyle.css";
 
 const history = createBrowserHistory();
 
@@ -33,6 +33,7 @@ class Layout extends React.Component<Props, State> {
 			history.location.pathname.slice(1) !== ""
 				? history.location.pathname
 				: "/bulbasaur";
+
 		this.updateUrlHistory(lastUrl);
 
 		this.state = {
@@ -46,7 +47,7 @@ class Layout extends React.Component<Props, State> {
 	}
 
 	async componentDidMount() {
-		this.updateNewPokemon(this.state.lastPokemon)
+		this.updateNewPokemon(this.state.lastPokemon);
 	}
 
 	upState = async () => {
@@ -69,7 +70,7 @@ class Layout extends React.Component<Props, State> {
 	};
 
 	async updateNewPokemon(newId: string) {
-		const pokemon = await this.fetchPokeData(newId);		
+		const pokemon = await this.fetchPokeData(newId);
 		this.updateUrlHistory(pokemon.name);
 		this.setPokemonInState(pokemon);
 	}
@@ -80,15 +81,18 @@ class Layout extends React.Component<Props, State> {
 			height: 404,
 			weight: 404,
 			id: 404,
-			name: 'MissingNo',
-		}
-		
+			name: "MissingNo"
+		};
+
 		try {
-			const res:any = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon)
+			const res: any = await Axios.get(
+				"https://pokeapi.co/api/v2/pokemon" + pokemon
+			);
 			return res.data;
 		} catch (error) {
-			return notFound
-
+			return notFound;
+		}
+	};
 	fetchPokeDataSpecies = async (pokemon: any) => {
 		const pokemonId = "/" + pokemon.id;
 		let pokeFlavor: string = "";
@@ -116,33 +120,33 @@ class Layout extends React.Component<Props, State> {
 
 	fetchPokeDataMoves = async (pokemon: any) => {
 		let listOfMovesUrls: string[] = [];
-		let pokemonMovesList: [] = pokemon.moves;
+		let pokemonMovesList: any = pokemon.moves;
 		let engMoveFlavor: string[] = [];
-
-		for (let i: number = 0; i < pokemonMovesList.length; i++) {
-			listOfMovesUrls.push(pokemon.moves[i].move.url);
-		}
-		for (let i: number = 0; i < 746; i++) {
-			for (let index: number = 0; index < listOfMovesUrls.length; index++) {
-				if (
-					listOfMovesUrls[index].includes(
-						"https://pokeapi.co/api/v2/move/" + i + "/"
-					)
-				) {
-					const getPokemonMoves = await Axios.get(
-						"https://pokeapi.co/api/v2/move/" + i + "/"
-					);
-					const dataPokemonMoves = getPokemonMoves.data;
-					engMoveFlavor.push(
-						dataPokemonMoves.flavor_text_entries[2].flavor_text
-					);
+		if (pokemonMovesList) {
+			for (let i: number = 0; i < pokemonMovesList.length; i++) {
+				listOfMovesUrls.push(pokemon.moves[i].move.url);
+			}
+			for (let i: number = 0; i < 746; i++) {
+				for (let index: number = 0; index < listOfMovesUrls.length; index++) {
+					if (
+						listOfMovesUrls[index].includes(
+							"https://pokeapi.co/api/v2/move/" + i + "/"
+						)
+					) {
+						const getPokemonMoves = await Axios.get(
+							"https://pokeapi.co/api/v2/move/" + i + "/"
+						);
+						const dataPokemonMoves = getPokemonMoves.data;
+						engMoveFlavor.push(
+							dataPokemonMoves.flavor_text_entries[2].flavor_text
+						);
+					}
 				}
 			}
 		}
 	};
 
 	setPokemonInState(pokemon: any) {
-
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
@@ -152,7 +156,7 @@ class Layout extends React.Component<Props, State> {
 				height: pokemon.height,
 				types: pokemon.types,
 				abilities: pokemon.abilities,
-				moves: pokemon.moves,
+				moves: pokemon.moves
 			}
 		});
 	}
@@ -172,7 +176,6 @@ class Layout extends React.Component<Props, State> {
 			});
 		} else {
 			console.log("TEAM FULL");
-			
 		}
 	};
 
@@ -181,7 +184,7 @@ class Layout extends React.Component<Props, State> {
 			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 			const pokemonBio = await this.fetchPokeDataSpecies(pokemon);
 			const pokemonMoves = await this.fetchPokeDataMoves(pokemon);
-			this.setPokemonInState(pokemon, pokemonBio, pokemonMoves);
+			this.setPokemonInState(pokemon);
 		}
 
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
@@ -231,13 +234,9 @@ class Layout extends React.Component<Props, State> {
 			<Switch>
 				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
-						<div style={buttWrapperStyle}>
-							<button style={buttStyle} onClick={this.handleAddFake}>
-								ADD 1 : fake
-							</button>
-							<button style={buttStyle} onClick={this.handleClearAll}>
-								Clear
-							</button>
+						<div>
+							<button onClick={this.handleAddFake}>ADD 1 : fake</button>
+							<button onClick={this.handleClearAll}>Clear</button>
 						</div>
 						<TeamBuilder
 							teamURLs={this.state.myTeam}
@@ -245,6 +244,7 @@ class Layout extends React.Component<Props, State> {
 						/>
 					</div>
 				</Route>
+
 				<Route path="/">
 					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
@@ -257,35 +257,34 @@ class Layout extends React.Component<Props, State> {
 									idDown={this.downState}
 									idUp={this.upState}
 								/>
-								<InfoDex 
-								pokemon={this.state.currentPokemon} 
-								isDesktop={this.props.isDesktop}
+								<InfoDex
+									pokemon={this.state.currentPokemon}
+									isDesktop={this.props.isDesktop}
 								/>
 							</div>
 						) : (
-							<Switch>
-								<Route path="/">
-									<div className="layoutStyleMobile">
-										<MainDex
-											isDesktop={this.props.isDesktop}
-											pokemon={this.state.currentPokemon}
-											searchClick={this.handleSearchClick}
-										/>
-									</div>
-									<div style={betweenDivs}></div>
-									<div className="layoutStyleMobile">
-										<InfoDex 
+							<Route path="/">
+								<div className="layoutStyleMobile">
+									<MainDex
+										isDesktop={this.props.isDesktop}
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
 										addToTeam={this.handleAddToTeam}
-										idDown={this.downState}
 										idUp={this.upState}
+										idDown={this.downState}
 									/>
-								</Route>
-								<Route path="/info">
-									<InfoDex pokemon={this.state.currentPokemon} />
-								</Route>
-							</Switch>
+								</div>
+								<div style={betweenDivs}></div>
+								<div className="layoutStyleMobile">
+									<InfoDex
+										pokemon={this.state.currentPokemon}
+										isDesktop={this.props.isDesktop}
+									/>
+								</div>
+							</Route>
+							// <Route path="/info">
+							// 	<InfoDex pokemon={this.state.currentPokemon} />
+							// </Route>
 						)}
 					</div>
 				</Route>
@@ -293,14 +292,13 @@ class Layout extends React.Component<Props, State> {
 		);
 	}
 }
-
+export default withRouter(Layout);
 
 const betweenDivs: React.CSSProperties = {
 	height: "1rem",
 	width: "80%",
-	border: ".2rem solid #123",
-export default withRouter(Layout);
-
+	border: ".2rem solid #123"
+};
 const layoutWrapperStyle: React.CSSProperties = {
 	position: "relative",
 
@@ -329,8 +327,8 @@ const layoutStyle: React.CSSProperties = {
 	backgroundImage:
 		'url("https://www.transparenttextures.com/patterns/cartographer.png")',
 	borderRadius: "1rem",
-	backgroundColor: "#111",
-}
+	backgroundColor: "#111"
+};
 
 // const buttWrapperStyle: React.CSSProperties = {
 // 	position: "absolute",
