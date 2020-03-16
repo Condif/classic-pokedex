@@ -56,7 +56,8 @@ export default class GenerateBio extends React.Component<Props, State> {
                 ) {
                     bio = bioText.flavor_text
                     return bio
-                } return bio
+                } 
+                return bio
             })
         } catch (error) {
             console.log(error);

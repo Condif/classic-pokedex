@@ -28,7 +28,6 @@ export default class PokeSprite extends React.Component<Props, State> {
 
     componentDidMount() {
         if (this.props.image !== undefined) {
-            this._isMounted = true
             this.loadImage()
         }
     }
@@ -47,8 +46,9 @@ export default class PokeSprite extends React.Component<Props, State> {
                     isLoading: false
                 })
             }
-            }
-            try {
+        }
+        try {
+                this._isMounted = true
                 const pokemon = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${this.props.image}`)
                 image.src = pokemon.data.sprites.front_default
                 if (this._isMounted) {
