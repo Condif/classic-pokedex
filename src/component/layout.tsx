@@ -66,6 +66,14 @@ export default class Layout extends React.Component<Props, State> {
 		this.setPokemonInState(pokemon);
 	}
 
+	handleUpclick = () => {
+		this.upState()
+	}
+
+	handleDownclick = () => {
+		this.downState()
+	}
+
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
 		const notFound = {
@@ -123,6 +131,8 @@ export default class Layout extends React.Component<Props, State> {
 									isDesktop={this.props.isDesktop}
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
+									handleUpclick={this.handleUpclick}
+									handleDownclick={this.handleDownclick}
 								/>
 								<InfoDex 
 								pokemon={this.state.currentPokemon} 
@@ -137,6 +147,8 @@ export default class Layout extends React.Component<Props, State> {
 											isDesktop={this.props.isDesktop}
 											pokemon={this.state.currentPokemon}
 											searchClick={this.handleSearchClick}
+											handleUpclick={this.handleUpclick}
+											handleDownclick={this.handleDownclick}
 										/>
 									</div>
 									<div style={betweenDivs}></div>

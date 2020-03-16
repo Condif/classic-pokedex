@@ -7,12 +7,15 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas: '. u .' 'l m r' '. d .';
+    
 }
 
 .btn {
     outline: none;
     background: #555;
     border: .5rem solid #333;
+    box-shadow: -.2rem .2rem .2rem #123;
+    
 }
 
 @media screen and (max-width: 42.5rem) {
