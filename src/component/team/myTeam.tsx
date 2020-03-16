@@ -30,14 +30,16 @@ class MyTeam extends React.Component<Props, State> {
 
 	render() {
 		console.log("team render - props :  ", this.props.myTeam);
+		let index: number = 0
 
 		return (
 			<div
 				style={this.props.isDesktop ? teamWrapperStyle : teamWrapperStyleMobile}
 				className="teamWrapper">
 				{this.props.myTeam.map((member: any) => {
+					index++
 					return (
-						<div key={member} style={memberStyle} className="teamMember">
+						<div key={index} style={memberStyle} className="teamMember">
 							<div style={memberTextWrapper}>
 								<p style={memberName}>{member.name ? member.name : "empty"}</p>
 

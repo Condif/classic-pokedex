@@ -4,6 +4,9 @@ import Axios from "axios";
 import MyTeam from "./myTeam";
 import TeamSuper from "./teamSuper";
 import TeamWeak from "./teamWeak";
+import DexIcon from "../../assets/pokedex-Icon.png"
+import TrashCan from "../../assets/trashcan.png"
+import Pokéball from "../../assets/pokeball.png"
 import { TeamPokemons } from "../../types";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
@@ -37,7 +40,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -61,7 +64,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -85,7 +88,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -109,7 +112,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -133,7 +136,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -157,7 +160,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					name: "empty",
 					sprites: {
 						front_default:
-							"https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+							Pokéball
 					},
 					types: [
 						{
@@ -277,7 +280,7 @@ class TeamBuilder extends React.Component<Props, State> {
 				<div style={{ ...btnWrapper, ...toTheRight }}>
 					<Link to="/">
 						<img
-							src="https://i.imgur.com/OZ8Rl4Z.png"
+							src={DexIcon}
 							alt=""
 							style={{ height: "5rem" }}
 						/>
@@ -291,8 +294,8 @@ class TeamBuilder extends React.Component<Props, State> {
 							border: "none"
 						}}>
 						<img
-							src="https://i.imgur.com/sH6poLn.png"
-							alt=""
+							src={TrashCan}
+							alt="CLEAR"
 							style={{ height: "5rem" }}
 						/>
 					</button>
