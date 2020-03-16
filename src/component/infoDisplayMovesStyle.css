@@ -1,12 +1,13 @@
 .displayStyle {
-    height: 60%;
+    height: 70%;
 	width: 90%;
 
 	max-width: 35rem;
 
 	padding: 1rem;
 	margin: 2rem;
-	margin-top: 3rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 
 	background: #272727;
 	color: #e7e7e7;

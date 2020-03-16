@@ -21,8 +21,6 @@ export default class InfoNavbar extends React.Component<Props> {
 					onClick={this.props.navigateToMoves}>
 					moves
 				</p>
-				{ (!this.props.isDesktop &&
-				<p style={backBtn}></p>) }
 			</div>
 		);
 	}
