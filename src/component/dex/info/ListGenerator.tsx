@@ -77,7 +77,7 @@ export default class ListGenerator extends React.Component<Props, State> {
 	render() {
 
 		return (
-			<div style={wrapper}>
+			<div>
 				<Suspense fallback={<PokeLoad />}>
 				{(this.state.listItems && this._isMounted) 
 				? this.state.listItems.map((item: any) => (
@@ -91,8 +91,5 @@ export default class ListGenerator extends React.Component<Props, State> {
 	}
 }
 
-const wrapper: React.CSSProperties = {
-	height: '100%'
-}
 
 
