@@ -10,5 +10,10 @@ export type Pokemon = {
 	pokemonBio?: string;
 };
 
-
-export type NavPage = "bio" | "moves"
+export type TeamPokemons = string[];
+export type NavPage = "bio" | "moves";
+export type Effect = "super" | "weak";
+export type Type = {
+	name: string;
+	url: string;
+};

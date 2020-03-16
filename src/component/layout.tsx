@@ -1,31 +1,39 @@
 import * as React from "react";
-import axios from "axios";
+import Axios from "axios";
 import { createBrowserHistory } from "history";
-import { Switch, Route } from "react-router-dom";
+import {
+	Switch,
+	Route,
+	withRouter,
+	RouteComponentProps
+} from "react-router-dom";
 
-import { Pokemon } from "../types";
+import { Pokemon, TeamPokemons } from "../types";
 
 import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
-import "./layoutStyle.css"
+import "./layoutStyle.css";
 
 const history = createBrowserHistory();
-interface Props {
+
+interface Props extends RouteComponentProps {
 	isDesktop: boolean;
 }
 interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
+	myTeam: TeamPokemons;
 }
-
-export default class Layout extends React.Component<Props, State> {
+class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+
 		const lastUrl =
 			history.location.pathname.slice(1) !== ""
 				? history.location.pathname
 				: "/bulbasaur";
+
 		this.updateUrlHistory(lastUrl);
 
 		this.state = {
@@ -34,11 +42,12 @@ export default class Layout extends React.Component<Props, State> {
 				height: 0,
 				weight: 0
 			},
+			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]")
 		};
 	}
 
 	async componentDidMount() {
-		this.updateNewPokemon(this.state.lastPokemon)
+		this.updateNewPokemon(this.state.lastPokemon);
 	}
 
 	upState = async () => {
@@ -61,18 +70,18 @@ export default class Layout extends React.Component<Props, State> {
 	};
 
 	async updateNewPokemon(newId: string) {
-		const pokemon = await this.fetchPokeData(newId);		
+		const pokemon = await this.fetchPokeData(newId);
 		this.updateUrlHistory(pokemon.name);
 		this.setPokemonInState(pokemon);
 	}
 
 	handleUpclick = () => {
-		this.upState()
-	}
+		this.upState();
+	};
 
 	handleDownclick = () => {
-		this.downState()
-	}
+		this.downState();
+	};
 
 	fetchPokeData = async (newId: string) => {
 		const pokemon = newId;
@@ -80,19 +89,72 @@ export default class Layout extends React.Component<Props, State> {
 			height: 404,
 			weight: 404,
 			id: 404,
-			name: 'MissingNo',
-		}
-		
+			name: "MissingNo"
+		};
+
 		try {
-			const res:any = await axios.get("https://pokeapi.co/api/v2/pokemon" + pokemon)
+			const res: any = await Axios.get(
+				"https://pokeapi.co/api/v2/pokemon" + pokemon
+			);
 			return res.data;
 		} catch (error) {
-			return notFound
+			return notFound;
+		}
+	};
+	fetchPokeDataSpecies = async (pokemon: any) => {
+		const pokemonId = "/" + pokemon.id;
+		let pokeFlavor: string = "";
+		if (pokemon.species) {
+			const resSpecies = await Axios.get(
+				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
+			);
+			const bioList = resSpecies.data.flavor_text_entries;
+			bioList.some((bioText: any) => {
+				if (
+					bioText !== undefined &&
+					bioText !== null &&
+					bioText.language.name === "en"
+				) {
+					pokeFlavor = bioText.flavor_text;
+				}
+				return pokeFlavor;
+			});
+		} else {
+			return (pokeFlavor = "");
+		}
+
+		return pokeFlavor;
+	};
+
+	fetchPokeDataMoves = async (pokemon: any) => {
+		let listOfMovesUrls: string[] = [];
+		let pokemonMovesList: any = pokemon.moves;
+		let engMoveFlavor: string[] = [];
+		if (pokemonMovesList) {
+			for (let i: number = 0; i < pokemonMovesList.length; i++) {
+				listOfMovesUrls.push(pokemon.moves[i].move.url);
+			}
+			for (let i: number = 0; i < 746; i++) {
+				for (let index: number = 0; index < listOfMovesUrls.length; index++) {
+					if (
+						listOfMovesUrls[index].includes(
+							"https://pokeapi.co/api/v2/move/" + i + "/"
+						)
+					) {
+						const getPokemonMoves = await Axios.get(
+							"https://pokeapi.co/api/v2/move/" + i + "/"
+						);
+						const dataPokemonMoves = getPokemonMoves.data;
+						engMoveFlavor.push(
+							dataPokemonMoves.flavor_text_entries[2].flavor_text
+						);
+					}
+				}
+			}
 		}
 	};
 
 	setPokemonInState(pokemon: any) {
-
 		this.setState({
 			lastPokemon: pokemon.id,
 			currentPokemon: {
@@ -102,7 +164,7 @@ export default class Layout extends React.Component<Props, State> {
 				height: pokemon.height,
 				types: pokemon.types,
 				abilities: pokemon.abilities,
-				moves: pokemon.moves,
+				moves: pokemon.moves
 			}
 		});
 	}
@@ -115,14 +177,48 @@ export default class Layout extends React.Component<Props, State> {
 		this.updateNewPokemon(searchResult);
 	};
 
+	handleAddToTeam = (url: string) => {
+		if (this.state.myTeam.length < 6) {
+			console.log("added : ", url);
+			this.setState({
+				myTeam: [...this.state.myTeam, url]
+			});
+		} else {
+			console.log("TEAM FULL");
+		}
+	};
+
+	async componentDidUpdate(prevProps: Props) {
+		if (prevProps.location.pathname !== this.props.location.pathname) {
+			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+			this.setPokemonInState(pokemon);
+		}
+
+		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
+	}
+
+	handleClearAll = () => {
+		this.setState(
+			{
+				myTeam: []
+			},
+			() => console.log("Cleared team", this.state.myTeam)
+		);
+	};
+
 	render() {
 		return (
 			<Switch>
-				<Route path="/hej">
-				<div className="layoutWrapperStyle">
-						<TeamBuilder />
+				<Route path="/teamPage">
+					<div style={layoutWrapperStyle}>
+						<TeamBuilder
+							teamURLs={this.state.myTeam}
+							isDesktop={this.props.isDesktop}
+							clearAll={this.handleClearAll}
+						/>
 					</div>
 				</Route>
+
 				<Route path="/">
 					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
@@ -133,33 +229,36 @@ export default class Layout extends React.Component<Props, State> {
 									searchClick={this.handleSearchClick}
 									handleUpclick={this.handleUpclick}
 									handleDownclick={this.handleDownclick}
+									addToTeam={this.handleAddToTeam}
 								/>
-								<InfoDex 
-								pokemon={this.state.currentPokemon} 
-								isDesktop={this.props.isDesktop}
+								<InfoDex
+									pokemon={this.state.currentPokemon}
+									isDesktop={this.props.isDesktop}
 								/>
 							</div>
 						) : (
-							<Switch>
-								<Route path="/">
-									<div className="layoutStyleMobile">
-										<MainDex
-											isDesktop={this.props.isDesktop}
-											pokemon={this.state.currentPokemon}
-											searchClick={this.handleSearchClick}
-											handleUpclick={this.handleUpclick}
-											handleDownclick={this.handleDownclick}
-										/>
-									</div>
-									<div style={betweenDivs}></div>
-									<div className="layoutStyleMobile">
-										<InfoDex 
+							<Route path="/">
+								<div className="layoutStyleMobile">
+									<MainDex
+										isDesktop={this.props.isDesktop}
+										pokemon={this.state.currentPokemon}
+										searchClick={this.handleSearchClick}
+										handleUpclick={this.handleUpclick}
+										handleDownclick={this.handleDownclick}
+										addToTeam={this.handleAddToTeam}
+									/>
+								</div>
+								<div style={betweenDivs}></div>
+								<div className="layoutStyleMobile">
+									<InfoDex
 										pokemon={this.state.currentPokemon}
 										isDesktop={this.props.isDesktop}
-										/>
-									</div>
-								</Route>
-							</Switch>
+									/>
+								</div>
+							</Route>
+							// <Route path="/info">
+							// 	<InfoDex pokemon={this.state.currentPokemon} />
+							// </Route>
 						)}
 					</div>
 				</Route>
@@ -167,12 +266,24 @@ export default class Layout extends React.Component<Props, State> {
 		);
 	}
 }
-
+export default withRouter(Layout);
 
 const betweenDivs: React.CSSProperties = {
 	height: "1rem",
 	width: "80%",
-	border: ".2rem solid #123",
-	borderRadius: "1rem",
-	backgroundColor: "#111",
-}
+	border: ".2rem solid #123"
+};
+const layoutWrapperStyle: React.CSSProperties = {
+	position: "relative",
+
+	width: "100%",
+	height: "100vh",
+
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+
+	backgroundColor: "#e7e7e7",
+	backgroundImage:
+		'url("https://www.transparenttextures.com/patterns/hexellence.png")'
+};
