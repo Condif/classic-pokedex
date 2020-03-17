@@ -113,74 +113,76 @@ class DamageRelations extends React.Component<Props, State> {
 	};
 
 	fetchSuper = async (type: Type) => {
-		const typeRes: any = await axios.get(type.url);
+		if (type.url) {
+			const typeRes: any = await axios.get(type.url);
 
-		let superList;
+			let superList;
 
-		if (this.props.effect === "super") {
-			superList = typeRes.data.damage_relations.double_damage_to;
-		} else if (this.props.effect === "weak") {
-			superList = typeRes.data.damage_relations.double_damage_from;
-		}
-
-		superList.forEach((type: any) => {
-			switch (type.name) {
-				case "normal":
-					this.setState({ normal: [...this.state.normal, [""]] });
-					break;
-				case "fire":
-					this.setState({ fire: [...this.state.fire, [""]] });
-					break;
-				case "water":
-					this.setState({ water: [...this.state.water, [""]] });
-					break;
-				case "electric":
-					this.setState({ electric: [...this.state.electric, [""]] });
-					break;
-				case "grass":
-					this.setState({ grass: [...this.state.grass, [""]] });
-					break;
-				case "ice":
-					this.setState({ ice: [...this.state.ice, [""]] });
-					break;
-				case "fighting":
-					this.setState({ fighting: [...this.state.fighting, [""]] });
-					break;
-				case "poison":
-					this.setState({ poison: [...this.state.poison, [""]] });
-					break;
-				case "ground":
-					this.setState({ ground: [...this.state.ground, [""]] });
-					break;
-				case "flying":
-					this.setState({ flying: [...this.state.flying, [""]] });
-					break;
-				case "psychic":
-					this.setState({ psychic: [...this.state.psychic, [""]] });
-					break;
-				case "bug":
-					this.setState({ bug: [...this.state.bug, [""]] });
-					break;
-				case "rock":
-					this.setState({ rock: [...this.state.rock, [""]] });
-					break;
-				case "ghost":
-					this.setState({ ghost: [...this.state.ghost, [""]] });
-					break;
-				case "dragon":
-					this.setState({ dragon: [...this.state.dragon, [""]] });
-					break;
-				case "dark":
-					this.setState({ dark: [...this.state.dark, [""]] });
-					break;
-				case "steel":
-					this.setState({ steel: [...this.state.steel, [""]] });
-					break;
-				case "fairy":
-					this.setState({ fairy: [...this.state.fairy, [""]] });
-					break;
+			if (this.props.effect === "super") {
+				superList = typeRes.data.damage_relations.double_damage_to;
+			} else if (this.props.effect === "weak") {
+				superList = typeRes.data.damage_relations.double_damage_from;
 			}
-		});
+
+			superList.forEach((type: any) => {
+				switch (type.name) {
+					case "normal":
+						this.setState({ normal: [...this.state.normal, [""]] });
+						break;
+					case "fire":
+						this.setState({ fire: [...this.state.fire, [""]] });
+						break;
+					case "water":
+						this.setState({ water: [...this.state.water, [""]] });
+						break;
+					case "electric":
+						this.setState({ electric: [...this.state.electric, [""]] });
+						break;
+					case "grass":
+						this.setState({ grass: [...this.state.grass, [""]] });
+						break;
+					case "ice":
+						this.setState({ ice: [...this.state.ice, [""]] });
+						break;
+					case "fighting":
+						this.setState({ fighting: [...this.state.fighting, [""]] });
+						break;
+					case "poison":
+						this.setState({ poison: [...this.state.poison, [""]] });
+						break;
+					case "ground":
+						this.setState({ ground: [...this.state.ground, [""]] });
+						break;
+					case "flying":
+						this.setState({ flying: [...this.state.flying, [""]] });
+						break;
+					case "psychic":
+						this.setState({ psychic: [...this.state.psychic, [""]] });
+						break;
+					case "bug":
+						this.setState({ bug: [...this.state.bug, [""]] });
+						break;
+					case "rock":
+						this.setState({ rock: [...this.state.rock, [""]] });
+						break;
+					case "ghost":
+						this.setState({ ghost: [...this.state.ghost, [""]] });
+						break;
+					case "dragon":
+						this.setState({ dragon: [...this.state.dragon, [""]] });
+						break;
+					case "dark":
+						this.setState({ dark: [...this.state.dark, [""]] });
+						break;
+					case "steel":
+						this.setState({ steel: [...this.state.steel, [""]] });
+						break;
+					case "fairy":
+						this.setState({ fairy: [...this.state.fairy, [""]] });
+						break;
+				}
+			});
+		}
 	};
 
 	generateSupers = () => {
@@ -491,7 +493,7 @@ class DamageRelations extends React.Component<Props, State> {
 				style={
 					this.props.isDesktop
 						? { ...measureList, flexDirection: "column" }
-						: { ...measureList, flexDirection: "row", height:"1rem" }
+						: { ...measureList, flexDirection: "row", height: "1rem" }
 				}>
 				{effects}
 			</div>
