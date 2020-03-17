@@ -15,6 +15,7 @@ import MainDex from "./dex/main/mainDex";
 import InfoDex from "./dex/info/infoDex";
 import TeamBuilder from "./team/teamBuilder";
 import "./layoutStyle.css";
+import { ErrorBoundary } from "../errorBoundary";
 
 const history = createBrowserHistory();
 
@@ -169,35 +170,22 @@ class Layout extends React.Component<Props, State> {
 				</Route>
 
 				<Route path="/teamPage">
-					<div style={layoutWrapperStyle}>
-						<TeamBuilder
-							teamURLs={this.state.myTeam}
-							isDesktop={this.props.isDesktop}
-							clearAll={this.handleClearAll}
-						/>
-					</div>
+					<ErrorBoundary>
+						<div style={layoutWrapperStyle}>
+							<TeamBuilder
+								teamURLs={this.state.myTeam}
+								isDesktop={this.props.isDesktop}
+								clearAll={this.handleClearAll}
+							/>
+						</div>
+					</ErrorBoundary>
 				</Route>
 
 				<Route path="/pokedex">
 					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
 							<div className="layoutStyle">
-								<MainDex
-									isDesktop={this.props.isDesktop}
-									pokemon={this.state.currentPokemon}
-									searchClick={this.handleSearchClick}
-									handleUpclick={this.handleUpclick}
-									handleDownclick={this.handleDownclick}
-									addToTeam={this.handleAddToTeam}
-								/>
-								<InfoDex
-									pokemon={this.state.currentPokemon}
-									isDesktop={this.props.isDesktop}
-								/>
-							</div>
-						) : (
-							<Route path="/pokedex">
-								<div className="layoutStyleMobile">
+								<ErrorBoundary>
 									<MainDex
 										isDesktop={this.props.isDesktop}
 										pokemon={this.state.currentPokemon}
@@ -206,18 +194,38 @@ class Layout extends React.Component<Props, State> {
 										handleDownclick={this.handleDownclick}
 										addToTeam={this.handleAddToTeam}
 									/>
-								</div>
-								<div style={betweenDivs}></div>
-								<div className="layoutStyleMobile">
+								</ErrorBoundary>
+								<ErrorBoundary>
 									<InfoDex
 										pokemon={this.state.currentPokemon}
 										isDesktop={this.props.isDesktop}
 									/>
+								</ErrorBoundary>
+							</div>
+						) : (
+							<Route path="/pokedex">
+								<div className="layoutStyleMobile">
+									<ErrorBoundary>
+										<MainDex
+											isDesktop={this.props.isDesktop}
+											pokemon={this.state.currentPokemon}
+											searchClick={this.handleSearchClick}
+											handleUpclick={this.handleUpclick}
+											handleDownclick={this.handleDownclick}
+											addToTeam={this.handleAddToTeam}
+										/>
+									</ErrorBoundary>
+								</div>
+								<div style={betweenDivs}></div>
+								<div className="layoutStyleMobile">
+									<ErrorBoundary>
+										<InfoDex
+											pokemon={this.state.currentPokemon}
+											isDesktop={this.props.isDesktop}
+										/>
+									</ErrorBoundary>
 								</div>
 							</Route>
-							// <Route path="/info">
-							// 	<InfoDex pokemon={this.state.currentPokemon} />
-							// </Route>
 						)}
 					</div>
 				</Route>
