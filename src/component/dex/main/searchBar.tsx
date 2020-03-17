@@ -120,7 +120,7 @@ export default class SearchBar extends React.Component<Props, State> {
 
     handlePokemonChoice = (event: any) => {
         const clickedPokemon = event.target.getAttribute('id')
-        this.props.searchClick('/'+clickedPokemon)
+        this.props.searchClick(clickedPokemon)
         this.removeSearchList()
     }
 
