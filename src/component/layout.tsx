@@ -5,7 +5,8 @@ import {
 	Switch,
 	Route,
 	withRouter,
-	RouteComponentProps
+	RouteComponentProps,
+	Redirect
 } from "react-router-dom";
 
 import { Pokemon, TeamPokemons } from "../types";
@@ -28,13 +29,16 @@ interface State {
 class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		const URL = history.location.pathname
+		console.log(URL);
+		console.log(URL.slice(9));
+		
+		
+		const lastUrl = URL.includes('pokedex') && 
+						URL.slice(9) !== ""
+						? URL.slice(9) : 'bulbasaur'
 
-		const lastUrl =
-			history.location.pathname.slice(1) !== ""
-				? history.location.pathname
-				: "/bulbasaur";
-
-		this.updateUrlHistory(lastUrl);
+		this.updateUrlHistory(lastUrl)
 
 		this.state = {
 			lastPokemon: lastUrl,
@@ -54,7 +58,7 @@ class Layout extends React.Component<Props, State> {
 		const id = this.state.currentPokemon.id;
 		if (id !== undefined) {
 			if (id < 807) {
-				const newId = "/" + (id + 1).toString();
+				const newId = (id + 1).toString();
 				this.updateNewPokemon(newId);
 			}
 		}
@@ -63,7 +67,7 @@ class Layout extends React.Component<Props, State> {
 		const id = this.state.currentPokemon.id;
 		if (id !== undefined) {
 			if (id > 1) {
-				const newId = "/" + (id - 1).toString();
+				const newId = (id - 1).toString();
 				this.updateNewPokemon(newId);
 			}
 		}
@@ -94,63 +98,11 @@ class Layout extends React.Component<Props, State> {
 
 		try {
 			const res: any = await Axios.get(
-				"https://pokeapi.co/api/v2/pokemon" + pokemon
+				"https://pokeapi.co/api/v2/pokemon/" + pokemon
 			);
 			return res.data;
 		} catch (error) {
 			return notFound;
-		}
-	};
-	fetchPokeDataSpecies = async (pokemon: any) => {
-		const pokemonId = "/" + pokemon.id;
-		let pokeFlavor: string = "";
-		if (pokemon.species) {
-			const resSpecies = await Axios.get(
-				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
-			);
-			const bioList = resSpecies.data.flavor_text_entries;
-			bioList.some((bioText: any) => {
-				if (
-					bioText !== undefined &&
-					bioText !== null &&
-					bioText.language.name === "en"
-				) {
-					pokeFlavor = bioText.flavor_text;
-				}
-				return pokeFlavor;
-			});
-		} else {
-			return (pokeFlavor = "");
-		}
-
-		return pokeFlavor;
-	};
-
-	fetchPokeDataMoves = async (pokemon: any) => {
-		let listOfMovesUrls: string[] = [];
-		let pokemonMovesList: any = pokemon.moves;
-		let engMoveFlavor: string[] = [];
-		if (pokemonMovesList) {
-			for (let i: number = 0; i < pokemonMovesList.length; i++) {
-				listOfMovesUrls.push(pokemon.moves[i].move.url);
-			}
-			for (let i: number = 0; i < 746; i++) {
-				for (let index: number = 0; index < listOfMovesUrls.length; index++) {
-					if (
-						listOfMovesUrls[index].includes(
-							"https://pokeapi.co/api/v2/move/" + i + "/"
-						)
-					) {
-						const getPokemonMoves = await Axios.get(
-							"https://pokeapi.co/api/v2/move/" + i + "/"
-						);
-						const dataPokemonMoves = getPokemonMoves.data;
-						engMoveFlavor.push(
-							dataPokemonMoves.flavor_text_entries[2].flavor_text
-						);
-					}
-				}
-			}
 		}
 	};
 
@@ -170,7 +122,11 @@ class Layout extends React.Component<Props, State> {
 	}
 
 	updateUrlHistory(pokemonId: string) {
-		history.push(pokemonId);
+		
+		if (history.location.pathname.includes('pokedex')) {
+			// console.log(history.location.pathname);
+			history.push(`/pokedex/${pokemonId}`);
+		}
 	}
 
 	handleSearchClick = (searchResult: string) => {
@@ -190,8 +146,8 @@ class Layout extends React.Component<Props, State> {
 
 	async componentDidUpdate(prevProps: Props) {
 		if (prevProps.location.pathname !== this.props.location.pathname) {
-			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-			this.setPokemonInState(pokemon);
+			// const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+			// this.setPokemonInState(pokemon);
 		}
 
 		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
@@ -208,6 +164,10 @@ class Layout extends React.Component<Props, State> {
 	render() {
 		return (
 			<Switch>
+				<Route exact path="/">
+					<Redirect to="/pokedex" />
+				</Route>
+
 				<Route path="/teamPage">
 					<div style={layoutWrapperStyle}>
 						<TeamBuilder
@@ -218,7 +178,7 @@ class Layout extends React.Component<Props, State> {
 					</div>
 				</Route>
 
-				<Route path="/">
+				<Route path="/pokedex">
 					<div className="layoutWrapperStyle">
 						{this.props.isDesktop ? (
 							<div className="layoutStyle">
@@ -236,7 +196,7 @@ class Layout extends React.Component<Props, State> {
 								/>
 							</div>
 						) : (
-							<Route path="/">
+							<Route path="/pokedex">
 								<div className="layoutStyleMobile">
 									<MainDex
 										isDesktop={this.props.isDesktop}
