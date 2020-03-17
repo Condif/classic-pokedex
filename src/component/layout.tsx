@@ -166,7 +166,7 @@ class Layout extends React.Component<Props, State> {
 		return (
 			<Switch>
 				<Route exact path="/">
-					<Redirect to="/pokedex" />
+					<Redirect to={`/pokedex/${this.state.lastPokemon}`} />
 				</Route>
 
 				<Route path="/teamPage">
