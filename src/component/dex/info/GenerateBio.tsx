@@ -39,6 +39,7 @@ export default class GenerateBio extends React.Component<Props, State> {
         this._isMounted = true
         
         const speciesBio: Result = await Axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.props.pokeName}`)
+        
         return speciesBio.data
         
     }

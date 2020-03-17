@@ -63,7 +63,7 @@ export default class InfoDisplay extends React.Component<Props> {
 				<Suspense fallback={ <PokeLoad />}>
 				<div style={this.props.isDesktop ? bioWrapperStyle : bioWrapperStyleMobile}>
 					<h4>Bio</h4>
-					<GenerateBio pokeName={this.props.pokemon.id?.toString()} />
+					<GenerateBio pokeName={this.props.pokemon.name} />
 				</div>
  
 				<div style={abilityWrapperStyle}>
