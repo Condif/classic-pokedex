@@ -11,6 +11,7 @@ import "../../mainDex.css";
 interface Props {
 	pokemon: Pokemon;
 	isDesktop: boolean;
+	teamFull: boolean;
 
 	searchClick: (searchReasult: string) => void;
 	handleUpclick: () => void;
@@ -38,9 +39,13 @@ export default class MainDex extends React.Component<Props> {
 					name={this.props.pokemon.name}
 					weight={this.props.pokemon.weight}
 					height={this.props.pokemon.height}>
-					<button style={addPokemonButton} onClick={this.onClick}>
+
+					{this.props.teamFull ? (<button style={{...addPokemonButton, ...fullTeam}} onClick={this.onClick}>
 						<img src={addPokemon} alt="ADD POKEMON" style={addPokemonStyle} />
-					</button>
+					</button>) : (<button style={addPokemonButton} onClick={this.onClick}>
+						<img src={addPokemon} alt="ADD POKEMON" style={addPokemonStyle} />
+					</button>)}
+					
 					<SearchBar
 						isDesktop={this.props.isDesktop}
 						searchClick={this.props.searchClick}
@@ -66,9 +71,16 @@ const addPokemonButton: React.CSSProperties = {
 	zIndex: 1000,
 
 	border:"none",
-	background:"none"
+	background:"none",
+	cursor:"pointer"
 };
 
 const addPokemonStyle: React.CSSProperties = {
 	width: "2rem"
 };
+
+const fullTeam: React.CSSProperties = {
+	
+	filter: "grayscale(100%)",
+	cursor:"not-allowed"
+}

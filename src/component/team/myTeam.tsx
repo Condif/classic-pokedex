@@ -29,28 +29,30 @@ class MyTeam extends React.Component<Props, State> {
 							<div style={memberTextWrapper}>
 								<p style={memberName}>{member.name ? member.name : "empty"}</p>
 
-								<ul style={memberMoveList}>
-									{member.moves ? (
-										<li style={memberMove}>{member.moves[0].move.name}</li>
-									) : (
-										<li style={memberMove}>. . .</li>
-									)}
-									{member.moves[1] ? (
-										<li style={memberMove}>{member.moves[1].move.name}</li>
-									) : (
-										<li style={memberMove}>. . .</li>
-									)}
-									{member.moves[2] ? (
-										<li style={memberMove}>{member.moves[2].move.name}</li>
-									) : (
-										<li style={memberMove}>. . .</li>
-									)}
-									{member.moves[3] ? (
-										<li style={memberMove}>{member.moves[3].move.name}</li>
-									) : (
-										<li style={memberMove}>. . .</li>
-									)}
-								</ul>
+								{this.props.isDesktop ? (
+									<ul style={memberMoveList}>
+										{member.moves ? (
+											<li style={memberMove}>{member.moves[0].move.name}</li>
+										) : (
+											<li style={memberMove}>. . .</li>
+										)}
+										{member.moves[1] ? (
+											<li style={memberMove}>{member.moves[1].move.name}</li>
+										) : (
+											<li style={memberMove}>. . .</li>
+										)}
+										{member.moves[2] ? (
+											<li style={memberMove}>{member.moves[2].move.name}</li>
+										) : (
+											<li style={memberMove}>. . .</li>
+										)}
+										{member.moves[3] ? (
+											<li style={memberMove}>{member.moves[3].move.name}</li>
+										) : (
+											<li style={memberMove}>. . .</li>
+										)}
+									</ul>
+								) : null}
 							</div>
 
 							<div style={imageWrapper} className="imageWrapper">
@@ -59,11 +61,6 @@ class MyTeam extends React.Component<Props, State> {
 									alt="sprite"
 									style={imgStyle}></img>
 							</div>
-							{member.name === "empty" ? null : (
-								<button
-									style={removeButton}
-									onClick={this.removeMember}></button>
-							)}
 						</div>
 					);
 				})}
@@ -103,6 +100,7 @@ const memberStyle: React.CSSProperties = {
 	textTransform: "capitalize",
 
 	display: "flex",
+	// flexDirection: "column",
 	justifyContent: "space-around",
 	alignItems: "center"
 };
@@ -132,20 +130,6 @@ const imgStyle: React.CSSProperties = {
 
 	transform: "scale(1.2)"
 };
-const removeButton: React.CSSProperties = {
-	position: "absolute",
-	top: 0,
-	right: 0,
-
-	margin: ".5rem",
-
-	height: ".4rem",
-	width: "1.2rem",
-
-	background: "#1238",
-	border: "none",
-	fontSize: "1.5rem"
-};
 
 const memberTextWrapper: React.CSSProperties = {
 	position: "relative",
@@ -174,15 +158,20 @@ const memberMoveList: React.CSSProperties = {
 	flexWrap: "wrap",
 	justifyContent: "center",
 
-	listStyle: "none"
+	listStyle: "none",
+
+	overflow: "hidden",
+	textOverflow: "ellipsis",
+	whiteSpace: "nowrap"
 };
 const memberMove: React.CSSProperties = {
 	width: "46%",
-	margin: "0 2%",
-	padding: "2%",
+	margin: "1%",
+	padding: "1%",
 
 	borderBottom: ".1rem solid #ababab",
+	background: "#4444",
 
-	fontSize: ".8rem",
+	fontSize: "50%",
 	fontWeight: "lighter"
 };

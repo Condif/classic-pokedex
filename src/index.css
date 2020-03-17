@@ -54,8 +54,56 @@ body ::-webkit-scrollbar-track-piece:start {
 }
 .teamWrapper :nth-child(2n) button {
 	left: 0;
-} */
-
+}
 .removeButton:nth-child(2n) {
-  right:0;
+	right: 0;
+}
+
+.navBtn{
+	height: 6rem;
+	margin:.5rem;
+	padding:1rem;
+
+	background: #3333;
+	border-radius: .5rem;
+}
+
+@media (max-width: 680px) {
+	.teamMember {
+		height: 7rem !important;
+		background: #3333 !important;
+	}
+	.teamMember div {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	.teamMember div img {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	.teamMember:nth-child(2n) {
+		transform: translateY(0%);
+	}
+	.teamMember:nth-child(n) {
+		flex-direction: column;
+	}
+	.teamMember:nth-child(n) img {
+		height: 10vh;
+	}
+	.teamWrapper :nth-child(n) p {
+		font-size: 1rem !important;
+	}
+
+	h2 {
+		font-size: 1.2rem;
+		margin:.2rem;
+	}
+	hr {
+		font-size: 1.2rem;
+		margin:.2rem;
+	}
+
+	.navBtn {
+		height: 4rem;
+	}
 }

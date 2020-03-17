@@ -24,6 +24,7 @@ interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
 	myTeam: TeamPokemons;
+	teamFull: boolean;
 }
 class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -42,12 +43,41 @@ class Layout extends React.Component<Props, State> {
 				height: 0,
 				weight: 0
 			},
-			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]")
+			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]"),
+			teamFull: false
 		};
 	}
 
 	async componentDidMount() {
 		this.updateNewPokemon(this.state.lastPokemon);
+	}
+
+	async componentDidUpdate(prevProps: Props, prevState: State) {
+		if (prevProps.location.pathname !== this.props.location.pathname) {
+			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+			this.setPokemonInState(pokemon);
+		}
+		console.log(this.state.myTeam, this.state.myTeam.length);
+		if (
+			this.state.myTeam.length === 6 &&
+			prevState.myTeam !== this.state.myTeam
+		) {
+			this.setState(
+				{
+					teamFull: true
+				},
+				() => console.log(this.state.teamFull)
+			);
+		} else if (
+			this.state.myTeam.length < 6 &&
+			prevState.myTeam !== this.state.myTeam
+		) {
+			this.setState({
+				teamFull: false
+			});
+		}
+
+		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
 	upState = async () => {
@@ -101,59 +131,7 @@ class Layout extends React.Component<Props, State> {
 			return notFound;
 		}
 	};
-	fetchPokeDataSpecies = async (pokemon: any) => {
-		const pokemonId = "/" + pokemon.id;
-		let pokeFlavor: string = "";
-		if (pokemon.species) {
-			const resSpecies = await Axios.get(
-				"https://pokeapi.co/api/v2/pokemon-species" + pokemonId
-			);
-			const bioList = resSpecies.data.flavor_text_entries;
-			bioList.some((bioText: any) => {
-				if (
-					bioText !== undefined &&
-					bioText !== null &&
-					bioText.language.name === "en"
-				) {
-					pokeFlavor = bioText.flavor_text;
-				}
-				return pokeFlavor;
-			});
-		} else {
-			return (pokeFlavor = "");
-		}
-
-		return pokeFlavor;
-	};
-
-	fetchPokeDataMoves = async (pokemon: any) => {
-		let listOfMovesUrls: string[] = [];
-		let pokemonMovesList: any = pokemon.moves;
-		let engMoveFlavor: string[] = [];
-		if (pokemonMovesList) {
-			for (let i: number = 0; i < pokemonMovesList.length; i++) {
-				listOfMovesUrls.push(pokemon.moves[i].move.url);
-			}
-			for (let i: number = 0; i < 746; i++) {
-				for (let index: number = 0; index < listOfMovesUrls.length; index++) {
-					if (
-						listOfMovesUrls[index].includes(
-							"https://pokeapi.co/api/v2/move/" + i + "/"
-						)
-					) {
-						const getPokemonMoves = await Axios.get(
-							"https://pokeapi.co/api/v2/move/" + i + "/"
-						);
-						const dataPokemonMoves = getPokemonMoves.data;
-						engMoveFlavor.push(
-							dataPokemonMoves.flavor_text_entries[2].flavor_text
-						);
-					}
-				}
-			}
-		}
-	};
-
+	
 	setPokemonInState(pokemon: any) {
 		this.setState({
 			lastPokemon: pokemon.id,
@@ -180,29 +158,21 @@ class Layout extends React.Component<Props, State> {
 	handleAddToTeam = (url: string) => {
 		if (this.state.myTeam.length < 6) {
 			console.log("added : ", url);
-			this.setState({
-				myTeam: [...this.state.myTeam, url]
-			});
+			this.setState(
+				{
+					myTeam: [...this.state.myTeam, url]
+				},
+				() => {}
+			);
 		} else {
 			console.log("TEAM FULL");
 		}
 	};
 
-	async componentDidUpdate(prevProps: Props) {
-		if (prevProps.location.pathname !== this.props.location.pathname) {
-			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-			this.setPokemonInState(pokemon);
-		}
-
-		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
-	}
-
 	handleClearAll = () => {
-		this.setState(
-			{
-				myTeam: []
-			}
-		);
+		this.setState({
+			myTeam: []
+		});
 	};
 
 	render() {
@@ -224,6 +194,7 @@ class Layout extends React.Component<Props, State> {
 							<div className="layoutStyle">
 								<MainDex
 									isDesktop={this.props.isDesktop}
+									teamFull={this.state.teamFull}
 									pokemon={this.state.currentPokemon}
 									searchClick={this.handleSearchClick}
 									handleUpclick={this.handleUpclick}
@@ -240,6 +211,7 @@ class Layout extends React.Component<Props, State> {
 								<div className="layoutStyleMobile">
 									<MainDex
 										isDesktop={this.props.isDesktop}
+										teamFull={this.state.teamFull}
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
 										handleUpclick={this.handleUpclick}
