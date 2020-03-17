@@ -4,9 +4,9 @@ import Axios from "axios";
 import MyTeam from "./myTeam";
 import TeamSuper from "./teamSuper";
 import TeamWeak from "./teamWeak";
-import DexIcon from "../../assets/pokedex-Icon.png"
-import TrashCan from "../../assets/trashcan.png"
-import Pokéball from "../../assets/pokeball.png"
+import DexIcon from "../../assets/pokedex-Icon.png";
+import TrashCan from "../../assets/trashcan.png";
+import Pokéball from "../../assets/pokeball.png";
 import { TeamPokemons } from "../../types";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
@@ -39,8 +39,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -63,8 +62,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -87,8 +85,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -111,8 +108,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -135,8 +131,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -159,8 +154,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					],
 					name: "empty",
 					sprites: {
-						front_default:
-							Pokéball
+						front_default: Pokéball
 					},
 					types: [
 						{
@@ -188,7 +182,6 @@ class TeamBuilder extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps: Props) {
-
 		if (prevProps.teamURLs !== this.props.teamURLs) {
 			this.setState(
 				{
@@ -245,7 +238,6 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	clearAll = () => {
-
 		this.setState({
 			teamURLs: [],
 			myTeam: [],
@@ -256,6 +248,26 @@ class TeamBuilder extends React.Component<Props, State> {
 	};
 
 	render() {
+		const navButton = (
+			<div
+				className="btnWrapper"
+				style={{
+					...btnWrapper
+				}}>
+				<Link
+					to="/teamPage"
+					onClick={this.clearAll}
+					style={{
+						background: "none",
+						border: "none"
+					}}>
+					<img className="navBtn" src={TrashCan} alt="CLEAR" />
+				</Link>
+				<Link to="/">
+					<img className="navBtn" src={DexIcon} alt="BACK" />
+				</Link>
+			</div>
+		);
 
 		return this.props.isDesktop ? (
 			<div style={teamBuilderStyle}>
@@ -269,29 +281,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					isDesktop={this.props.isDesktop}
 				/>
 
-				<div style={{ ...btnWrapper, ...toTheRight }}>
-					<Link to="/">
-						<img
-							src={DexIcon}
-							alt=""
-							style={{ height: "5rem" }}
-						/>
-					</Link>
-				</div>
-				<div style={{ ...btnWrapper, ...toTheLeft }}>
-					<button
-						onClick={this.clearAll}
-						style={{
-							background: "none",
-							border: "none"
-						}}>
-						<img
-							src={TrashCan}
-							alt="CLEAR"
-							style={{ height: "5rem" }}
-						/>
-					</button>
-				</div>
+				{navButton}
 			</div>
 		) : (
 			<div style={teamBuilderStyleMobile}>
@@ -305,9 +295,7 @@ class TeamBuilder extends React.Component<Props, State> {
 					isDesktop={this.props.isDesktop}
 				/>
 
-				<div style={btnWrapper}>
-					<Link to="/">BACK</Link>
-				</div>
+				{navButton}
 			</div>
 		);
 	}
@@ -324,7 +312,9 @@ const teamBuilderStyleMobile: React.CSSProperties = {
 	display: "flex",
 	flexWrap: "wrap",
 	justifyContent: "center",
-	alignItems: "flex-start"
+	alignItems: "flex-start",
+
+	overflow: "hidden"
 };
 const teamBuilderStyle: React.CSSProperties = {
 	width: "100%",
@@ -339,19 +329,12 @@ const teamBuilderStyle: React.CSSProperties = {
 
 const btnWrapper: React.CSSProperties = {
 	position: "absolute",
-
-	padding: "1rem",
-	margin: "1rem",
-
-	background: "#3338",
-	borderRadius: ".5rem"
-};
-
-const toTheRight: React.CSSProperties = {
 	bottom: 0,
-	right: 0
-};
-const toTheLeft: React.CSSProperties = {
-	bottom: 0,
-	left: 0
+
+	width: "100%",
+
+	borderRadius: ".5rem",
+
+	display: "flex",
+	justifyContent: "space-between"
 };

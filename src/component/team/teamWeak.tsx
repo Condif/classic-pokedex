@@ -12,8 +12,11 @@ export default class TeamSuper extends React.Component<Props> {
 			<div style={this.props.isDesktop ? superStyle : superStyleMobile}>
 				<h2>Weaknesses</h2>
 				<hr />
-				<DamageRelations teamTypes={this.props.teamTypes} effect={"weak"} />
-				<hr />
+				<DamageRelations
+					teamTypes={this.props.teamTypes}
+					effect={"weak"}
+					isDesktop={this.props.isDesktop}
+				/>
 			</div>
 		);
 	}

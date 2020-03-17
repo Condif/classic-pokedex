@@ -26,20 +26,19 @@ interface State {
 	lastPokemon: string;
 	currentPokemon: Pokemon;
 	myTeam: TeamPokemons;
+	teamFull: boolean;
 }
 class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		const URL = history.location.pathname
-		console.log(URL);
-		console.log(URL.slice(9));
-		
-		
-		const lastUrl = URL.includes('pokedex') && 
-						URL.slice(9) !== ""
-						? URL.slice(9) : 'bulbasaur'
+		const URL = history.location.pathname;
 
-		this.updateUrlHistory(lastUrl)
+		const lastUrl =
+			URL.includes("pokedex") && URL.slice(9) !== ""
+				? URL.slice(9)
+				: "bulbasaur";
+
+		this.updateUrlHistory(lastUrl);
 
 		this.state = {
 			lastPokemon: lastUrl,
@@ -47,12 +46,39 @@ class Layout extends React.Component<Props, State> {
 				height: 0,
 				weight: 0
 			},
-			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]")
+			myTeam: JSON.parse((window as any).localStorage.myTeam || "[]"),
+			teamFull: false
 		};
 	}
 
 	async componentDidMount() {
 		this.updateNewPokemon(this.state.lastPokemon);
+	}
+
+	async componentDidUpdate(prevProps: Props, prevState: State) {
+		if (prevProps.location.pathname !== this.props.location.pathname) {
+			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
+			this.setPokemonInState(pokemon);
+		}
+		if (
+			this.state.myTeam.length === 6 &&
+			prevState.myTeam !== this.state.myTeam
+		) {
+			this.setState(
+				{
+					teamFull: true
+				}
+			);
+		} else if (
+			this.state.myTeam.length < 6 &&
+			prevState.myTeam !== this.state.myTeam
+		) {
+			this.setState({
+				teamFull: false
+			});
+		}
+
+		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
 	}
 
 	upState = async () => {
@@ -106,7 +132,6 @@ class Layout extends React.Component<Props, State> {
 			return notFound;
 		}
 	};
-
 	setPokemonInState(pokemon: any) {
 		this.setState({
 			lastPokemon: pokemon.id,
@@ -123,9 +148,7 @@ class Layout extends React.Component<Props, State> {
 	}
 
 	updateUrlHistory(pokemonId: string) {
-		
-		if (history.location.pathname.includes('pokedex')) {
-			// console.log(history.location.pathname);
+		if (history.location.pathname.includes("pokedex")) {
 			history.push(`/pokedex/${pokemonId}`);
 		}
 	}
@@ -136,30 +159,19 @@ class Layout extends React.Component<Props, State> {
 
 	handleAddToTeam = (url: string) => {
 		if (this.state.myTeam.length < 6) {
-			console.log("added : ", url);
-			this.setState({
-				myTeam: [...this.state.myTeam, url]
-			});
-		} else {
-			console.log("TEAM FULL");
+			this.setState(
+				{
+					myTeam: [...this.state.myTeam, url]
+				},
+				() => {}
+			);
 		}
 	};
 
-	async componentDidUpdate(prevProps: Props) {
-		if (prevProps.location.pathname !== this.props.location.pathname) {
-			// const pokemon = await this.fetchPokeData(this.state.lastPokemon);
-			// this.setPokemonInState(pokemon);
-		}
-
-		(window as any).localStorage.myTeam = JSON.stringify(this.state.myTeam);
-	}
-
 	handleClearAll = () => {
-		this.setState(
-			{
-				myTeam: []
-			}
-		);
+		this.setState({
+			myTeam: []
+		});
 	};
 
 	render() {
@@ -188,6 +200,7 @@ class Layout extends React.Component<Props, State> {
 								<ErrorBoundary>
 									<MainDex
 										isDesktop={this.props.isDesktop}
+										teamFull={this.state.teamFull}
 										pokemon={this.state.currentPokemon}
 										searchClick={this.handleSearchClick}
 										handleUpclick={this.handleUpclick}
@@ -208,6 +221,7 @@ class Layout extends React.Component<Props, State> {
 									<ErrorBoundary>
 										<MainDex
 											isDesktop={this.props.isDesktop}
+											teamFull={this.state.teamFull}
 											pokemon={this.state.currentPokemon}
 											searchClick={this.handleSearchClick}
 											handleUpclick={this.handleUpclick}

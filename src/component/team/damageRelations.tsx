@@ -28,6 +28,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 interface Props extends RouteComponentProps {
 	teamTypes: any;
 	effect: Effect;
+	isDesktop: boolean;
 }
 
 interface State {
@@ -112,79 +113,81 @@ class DamageRelations extends React.Component<Props, State> {
 	};
 
 	fetchSuper = async (type: Type) => {
-		const typeRes: any = await axios.get(type.url);
+		if (type.url) {
+			const typeRes: any = await axios.get(type.url);
 
-		let superList;
+			let superList;
 
-		if (this.props.effect === "super") {
-			superList = typeRes.data.damage_relations.double_damage_to;
-		} else if (this.props.effect === "weak") {
-			superList = typeRes.data.damage_relations.double_damage_from;
-		}
-
-		superList.forEach((type: any) => {
-			switch (type.name) {
-				case "normal":
-					this.setState({ normal: [...this.state.normal, [""]] });
-					break;
-				case "fire":
-					this.setState({ fire: [...this.state.fire, [""]] });
-					break;
-				case "water":
-					this.setState({ water: [...this.state.water, [""]] });
-					break;
-				case "electric":
-					this.setState({ electric: [...this.state.electric, [""]] });
-					break;
-				case "grass":
-					this.setState({ grass: [...this.state.grass, [""]] });
-					break;
-				case "ice":
-					this.setState({ ice: [...this.state.ice, [""]] });
-					break;
-				case "fighting":
-					this.setState({ fighting: [...this.state.fighting, [""]] });
-					break;
-				case "poison":
-					this.setState({ poison: [...this.state.poison, [""]] });
-					break;
-				case "ground":
-					this.setState({ ground: [...this.state.ground, [""]] });
-					break;
-				case "flying":
-					this.setState({ flying: [...this.state.flying, [""]] });
-					break;
-				case "psychic":
-					this.setState({ psychic: [...this.state.psychic, [""]] });
-					break;
-				case "bug":
-					this.setState({ bug: [...this.state.bug, [""]] });
-					break;
-				case "rock":
-					this.setState({ rock: [...this.state.rock, [""]] });
-					break;
-				case "ghost":
-					this.setState({ ghost: [...this.state.ghost, [""]] });
-					break;
-				case "dragon":
-					this.setState({ dragon: [...this.state.dragon, [""]] });
-					break;
-				case "dark":
-					this.setState({ dark: [...this.state.dark, [""]] });
-					break;
-				case "steel":
-					this.setState({ steel: [...this.state.steel, [""]] });
-					break;
-				case "fairy":
-					this.setState({ fairy: [...this.state.fairy, [""]] });
-					break;
+			if (this.props.effect === "super") {
+				superList = typeRes.data.damage_relations.double_damage_to;
+			} else if (this.props.effect === "weak") {
+				superList = typeRes.data.damage_relations.double_damage_from;
 			}
-		});
+
+			superList.forEach((type: any) => {
+				switch (type.name) {
+					case "normal":
+						this.setState({ normal: [...this.state.normal, [""]] });
+						break;
+					case "fire":
+						this.setState({ fire: [...this.state.fire, [""]] });
+						break;
+					case "water":
+						this.setState({ water: [...this.state.water, [""]] });
+						break;
+					case "electric":
+						this.setState({ electric: [...this.state.electric, [""]] });
+						break;
+					case "grass":
+						this.setState({ grass: [...this.state.grass, [""]] });
+						break;
+					case "ice":
+						this.setState({ ice: [...this.state.ice, [""]] });
+						break;
+					case "fighting":
+						this.setState({ fighting: [...this.state.fighting, [""]] });
+						break;
+					case "poison":
+						this.setState({ poison: [...this.state.poison, [""]] });
+						break;
+					case "ground":
+						this.setState({ ground: [...this.state.ground, [""]] });
+						break;
+					case "flying":
+						this.setState({ flying: [...this.state.flying, [""]] });
+						break;
+					case "psychic":
+						this.setState({ psychic: [...this.state.psychic, [""]] });
+						break;
+					case "bug":
+						this.setState({ bug: [...this.state.bug, [""]] });
+						break;
+					case "rock":
+						this.setState({ rock: [...this.state.rock, [""]] });
+						break;
+					case "ghost":
+						this.setState({ ghost: [...this.state.ghost, [""]] });
+						break;
+					case "dragon":
+						this.setState({ dragon: [...this.state.dragon, [""]] });
+						break;
+					case "dark":
+						this.setState({ dark: [...this.state.dark, [""]] });
+						break;
+					case "steel":
+						this.setState({ steel: [...this.state.steel, [""]] });
+						break;
+					case "fairy":
+						this.setState({ fairy: [...this.state.fairy, [""]] });
+						break;
+				}
+			});
+		}
 	};
 
 	generateSupers = () => {
 		const superList: any = [];
-		let index: number = 0
+		let index: number = 0;
 
 		for (let [key, value] of Object.entries(this.state)) {
 			switch (key) {
@@ -193,8 +196,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...normal }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...normal }}></p>
+									);
 								})}
 							</div>
 						);
@@ -205,8 +212,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...fire }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...fire }}></p>
+									);
 								})}
 							</div>
 						);
@@ -217,8 +228,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...water }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...water }}></p>
+									);
 								})}
 							</div>
 						);
@@ -229,8 +244,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...electric }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...electric }}></p>
+									);
 								})}
 							</div>
 						);
@@ -241,8 +260,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...grass }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...grass }}></p>
+									);
 								})}
 							</div>
 						);
@@ -253,8 +276,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...ice }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...ice }}></p>
+									);
 								})}
 							</div>
 						);
@@ -265,8 +292,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...fighting }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...fighting }}></p>
+									);
 								})}
 							</div>
 						);
@@ -277,8 +308,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...poison }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...poison }}></p>
+									);
 								})}
 							</div>
 						);
@@ -289,8 +324,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...ground }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...ground }}></p>
+									);
 								})}
 							</div>
 						);
@@ -301,8 +340,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...flying }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...flying }}></p>
+									);
 								})}
 							</div>
 						);
@@ -313,8 +356,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...psychic }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...psychic }}></p>
+									);
 								})}
 							</div>
 						);
@@ -325,8 +372,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...bug }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...bug }}></p>
+									);
 								})}
 							</div>
 						);
@@ -337,8 +388,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...rock }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...rock }}></p>
+									);
 								})}
 							</div>
 						);
@@ -349,8 +404,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...ghost }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...ghost }}></p>
+									);
 								})}
 							</div>
 						);
@@ -361,8 +420,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...dragon }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...dragon }}></p>
+									);
 								})}
 							</div>
 						);
@@ -373,8 +436,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...dark }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...dark }}></p>
+									);
 								})}
 							</div>
 						);
@@ -385,8 +452,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...steel }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...steel }}></p>
+									);
 								})}
 							</div>
 						);
@@ -397,8 +468,12 @@ class DamageRelations extends React.Component<Props, State> {
 						superList.push(
 							<div key={key} style={measureWrapper}>
 								{value.map(() => {
-									index++
-									return <p key={key + index} style={{ ...measureStyle, ...fairy }}></p>;
+									index++;
+									return (
+										<p
+											key={key + index}
+											style={{ ...measureStyle, ...fairy }}></p>
+									);
 								})}
 							</div>
 						);
@@ -413,14 +488,23 @@ class DamageRelations extends React.Component<Props, State> {
 	render() {
 		let effects: any = this.generateSupers();
 
-		return <div style={measureList}>{effects}</div>;
+		return (
+			<div
+				style={
+					this.props.isDesktop
+						? { ...measureList, flexDirection: "column" }
+						: { ...measureList, flexDirection: "row", height: "1rem" }
+				}>
+				{effects}
+			</div>
+		);
 	}
 }
 
 export default withRouter(DamageRelations);
 
 const measureWrapper: React.CSSProperties = {
-	padding: ".5rem",
+	padding: ".2rem",
 	margin: ".2rem",
 
 	display: "flex",
@@ -428,12 +512,13 @@ const measureWrapper: React.CSSProperties = {
 	background: "#3338"
 };
 const measureStyle: React.CSSProperties = {
-	width: ".5rem",
+	width: ".3rem",
 	height: "1rem",
 
 	margin: ".2rem"
 };
+
 const measureList: React.CSSProperties = {
 	display: "flex",
-	flexDirection: "column"
+	flexWrap: "wrap"
 };
