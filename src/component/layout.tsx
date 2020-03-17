@@ -32,8 +32,6 @@ class Layout extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		const URL = history.location.pathname;
-		console.log(URL);
-		console.log(URL.slice(9));
 
 		const lastUrl =
 			URL.includes("pokedex") && URL.slice(9) !== ""
@@ -62,7 +60,6 @@ class Layout extends React.Component<Props, State> {
 			const pokemon = await this.fetchPokeData(this.state.lastPokemon);
 			this.setPokemonInState(pokemon);
 		}
-		console.log(this.state.myTeam, this.state.myTeam.length);
 		if (
 			this.state.myTeam.length === 6 &&
 			prevState.myTeam !== this.state.myTeam
@@ -70,8 +67,7 @@ class Layout extends React.Component<Props, State> {
 			this.setState(
 				{
 					teamFull: true
-				},
-				() => console.log(this.state.teamFull)
+				}
 			);
 		} else if (
 			this.state.myTeam.length < 6 &&
@@ -153,7 +149,6 @@ class Layout extends React.Component<Props, State> {
 
 	updateUrlHistory(pokemonId: string) {
 		if (history.location.pathname.includes("pokedex")) {
-			// console.log(history.location.pathname);
 			history.push(`/pokedex/${pokemonId}`);
 		}
 	}
@@ -164,15 +159,12 @@ class Layout extends React.Component<Props, State> {
 
 	handleAddToTeam = (url: string) => {
 		if (this.state.myTeam.length < 6) {
-			console.log("added : ", url);
 			this.setState(
 				{
 					myTeam: [...this.state.myTeam, url]
 				},
 				() => {}
 			);
-		} else {
-			console.log("TEAM FULL");
 		}
 	};
 

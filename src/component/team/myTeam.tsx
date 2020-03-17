@@ -10,10 +10,7 @@ interface Props extends RouteComponentProps {
 interface State {}
 
 class MyTeam extends React.Component<Props, State> {
-	removeMember = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		console.log("button Clicked");
-		console.log(event);
-	};
+
 
 	render() {
 		let index: number = 0;
