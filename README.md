@@ -1,15 +1,20 @@
 # pokedex-2.0
 
 ## Projektbeskrivning
-
+Vi har använt react och create-react-app som grund och skapat ett klassiskt pokedéx. 
+Pokédexet består av en huvudsida med bild, sökfält, bio, moves och en navpad samt ett sökfällt
+för att navigera mellan olika pokémons. Projektet har även en "Team sida" där man kan skapa två lag
+och jämföra deras styrkor och svagheter genom att lägga till pokémons från huvudsidan 
+(Klicka i mitten på navpad för att gå till teamsidan).
 
 ## Instruktioner för att bygga och köra projektet
 
-
+1. npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+2. npm start
 
 ###### Repository: https://github.com/Condif/Pokedex.git
 
-###### Demo: https://condif.github.io/Pokedex/
+###### Demo: Använd inte för detta projekt, använd npm start istället.
 
 
 # Miniprojekt 1 - Create React App
