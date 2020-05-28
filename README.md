@@ -12,7 +12,7 @@ och jämföra deras styrkor och svagheter genom att lägga till pokémons från 
 1. npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 2. npm start
 
-###### Repository: https://github.com/Condif/Pokedex.git
+###### Repository: https://github.com/Condif/classic-pokedex.git
 
 ###### Demo: Använd inte för detta projekt, använd npm start istället.
 
